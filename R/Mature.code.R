@@ -1,7 +1,7 @@
 #Mature
 #To use the following code in R, use the "source" function after removing all of this header material.
 
-matureFit = function(data)
+matureFit = function(data, ...)
 {
 	y = data$y
 	x = data$x
