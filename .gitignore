@@ -2,7 +2,6 @@
 .Rhistory
 .Rapp.history
 *.dat
-*.txt
 *.csv
 
 # Example code in package build process
