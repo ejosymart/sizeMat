@@ -25,10 +25,12 @@ my.mat2 = classifyCluster(data = crabdat)
 my.mat2
 
 #Calculate ogive
-my.ogive1 = ogive(my.mat1)
-my.ogive2 = ogive(my.mat2)
+my.ogive1  = ogive(my.mat1)
+my.ogive2  = ogive(my.mat2)
+#Calculate ogive (Bayesian MCMClogit)
 my.ogiveB1 = ogiveBayes(my.mat1)
 my.ogiveB2 = ogiveBayes(my.mat2)
+
 
 #Plot
 plot(my.ogive1)
