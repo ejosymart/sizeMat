@@ -20,7 +20,7 @@ headtail(crabdat)
 my.mat1 = classifyByDistance(data = crabdat, n.iter = 100)
 my.mat1
 
-#Classify juvelines and adults (PCA + clustering)
+#Classify juvelines and adults (PCA + clustering + discriminant analysis)
 my.mat2 = classifyCluster(data = crabdat)
 my.mat2
 
@@ -38,4 +38,3 @@ plot(my.ogiveB1)
 
 plot(my.ogive2)
 plot(my.ogiveB2)
-

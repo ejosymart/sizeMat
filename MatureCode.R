@@ -67,7 +67,7 @@ classifyByDistance = function(data, xlab = "Log(carapace width)", ylab = "Log(ch
 		x.up  = c(lx.mid[res.up <= res.low], lx.up)
 		y.low = c(ly.mid[res.low < res.up], ly.low)
 		x.low = c(lx.mid[res.low < res.up], lx.low)
-		cat("number in upper and lower group =", length(y.up), ",", length(y.low), "\n")
+		cat("number in juvenile and adult group =", length(y.low), ",", length(y.up), "\n")
 		
 		fit.up  = glm(y.up ~ x.up)
 		rss1    = sum((fit.up$resid)^2)
@@ -85,32 +85,30 @@ classifyByDistance = function(data, xlab = "Log(carapace width)", ylab = "Log(ch
 	output = data.frame(carapace = round(exp(c(x.up, x.low))), 
 	                    chela    = round(exp(c(y.up, y.low))), 
 	                    mature   = c(rep(1, length(y.up)), rep(0, length(y.low)))) 
-# 	class(output) = "classify"
 	return(output)
 }
 
 
 classifyCluster = function(data, xlab = "Log(carapace width)", ylab = "Log(chela dimension)", ...){
 
-  #Principal Components Analysis and cluster
+  #Principal Components Analysis, cluster and Linear Discriminant Analysis
   pca.classify   = prcomp(log(data), 2)
   k.means.scores = kmeans(pca.classify$x, centers = 2, nstart = 20)
-    
-  clusters = hclust(dist(pca.classify$x, method = 'euclidean'), method = 'ward.D')
-  clusterCut = cutree(clusters, 2)
-  
-#   pch=ifelse(k.means.scores$cluster == 1, 4, 5)
-#   col=ifelse(k.means.scores$cluster == 1, 3, 2)
-  pch=ifelse(clusterCut == 1, 4, 5)
-  col=ifelse(clusterCut == 1, 3, 2)
-  plot(log(data), col = col, xlab = xlab, ylab = ylab, pch = pch)
-  
+#   mature.means   = k.means.scores$cluster - 1
+
+  clusters       = hclust(dist(pca.classify$x, method = 'euclidean'), method = 'ward.D')
+  mature.means   = cutree(clusters, 2) - 1
+  base           = data.frame(log(data), mature = mature.means)
+  dis.reg        = lda(mature ~ ., base, prior = c(0.5,0.5))
+  mature         = as.numeric(as.character(predict(dis.reg)$class))
+  base.mat       = data.frame(exp(cbind(base[, -3])), mature)
+
+  pch = ifelse(mature == 0, 4, 5)
+  col = ifelse(mature == 0, 3, 2)
+  plot(base[, -3], col = col, xlab = xlab, ylab = ylab, pch = pch)
+  cat("number in juveline and adult group =", as.numeric(dis.reg$counts[1]), ",", as.numeric(dis.reg$counts[2]), "\n")
   # New data (classification)
-#   mature = k.means.scores$cluster - 1  
-  mature = clusterCut - 1  
-  output = data.frame(data, mature = mature)
-  output
-#   class(output) = "classify"
+  output = base.mat
   return(output)
 }
 
@@ -124,8 +122,8 @@ ogive = function(data, ...){
   deviance = (out$null.deviance - out$deviance)/out$null.deviance
   # Predict ans Confidence intervals
   pred.dat = predict(out, newdata = data.frame(x.input = x.input), se.fit = TRUE)
-  upper    = with(pred.dat, exp(fit+1.96*se.fit)/(1+exp(fit+1.96*se.fit)))
-  lower    = with(pred.dat, exp(fit-1.96*se.fit)/(1+exp(fit-1.96*se.fit)))
+  upper    = round(with(pred.dat, exp(fit+1.96*se.fit)/(1+exp(fit+1.96*se.fit))), 3)
+  lower    = round(with(pred.dat, exp(fit-1.96*se.fit)/(1+exp(fit-1.96*se.fit))), 3)
   CI       = data.frame(lower, upper)
   # Output
   output  = data.frame(carapace = x.input, mature = y.input, fitted = round(out$fitted, 3))
@@ -146,11 +144,11 @@ ogiveBayes = function(data, ...){
   X.bayes     = cbind(1, x.input)
   Xb          = as.matrix(X.bayes) %*% t(model.bayes)
   pred.bayes  = as.data.frame(1/(1 + exp(-Xb)))
-  qtl         = rowQuantiles(pred.bayes, probs=c(0.025,0.5,0.975))
+  qtl         = round(rowQuantiles(pred.bayes, probs=c(0.025,0.5,0.975)), 3)
   CI          = data.frame(lower= qtl[,1], upper= qtl[,3])
   #Output
-  output = data.frame(carapace = x.input, mature = y.input, fitted = round(qtl[, 2], 3))
-  data   = list(params = params, output = output, confidence_intervals = round(CI, 3))
+  output = data.frame(carapace = x.input, mature = y.input, fitted = qtl[, 2])
+  data   = list(params = params, output = output, confidence_intervals = CI)
   class(data) = "ogive"
   return(data)
 }
