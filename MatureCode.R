@@ -9,7 +9,7 @@ dataMature = function(file, ext = "txt", ...){
                 "delim" = read.delim(file),
                 "xlsx"  = read.xlsx(file, sheetIndex = 1))
   names(data) = c("carapace", "chela")
-  data[complete.cases(data), ]
+  data = data[complete.cases(data), ]
   return(data)
 }
 
@@ -97,7 +97,6 @@ classifyCluster = function(data, xlab = "Log(carapace width)", ylab = "Log(chela
   k.means.scores = kmeans(pca.classify$x, centers = 2, nstart = 20)
     
   clusters = hclust(dist(pca.classify$x, method = 'euclidean'), method = 'ward.D')
-  plot(clusters)
   clusterCut = cutree(clusters, 2)
   
 #   pch=ifelse(k.means.scores$cluster == 1, 4, 5)

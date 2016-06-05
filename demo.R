@@ -10,8 +10,8 @@ rm(list=ls())
 source("MatureCode.R")
 
 #Read Data
-file = "crabdat"
-crabdat = dataMature(file, ext = "txt")
+file = "longipes_width"
+crabdat = dataMature(file, ext = "csv")
 
 #View data
 headtail(crabdat)
