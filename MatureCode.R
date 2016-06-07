@@ -47,7 +47,6 @@ classifyByDistance = function(data, xlab = "Log(carapace width)", ylab = "Log(ch
 
 	# determine initial fit to upper and lower data
 	fit.up = lsfit(lx.up, ly.up)
-	
 	fit.low = lsfit(lx.low, ly.low)
 	
 	# iterative reassign mid points to upper or lower group
@@ -93,9 +92,6 @@ classifyCluster = function(data, xlab = "Log(carapace width)", ylab = "Log(chela
 
   #Principal Components Analysis, cluster and Linear Discriminant Analysis
   pca.classify   = prcomp(log(data), 2)
-  k.means.scores = kmeans(pca.classify$x, centers = 2, nstart = 20)
-#   mature.means   = k.means.scores$cluster - 1
-
   clusters       = hclust(dist(pca.classify$x, method = 'euclidean'), method = 'ward.D')
   mature.means   = cutree(clusters, 2) - 1
   base           = data.frame(log(data), mature.binom = mature.means)
