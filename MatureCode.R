@@ -98,15 +98,15 @@ classifyCluster = function(data, xlab = "Log(carapace width)", ylab = "Log(chela
 
   clusters       = hclust(dist(pca.classify$x, method = 'euclidean'), method = 'ward.D')
   mature.means   = cutree(clusters, 2) - 1
-  base           = data.frame(log(data), mature = mature.means)
-  dis.reg        = lda(mature ~ ., base, prior = c(0.5,0.5))
+  base           = data.frame(log(data), mature.binom = mature.means)
+  dis.reg        = lda(mature.binom ~ ., data = base)
   mature         = as.numeric(as.character(predict(dis.reg)$class))
   base.mat       = data.frame(exp(cbind(base[, -3])), mature)
 
   pch = ifelse(mature == 0, 4, 5)
   col = ifelse(mature == 0, 3, 2)
   plot(base[, -3], col = col, xlab = xlab, ylab = ylab, pch = pch)
-  cat("number in juveline and adult group =", as.numeric(dis.reg$counts[1]), ",", as.numeric(dis.reg$counts[2]), "\n")
+  cat("number in juveline and adult group =", as.numeric(table(mature)[1]), ",", as.numeric(table(mature)[2]), "\n")
   # New data (classification)
   output = base.mat
   return(output)
