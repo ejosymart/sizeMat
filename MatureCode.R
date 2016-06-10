@@ -1,179 +1,180 @@
-#Read Data
-dataMature = function(file, ext = "txt", ...){
-  file = paste(file, ".", ext, sep="")
+# Load data ---------------------------------------------------------------
+
+get_data <- function(file, ext = "txt", ...){
+  file <- paste(file, ".", ext, sep = "")
   
-  data = switch(ext,
+  data <- switch(ext,
                 "txt"   = read.table(file, header = TRUE, stringsAsFactors = FALSE),
                 "csv"   = read.csv(file),
                 "csv2"  = read.csv2(file),
                 "delim" = read.delim(file),
                 "xlsx"  = read.xlsx(file, sheetIndex = 1))
-  names(data) = c("carapace", "chela")
-  data = data[complete.cases(data), ]
+  names(data) <- c("x", "y")
+  
   return(data)
 }
 
 
-#Mature
-classifyByDistance = function(data, xlab = "Log(carapace width)", ylab = "Log(chela dimension)", 
-                              col.juv = "green", col.adlt = "red", col.indt = "blue", n.iter = 100, ...){
-  y  = data$chela
-	x  = data$carapace
-	ly = log(y)
-	lx = log(x)
-	plot(lx, ly, xlab = xlab, ylab = ylab, main = "Upper and lower bounds")
-	
-	# enter upper and lower bounds
-	cat("enter lower bound ")
-	xlow     = locator(1)$x
-	cat(xlow, "\n")
-	abline(v = xlow)
-	cat("enter upper bound ")
-	xup      = locator(1)$x
-	cat(xup, "\n")
-	abline(v = xup)
-	ly.up    = ly[lx > xup]
-	lx.up    = lx[lx > xup]
-	ly.low   = ly[lx < xlow]
-	lx.low   = lx[lx < xlow]
-	ly.mid   = ly[lx >= xlow & lx <= xup]
-	lx.mid   = lx[lx >= xlow & lx <= xup]
-	plot(lx, ly, type = "n", xlab = xlab, ylab = ylab, main = "Determine initial fit to upper and lower data")
-	points(lx.low, ly.low, col = col.juv, pch = 4)
-	points(lx.up, ly.up, col = col.adlt, pch = 5)
-	points(lx.mid, ly.mid, col = col.indt)
-	abline(v = xlow)
-	abline(v = xup)
 
-	# determine initial fit to upper and lower data
-	fit.up = lsfit(lx.up, ly.up)
-	fit.low = lsfit(lx.low, ly.low)
-	
-	# iterative reassign mid points to upper or lower group
-	# based on absolute residuals (distance)
-	plot(lx, ly, xlab = xlab, ylab = ylab, type = "n",
-	     main = "Iterative reassign mid points to upper or lower group \n based on absolute residuals (distance)")
-	cat("\n", "Reassign points until min residual ss is found \n")
-	for(i in seq_len(n.iter)){
-		yp.mid.up  = fit.up$coef[1] + fit.up$coef[2] * lx.mid
-		res.up     = abs(ly.mid - yp.mid.up)
-		
-		yp.mid.low = fit.low$coef[1] + fit.low$coef[2] * lx.mid
-		res.low    = abs(ly.mid - yp.mid.low)
-		
-		#Points tentatively assigned to the closest line
-		y.up  = c(ly.mid[res.up <= res.low], ly.up) 
-		x.up  = c(lx.mid[res.up <= res.low], lx.up)
-		y.low = c(ly.mid[res.low < res.up], ly.low)
-		x.low = c(lx.mid[res.low < res.up], lx.low)
-		cat("number in juvenile and adult group =", length(y.low), ",", length(y.up), "\n")
-		
-		fit.up  = glm(y.up ~ x.up)
-		rss1    = sum((fit.up$resid)^2)
-		fit.low = glm(y.low ~ x.low)
-		rss2    = sum((fit.low$resid)^2)
-		rss     = rss1 + rss2
-		cat("Residual ss of combined fit =", rss, "\n")
-		
-		points(x.low, y.low, col = col.juv, pch = 4)
-		points(x.up, y.up, col = col.adlt, pch = 5)
-		lines(x.low, predict(fit.low), col = col.juv, lwd = 2)
-		lines(x.up, predict(fit.up), col = col.adlt, lwd = 2)
-	}
+# Classify data -----------------------------------------------------------
 
-	output = data.frame(carapace = round(exp(c(x.up, x.low))), 
-	                    chela    = round(exp(c(y.up, y.low))), 
-	                    mature   = c(rep(1, length(y.up)), rep(0, length(y.low)))) 
-	return(output)
+
+# Classify PCA + cluster  -----
+.classify_fq <- function(data, ...){
+  
+  pca_classify   <- prcomp(data, 2)
+  print(summary(pca_classify))
+  clusters       <- hclust(dist(pca_classify$x, method = 'euclidean'), method = 'ward.D')
+  mature.means   <- cutree(clusters, 2) - 1
+  
+  return(mature.means)
+}
+
+# Classify BayesianPCA + cluster  -----
+.classify_bayes <- function(data, ...){
+  
+  bpca_classify  <- sim.bPCA(data, n.chains = 3, n.iter = 100000, n.burnin = 500)
+  scores.chain   <- get.scores.chain.bPCA(bpca_classify, log(data))
+  scores.bpca    <- summary.scores.bPCA(scores.chain, axes.to.get = 1:2)
+  clusters       <- hclust(dist(as.data.frame(scores.bpca[2]), method = 'euclidean'), method = 'ward.D')
+  mature.means   <- cutree(clusters, 2) - 1
+
+  return(mature.means)  
 }
 
 
-classifyCluster = function(data, xlab = "Log(carapace width)", ylab = "Log(chela dimension)", ...){
-
-  #Principal Components Analysis, cluster and Linear Discriminant Analysis
-  pca.classify   = prcomp(log(data), 2)
-  clusters       = hclust(dist(pca.classify$x, method = 'euclidean'), method = 'ward.D')
-  mature.means   = cutree(clusters, 2) - 1
-  base           = data.frame(log(data), mature.binom = mature.means)
-  dis.reg        = lda(mature.binom ~ ., data = base)
-  mature         = as.numeric(as.character(predict(dis.reg)$class))
-  base.mat       = data.frame(exp(cbind(base[, -3])), mature)
-
-  pch = ifelse(mature == 0, 4, 5)
-  col = ifelse(mature == 0, 3, 2)
-  plot(base[, -3], col = col, xlab = xlab, ylab = ylab, pch = pch)
+classify_mature <- function(data, method = "fq", ...){
+  
+  data <- data[complete.cases(data), ]
+  data <- log(data)
+  
+  mature_classify <- switch(method,
+                           "fq"    = .classify_fq(data),
+                           "bayes" = .classify_bayes(data))
+  
+  base           <- data.frame(data, mature.binom = mature_classify)
+  # linear o quadratic discriminarion analysis
+  test.cov.mat   <- boxM(base[, c("x", "y")], base[, "mature.binom"])
+  if(test.cov.mat$p.value > 0.05){
+    dis.reg      <- lda(mature.binom ~ ., data = base)
+  }else{
+    dis.reg      <- qda(mature.binom ~ ., data = base)
+  }
+  mature         <- as.numeric(as.character(predict(dis.reg)$class))
+  output         <- data.frame(exp(base[, c("x", "y")]), mature)
   cat("number in juveline and adult group =", as.numeric(table(mature)[1]), ",", as.numeric(table(mature)[2]), "\n")
-  # New data (classification)
-  output = base.mat
+  class(output) <- "classify"
+
   return(output)
 }
 
 
-ogive = function(data, ...){
-  x.input = data$carapace
-  y.input = data$mature
-  # Model, params and deviance
-  out = glm(y.input ~ x.input, family = binomial(link = "logit"))
-  A = as.numeric(out$coef[1]); B = as.numeric(out$coef[2]); params = c(A, B)
-  deviance = (out$null.deviance - out$deviance)/out$null.deviance
-  # Predict ans Confidence intervals
-  pred.dat = predict(out, newdata = data.frame(x.input = x.input), se.fit = TRUE)
-  upper    = round(with(pred.dat, exp(fit+1.96*se.fit)/(1+exp(fit+1.96*se.fit))), 3)
-  lower    = round(with(pred.dat, exp(fit-1.96*se.fit)/(1+exp(fit-1.96*se.fit))), 3)
-  CI       = data.frame(lower, upper)
-  # Output
-  output  = data.frame(carapace = x.input, mature = y.input, fitted = round(out$fitted, 3))
-  data    = list(model = out, deviance = deviance, params = params, output = output, confidence_intervals = CI)
-  class(data) = "ogive"
-  return(data)
-}
 
+# Plot classify  ----------------------------------------------------------
 
-ogiveBayes = function(data, ...){
-  x.input = data$carapace
-  y.input = data$mature
-  # Model and params
-  model.bayes = MCMClogit(y.input ~ x.input, burnin = 1000, mcmc = 100000, b0 = 0.1, B0 = 0.0001, thin = 10)
-  stats       = summary(model.bayes)
-  A = stats$quantiles[5]; B = stats$quantiles[6]; params = c(A, B)
-  # Predict bayes and credible intervals
-  X.bayes     = cbind(1, x.input)
-  Xb          = as.matrix(X.bayes) %*% t(model.bayes)
-  pred.bayes  = as.data.frame(1/(1 + exp(-Xb)))
-  qtl         = round(rowQuantiles(pred.bayes, probs=c(0.025,0.5,0.975)), 3)
-  CI          = data.frame(lower= qtl[,1], upper= qtl[,3])
-  #Output
-  output = data.frame(carapace = x.input, mature = y.input, fitted = qtl[, 2])
-  data   = list(params = params, output = output, confidence_intervals = CI)
-  class(data) = "ogive"
-  return(data)
-}
-
-
-plot.ogive = function(data, xlab = "Width", ylab = "Proportion mature", col1 = "blue", col2 = "red", ...){
+plot.classify <- function(data, xlab = "X", ylab = "Y", colors = c(1, 2), pch = c(4, 5), ...){
   
-  fit     = data$output
-  x.input = fit$carapace
-  y.input = fit$mature
-  m.p     = tapply(y.input, x.input, mean)
-  ci      = data$confidence_intervals
-  #Plots
+  data <- data.frame(do.call("cbind", data))
+  
+  juv <- data[data$mature == 0, ]
+  adt <- data[data$mature == 1, ] 
+  fit.juv <- glm(y ~ x, data = juv)
+  fit.adt <- glm(y ~ x, data = adt)
+  eq.juv  <- paste0("Y = ", round(as.numeric(coef(fit.juv)[1]), 2), " + ", round(as.numeric(coef(fit.juv)[2]),2), " *X", sep = "")
+  eq.adt  <- paste0("Y = ", round(as.numeric(coef(fit.adt)[1]), 2), " + ", round(as.numeric(coef(fit.adt)[2]),2), " *X", sep = "")
+  pch <- ifelse (data$mature == 0, pch[1], pch[2])
+  col <- ifelse (data$mature == 0, colors[1], colors[2])
+  plot(data[, c("x", "y")], col = col, xlab = xlab, ylab = ylab, pch = pch)
+  lines(juv$x, predict(fit.juv), col = colors[1], lwd = 2)
+  lines(adt$x, predict(fit.adt), col = colors[2], lwd = 2)
+  legend("topleft", c(paste("Juveniles: ", eq.juv), paste("Adults: ", eq.adt)), 
+         bty = "n", pch = pch, col = colors, cex = 0.8)
+  invisible()
+}
+
+
+
+# Calculate ogive ---------------------------------------------------------
+
+.calculate_ogive_fq <- function(data, ...){
+  
+  model.glm <- glm(mature ~ x, data = data, family = binomial(link = "logit"))
+  A <- as.numeric(model.glm$coef[1])
+  B <- as.numeric(model.glm$coef[2])
+  params <- c(A, B)
+  
+  pred.dat <- predict(model.glm, newdata = data.frame(x = data$x), se.fit = TRUE)
+  fitted   <- round(model.glm$fitted, 3)
+  lower    <- round(with(pred.dat, exp(fit - 1.96 * se.fit) / (1+exp(fit - 1.96 * se.fit))), 3)
+  upper    <- round(with(pred.dat, exp(fit + 1.96 * se.fit) / (1+exp(fit + 1.96 * se.fit))), 3)
+  
+  estimate <- list(params = params, lower = lower, fitted = fitted,  upper = upper)
+
+  return(estimate)
+}
+
+
+.calculate_ogive_bayes <- function(data, ...){
+  
+  model.bayes <- MCMClogit(data$mature ~ data$x, burnin = 1000, mcmc = 100000, thin = 10)
+  stats       <- summary(model.bayes)
+  A <- stats$quantiles[5]
+  B <- stats$quantiles[6]
+  params <- c(A, B)
+  
+  X.bayes     <- cbind(1, data$x)
+  Xb          <- as.matrix(X.bayes) %*% t(model.bayes)
+  pred.bayes  <- as.data.frame(1 / (1 + exp(-Xb)))
+  qtl         <- round(rowQuantiles(pred.bayes, probs = c(0.025, 0.5, 0.975)), 3)
+  fitted      <- qtl[, 2]
+  lower       <- qtl[, 1]
+  upper       <- qtl[, 3]
+  
+  estimate    <- list(params = params, lower = lower, fitted = fitted,  upper = upper)
+  
+  return(estimate)
+}
+
+
+calculate_ogive <- function(data, method = "fq", ...){
+  
+  data <- data.frame(do.call("cbind", data))
+  estimate <- switch(method,
+                     "fq" = .calculate_ogive_fq(data),
+                     "bayes" = .calculate_ogive_bayes(data)) 
+  
+  output  <- data.frame(x = data$x, y = data$y, mature = data$mature, CIlower = estimate$lower, 
+                        fitted = estimate$fitted, CIupper = estimate$upper)
+  data    <- list(params = estimate$params, output = output)
+  class(data) <- "ogive"
+  
+  return(data)
+}
+
+
+# Plot ogive --------------------------------------------------------------
+
+plot.ogive <- function(data, xlab = "X", ylab = "Proportion mature", col1 = "blue", col2 = "red", ...){
+  
+  fit     <- data$output
+  x.input <- fit$x
+  y.input <- fit$mature
+  m.p     <- tapply(y.input, x.input, mean)
+  
   plot(sort(unique(x.input)), m.p, xlab = xlab, ylab = "Proportion mature", pch = 19, col = "darkgrey", axes = F)
   axis(1)
   axis(2, seq(0, 1, 0.1), las = 1)
   box()
-  #Length at which the 50% of population is mature
-  wide50 = -data$params[1]/data$params[2]
-  #Length at which the 95% of population is mature
-  wide95 = (1/data$params[2])*log(1/0.05-1)-data$params[1]/data$params[2]
-  #Adding lines, intervlas and legend
+  
+  wide50 <- - data$params[1] / data$params[2]
+  wide95 <- (1 / data$params[2]) * log(1 / 0.05 - 1) - data$params[1] / data$params[2]
+  
   lines(sort(x.input), sort(fit$fitted), col = col1, lwd = 2)
-  lines(sort(x.input), sort(ci$lower), col = col1, lwd = 2, lty = 2)
-  lines(sort(x.input), sort(ci$upper), col = col1, lwd = 2, lty = 2)
+  lines(sort(x.input), sort(fit$CIlower), col = col1, lwd = 2, lty = 2)
+  lines(sort(x.input), sort(fit$CIupper), col = col1, lwd = 2, lty = 2)
   lines(c(wide50, wide50), c(-1, 0.5), col = col2, lty = 2, lwd = 2)
   lines(c(-1, wide50), c(0.5, 0.5), col = col2, lty = 2, lwd = 2)
   legend("topleft", as.expression(bquote(bold(CW[50] == .(round(wide50, 1))))), bty = "n")
-  #Results
   cat("Carapace width of 50% maturity =", round(wide50, 1), "\n")
   cat("Carapace width of 95% maturity =", round(wide95, 1), "\n")
   invisible()

@@ -5,36 +5,36 @@ library(xlsx)
 library(UsingR)
 library(matrixStats)
 library(MCMCpack)
+library(biotools)
+library(bPCA)
 
 rm(list=ls())
 source("MatureCode.R")
 
 #Read Data
 file = "crabdat"
-crabdat = dataMature(file, ext = "txt")
+crabdat = get_data(file, ext = "txt")
 
 #View data
 headtail(crabdat)
 
-#Classify juvelines and adults (minimun distance)
-my.mat1 = classifyByDistance(data = crabdat, n.iter = 100)
+
+#Classify juvelines and adults (BayesianPCA + hierarchical clustering + linear or quadratic discriminant analysis)
+## linear or quadratic discriminant analysis based on the homogenity covariance matrix
+my.mat1 = classify_mature(data = crabdat, method = "bayes")
 my.mat1
 
-#Classify juvelines and adults (PCA + clustering + discriminant analysis)
-my.mat2 = classifyCluster(data = crabdat)
-my.mat2
+
+#Plot classify
+plot(my.mat1)
+
 
 #Calculate ogive
-my.ogive1  = ogive(my.mat1)
-my.ogive2  = ogive(my.mat2)
-#Calculate ogive (Bayesian MCMClogit)
-my.ogiveB1 = ogiveBayes(my.mat1)
-my.ogiveB2 = ogiveBayes(my.mat2)
-
+my.ogive1 = calculate_ogive(my.mat1, method = "fq")
+my.ogive2 = calculate_ogive(my.mat1, method = "bayes")
 
 #Plot
 plot(my.ogive1)
-plot(my.ogiveB1)
-
+x11()
 plot(my.ogive2)
-plot(my.ogiveB2)
+
