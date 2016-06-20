@@ -1,7 +1,4 @@
 #install and load this packages
-library(gdata)
-library(rJava)
-library(xlsx)
 library(UsingR)
 library(matrixStats)
 library(MCMCpack)
@@ -9,11 +6,11 @@ library(biotools)
 library(bPCA)
 
 rm(list=ls())
-source("MatureCode.R")
+source("calculate_ssm.R")
 
 #Read Data
 file = "crabdat"
-crabdat = get_data(file, ext = "txt")
+crabdat = read_data(file, ext = "txt")
 
 #View data
 headtail(crabdat)
