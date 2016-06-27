@@ -1,3 +1,21 @@
+# ssmRG package: Size at Sexual Maturity based on Relative Growth---------------
+#' @import MCMCpack
+#' @import UsingR
+#' @import biotools
+#' @import matrixStats
+#' @useDynLib ssmRG
+#'
+#' @title Size at Sexual Maturity based on Relative Growth
+#'
+#' @name ssmRG-package
+#' @description  Package to Estimate size at sexual maturity from morphometic data based on relative growth.
+#' @aliases ssmRG-package ssmRG
+#' @docType package
+#' @references ssmRG: Size at Sexual Maturity based on Relative Growth (RJournal)
+#' @keywords size, sexual - maturity, alometric, relative-growth
+
+
+NULL
 #' Read data
 #' 
 #' Read a database with different extesions. The data base have only two variables, first variable is the independet variable and the second is the dependent variable.
@@ -25,7 +43,7 @@ read_data <- function(file, ext = "txt"){
 #' Classify mature
 #' 
 #' Classify in two groups (juvelines = 0 and adult = 1). The analisys is based on 
-#' Principal Components Analisys (frequentist or bayesian) with the variables 
+#' Principal Components Analisys  with the variables 
 #' (x: independent variable, y: dependent variable) in log base, allowing to distinguish 
 #' two groups would represent juveniles and adult.
 #' The individuals are assigned to each group using a hierarchical classification 
@@ -36,17 +54,15 @@ read_data <- function(file, ext = "txt"){
 #' is conducted to obtain a discriminating function that permitted any individuals 
 #' to be classified as a juvenile or an adult on the basis of the X and Y variables.
 #' @param data The database with two variables (x: independent variable, y: dependent variable)
-#' @param methodPCA The method to be applied, "fq" frequentist PCA (prcomp function) 
-#' or "bayes" bayesian PCA (bPCA function).
 #' @return Database with x (independent), y (dependent) and mature classification
 #' (juveniles = 0, adult = 1) variables.
 #' @examples
-#' data = classify_mature(data, methodPCA = "bayes", ...)
+#' data = classify_mature(data, methodPCA = "fq", ...)
 #' data
 #' plot(data, xlab = "X", ylab = "Y", colors = c(1, 2), pch = c(4, 5))
 #' @export
 
-classify_mature <- function(data, methodPCA = "fq"){
+classify_mature <- function(data){
   
   # Removing NA's rows ------------------------------------------------------
   data <- data[complete.cases(data), ]
@@ -54,11 +70,9 @@ classify_mature <- function(data, methodPCA = "fq"){
   # Log data ----------------------------------------------------------------  
   data <- log(data)
   
-  # Classify: frequentist or bayesian methods -------------------------------  
-  scores          <- switch(methodPCA,
-                            "fq"    = .classify_PCAfq(data),
-                            "bayes" = .classify_PCAbayes(data))
-  
+  # Classify PCA ------------------------------------------------------------
+  pca_classify    <- prcomp(data, 2)
+  scores          <- pca_classify$x
   clusters        <- hclust(dist(scores, method = 'euclidean'), method = 'ward.D')
   mature_classify <- cutree(clusters, 2) - 1
   
@@ -79,29 +93,9 @@ classify_mature <- function(data, methodPCA = "fq"){
   
   # Ouput -------------------------------------------------------------------
   data         <- data.frame(exp(base[, c("x", "y")]), mature)
-  class(data)  <- "classify"
+  class(data)  <- c("classify")
   
   return(data)
-}
-
-
-.classify_PCAfq <- function(data){
-  
-  pca_classify    <- prcomp(data, 2)
-  scores          <- pca_classify$x
-  
-  return(scores)
-}
-
-
-.classify_PCAbayes <- function(data){
-  
-  bpca_classify   <- sim.bPCA(data, n.chains = 3, n.iter = 100000, n.burnin = 500)
-  scores_chain    <- get.scores.chain.bPCA(bpca_classify, log(data))
-  scores_bpca     <- summary.scores.bPCA(scores_chain, axes.to.get = 1:2)
-  scores          <- as.data.frame(scores_bpca[2])
-  
-  return(scores)  
 }
 
 
@@ -142,7 +136,7 @@ plot.classify <- function(data, xlab = "X", ylab = "Y", colors = c(1, 2), pch = 
 #' @return List database with the parameters and a data.frame with the X, Y and mature stages
 #' variables. Also the fitted values for the logistic regression and confidence intervals.
 #' @examples
-#' my_ogive = calculate_ogive(data, methodReg = "bayes")
+#' my_ogive = calculate_ogive(data, methodReg = "fq")
 #' plot(my_ogive, xlab = "X", ylab = "Proportion mature", col = "blue", col50 = "red")
 #' @export
 
@@ -152,8 +146,8 @@ calculate_ogive <- function(data, methodReg = "fq"){
   
   # Estimate coefficients, Predict data and CI's ----------------------------  
   estimate <- switch(methodReg,
-                     "fq" = .calculate_ogive_fq(data),
-                     "bayes" = .calculate_ogive_bayes(data)) 
+                     fq = .calculate_ogive_fq(data),
+                     bayes = .calculate_ogive_bayes(data)) 
   
   # Output ------------------------------------------------------------------
   output  <- data.frame(x = data$x, y = data$y, mature = data$mature, CIlower = estimate$lower, 

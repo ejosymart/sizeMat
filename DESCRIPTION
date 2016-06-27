@@ -7,7 +7,7 @@ Author: Edgar Josymar Torrejon-Magallanes
 Maintainer: Edgar Josymar Torrejon-Magallanes <ejosymart@gmail.com>
 Description: Estimate size at sexual maturity from morphometic data based on
     relative growth.
-Depends: MASS, UsingR, matrixStats, MCMCpack, biotools, bPCA
+Depends: UsingR, matrixStats, MCMCpack, biotools, bPCA
 License: GPL-2
 LazyData: TRUE
 RoxygenNote: 5.0.1

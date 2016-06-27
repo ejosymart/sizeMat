@@ -3,3 +3,8 @@
 export(calculate_ogive)
 export(classify_mature)
 export(read_data)
+import(MCMCpack)
+import(UsingR)
+import(biotools)
+import(matrixStats)
+useDynLib(ssmRG)
