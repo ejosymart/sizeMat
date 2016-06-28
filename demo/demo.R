@@ -1,19 +1,13 @@
-#install and load this packages
-library(UsingR)
-library(matrixStats)
-library(MCMCpack)
-library(biotools)
-
 
 #Read Data
-file = "crabdat"
-crabdat = read_data(file, ext = "txt")
+file = "crabdat.txt"
+crabdat = read_data(file)
 
 #View data
-headtail(crabdat)
+head(crabdat)
 
 
-#Classify juvelines and adults (BayesianPCA + hierarchical clustering + linear or quadratic discriminant analysis)
+#Classify juvelines and adults (PCA + hierarchical clustering + linear or quadratic discriminant analysis)
 ## linear or quadratic discriminant analysis based on the homogenity covariance matrix
 my.mat1 = classify_mature(data = crabdat)
 my.mat1
