@@ -3,11 +3,13 @@ Type: Package
 Title: Size at sexual maturity (ssm) from morphometric data
 Version: 1.0
 Date: 2016-06-12
-Author: Edgar Josymar Torrejon-Magallanes
+Authors@R: c(person("Josymar", "Torrejon-Magallanes", role = c("aut", "cre"),
+     email = "ejosymart@gmail.com"))
+Author: Josymar Torrejon-Magallanes [aut, cre]
 Maintainer: Edgar Josymar Torrejon-Magallanes <ejosymart@gmail.com>
 Description: Estimate size at sexual maturity from morphometic data based on
     relative growth.
-Depends: UsingR, matrixStats, MCMCpack, biotools, bPCA
+Depends: UsingR, matrixStats, MCMCpack, biotools, MASS
 License: GPL-2
 LazyData: TRUE
 RoxygenNote: 5.0.1

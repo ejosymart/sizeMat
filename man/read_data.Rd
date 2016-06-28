@@ -4,12 +4,10 @@
 \alias{read_data}
 \title{Read data}
 \usage{
-read_data(file, ext = "txt")
+read_data(file)
 }
 \arguments{
-\item{file}{The filename}
-
-\item{ext}{The file extension ("txt", "csv")}
+\item{file}{The filename (extension: txt, csv, csv2)}
 }
 \value{
 Database with x (independent) and y (dependent) variables.
@@ -18,7 +16,7 @@ Database with x (independent) and y (dependent) variables.
 Read a database with different extesions. The data base have only two variables, first variable is the independet variable and the second is the dependent variable.
 }
 \examples{
-data = read_data("my_data", ext = "csv")
-data
+my_file = system.file("extdata", "crabdat.txt", package = "ssmRG")
+data = read_data(my_file)
 }
 

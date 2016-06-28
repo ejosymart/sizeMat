@@ -2,9 +2,9 @@
 % Please edit documentation in R/calculate_ssmRG.R
 \docType{package}
 \name{ssmRG-package}
-\alias{ssmRG}
 \alias{ssmRG-package}
-\title{Size at Sexual Maturity based on Relative Growth}
+\alias{ssmRG.}
+\title{Size at Sexual Maturity based on Relative Growth.}
 \description{
 Package to Estimate size at sexual maturity from morphometic data based on relative growth.
 }
@@ -14,7 +14,7 @@ ssmRG: Size at Sexual Maturity based on Relative Growth (RJournal)
 \keyword{-}
 \keyword{alometric,}
 \keyword{maturity,}
-\keyword{relative-growth}
+\keyword{relative-growth.}
 \keyword{sexual}
 \keyword{size,}
 

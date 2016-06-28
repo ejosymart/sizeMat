@@ -27,8 +27,9 @@ is conducted to obtain a discriminating function that permitted any individuals
 to be classified as a juvenile or an adult on the basis of the X and Y variables.
 }
 \examples{
-data = classify_mature(data, methodPCA = "fq", ...)
-data
-plot(data, xlab = "X", ylab = "Y", colors = c(1, 2), pch = c(4, 5))
+my_file = system.file("extdata", "crabdat.txt", package = "ssmRG")
+data    = read_data(my_file)
+classify_data = classify_mature(data)
+classify_data
 }
 

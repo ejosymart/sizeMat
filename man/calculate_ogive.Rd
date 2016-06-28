@@ -22,7 +22,9 @@ relating X variable and maturity stage (classifying individuals into juveniles
 or adults depending on their morphometry).
 }
 \examples{
-my_ogive = calculate_ogive(data, methodReg = "fq")
-plot(my_ogive, xlab = "X", ylab = "Proportion mature", col = "blue", col50 = "red")
+my_file = system.file("extdata", "crabdat.txt", package = "ssmRG")
+data    = read_data(my_file)
+classify_data = classify_mature(data)
+my_ogive = calculate_ogive(classify_data, methodReg = "fq")
 }
 
