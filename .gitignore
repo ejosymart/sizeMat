@@ -1,11 +1,10 @@
 # History files
 .Rhistory
 .Rapp.history
-*.dat
-*.csv
 
 # Example code in package build process
 *-Ex.R
+.Rdata
 
 # RStudio files
 .Rproj.user/

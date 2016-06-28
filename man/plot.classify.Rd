@@ -8,7 +8,7 @@
   pch = c(4, 5), ...)
 }
 \arguments{
-\item{x}{Database (a list) with x (independent), y (dependent) and mature classification (juveniles = 0, adult = 1) variables.}
+\item{x}{Database (a \code{list}) with x (independent), y (dependent) and mature classification (juveniles = 0, adult = 1) variables.}
 
 \item{xlab}{a title for the x axis}
 

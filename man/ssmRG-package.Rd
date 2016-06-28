@@ -6,7 +6,17 @@
 \alias{ssmRG.}
 \title{Size at Sexual Maturity based on Relative Growth.}
 \description{
-Package to Estimate size at sexual maturity from morphometic data based on relative growth.
+Package to estimate size at sexual maturity from morphometic data based on relative growth.
+Some basic plotting (classification and maturity ogive) are also provided.
+}
+\details{
+Package: ssmRG
+
+Type: Package
+}
+\author{
+Edgar Josymar Torrejon-Magallanes Maintainer: Edgar Josymar Torrejon-Magallanes
+<ejosymart@gmail.com>
 }
 \references{
 ssmRG: Size at Sexual Maturity based on Relative Growth (RJournal)

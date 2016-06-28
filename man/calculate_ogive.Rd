@@ -4,16 +4,16 @@
 \alias{calculate_ogive}
 \title{Calculate ogive}
 \usage{
-calculate_ogive(data, methodReg = "fq")
+calculate_ogive(data, method = "fq")
 }
 \arguments{
 \item{data}{The database with the X, Y and mature stages (juvelines = 0, adults = 1)}
 
-\item{methodReg}{The method to be applied, "fq"frecuentist GLM, or "bayes" bayesian GLM
+\item{method}{The method to be applied, "fq"frecuentist GLM, or "bayes" bayesian GLM
 (MCMClogit function).}
 }
 \value{
-List database with the parameters and a data.frame with the X, Y and mature stages
+list Database with the parameters and a data.frame with the X, Y and mature stages
 variables. Also the fitted values for the logistic regression and confidence intervals.
 }
 \description{
@@ -25,6 +25,6 @@ or adults depending on their morphometry).
 my_file = system.file("extdata", "crabdat.txt", package = "ssmRG")
 data    = read_data(my_file)
 classify_data = classify_mature(data)
-my_ogive = calculate_ogive(classify_data, methodReg = "fq")
+my_ogive = calculate_ogive(classify_data, method = "fq")
 }
 

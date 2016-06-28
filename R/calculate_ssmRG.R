@@ -12,9 +12,14 @@
 #' @title Size at Sexual Maturity based on Relative Growth.
 #'
 #' @name ssmRG-package
-#' @description  Package to Estimate size at sexual maturity from morphometic data based on relative growth.
+#' @description  Package to estimate size at sexual maturity from morphometic data based on relative growth.
+#' Some basic plotting (classification and maturity ogive) are also provided.
+#' @details Package: ssmRG
+#' @details Type: Package
 #' @aliases ssmRG-package ssmRG.
 #' @docType package
+#' @author Edgar Josymar Torrejon-Magallanes Maintainer: Edgar Josymar Torrejon-Magallanes
+#' <ejosymart@@gmail.com>
 #' @references ssmRG: Size at Sexual Maturity based on Relative Growth (RJournal)
 #' @keywords size, sexual - maturity, alometric, relative-growth.
 
@@ -88,7 +93,7 @@ classify_mature <- function(data){
   }else{
     dis_reg    <- qda(mature_binom ~ ., data = base)
   }
-
+  
   mature       <- as.numeric(as.character(predict(dis_reg)$class))
   cat("number in juveline and adult group =", as.numeric(table(mature)[1]), ",", as.numeric(table(mature)[2]), "\n")
   
@@ -101,7 +106,7 @@ classify_mature <- function(data){
 
 #' Plot classify data
 #'
-#' @param x Database (a list) with x (independent), y (dependent) and mature classification (juveniles = 0, adult = 1) variables.
+#' @param x Database (a \code{list}) with x (independent), y (dependent) and mature classification (juveniles = 0, adult = 1) variables.
 #' @param xlab a title for the x axis
 #' @param ylab a title for the y axis
 #' @param col the colors for juveniles and adults group
@@ -144,31 +149,31 @@ plot.classify <- function(x, xlab = "X", ylab = "Y", col = c(1, 2), pch = c(4, 5
 #' or adults depending on their morphometry).
 #'
 #' @param data The database with the X, Y and mature stages (juvelines = 0, adults = 1)
-#' @param methodReg The method to be applied, "fq"frecuentist GLM, or "bayes" bayesian GLM
+#' @param method The method to be applied, "fq"frecuentist GLM, or "bayes" bayesian GLM
 #' (MCMClogit function).
-#' @return List database with the parameters and a data.frame with the X, Y and mature stages
+#' @return list Database with the parameters and a data.frame with the X, Y and mature stages
 #' variables. Also the fitted values for the logistic regression and confidence intervals.
 #' @exportClass ogive
 #' @examples
 #' my_file = system.file("extdata", "crabdat.txt", package = "ssmRG")
 #' data    = read_data(my_file)
 #' classify_data = classify_mature(data)
-#' my_ogive = calculate_ogive(classify_data, methodReg = "fq")
+#' my_ogive = calculate_ogive(classify_data, method = "fq")
 #' @export
-calculate_ogive <- function(data, methodReg = "fq"){
+calculate_ogive <- function(data, method = "fq"){
   
   input    <- data.frame(do.call("cbind", data))
   
-  estimate <- switch(methodReg,
+  estimate <- switch(method,
                      fq = .calculate_ogive_fq(input),
                      bayes = .calculate_ogive_bayes(input)) 
   
   out   <- data.frame(x = input$x, y = input$y, mature = input$mature, CIlower = estimate$lower, 
-                        fitted = estimate$fitted, CIupper = estimate$upper)
-  output     <- list(params = estimate$params, out = out)
+                      fitted = estimate$fitted, CIupper = estimate$upper)
+  output <- list(params = estimate$params, out = out)
   class(output) <- "ogive"
   
-  return(out)
+  return(output)
 }
 
 
@@ -184,7 +189,7 @@ calculate_ogive <- function(data, methodReg = "fq"){
 #' my_file = system.file("extdata", "crabdat.txt", package = "ssmRG")
 #' data    = read_data(my_file)
 #' classify_data = classify_mature(data)
-#' my_ogive = calculate_ogive(classify_data, methodReg = "fq")
+#' my_ogive = calculate_ogive(classify_data, method = "fq")
 #' plot(my_ogive, xlab1 = "X", ylab1 = "Proportion mature", col = c("blue", "red"))
 #' @export
 #' @method plot ogive
