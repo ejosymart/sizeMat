@@ -12,15 +12,20 @@
 #' @title Size at Sexual Maturity based on Relative Growth.
 #'
 #' @name ssmRG-package
-#' @description  Package to estimate size at sexual maturity from morphometic data based on relative growth.
+#' @description  Package to estimate size at sexual maturity from morphometic data based on relative growth. 
+#' Principal Components Analysis with two variables (x: independent variable, y: dependent variable), 
+#' hierarchical clustering and linear or quadratic discriminant analysis 
+#' are used to classify the individuals in two groups (juveniles or adults). 
 #' Some basic plotting (classification and maturity ogive) are also provided.
 #' @details Package: ssmRG
 #' @details Type: Package
 #' @aliases ssmRG-package ssmRG.
 #' @docType package
-#' @author Edgar Josymar Torrejon-Magallanes Maintainer: Edgar Josymar Torrejon-Magallanes
-#' <ejosymart@@gmail.com>
+#' @author Edgar Josymar Torrejon-Magallanes <ejosymart@@gmail.com>
 #' @references ssmRG: Size at Sexual Maturity based on Relative Growth (RJournal)
+#' @references Agostinho, C. S. (2000). Use of otoliths to estimate size at sexual maturity in fish. Brazilian Archives of Biology and Technology, 43(4), 0-0.
+#' @references Corgos, A., & Freire, J. (2006). Morphometric and gonad maturity in the spider crab Maja brachydactyla: a comparison of methods for estimating size at maturity in species with determinate growth. ICES Journal of Marine Science: Journal du Conseil, 63(5), 851-859.
+#' @references Somerton, D. A. (1980). A computer technique for estimating the size of sexual maturity in crabs. Canadian Journal of Fisheries and Aquatic Sciences, 37(10), 1488-1494.
 #' @keywords size, sexual - maturity, alometric, relative-growth.
 
 
@@ -53,7 +58,7 @@ read_data <- function(file){
 #' Classify mature
 #' 
 #' Classify in two groups (juvelines = 0 and adult = 1). The analisys is based on 
-#' Principal Components Analisys  with the variables 
+#' Principal Components Analisys with the variables 
 #' (x: independent variable, y: dependent variable) in log base, allowing to distinguish 
 #' two groups would represent juveniles and adult.
 #' The individuals are assigned to each group using a hierarchical classification 
@@ -144,8 +149,8 @@ plot.classify <- function(x, xlab = "X", ylab = "Y", col = c(1, 2), pch = c(4, 5
 
 #' Calculate ogive
 #' 
-#' Estimate the size at 50\% maturity using a logistic regression
-#' relating X variable and maturity stage (classifying individuals into juveniles 
+#' Estimate the size at maturity using a logistic regression
+#' relating X variable and maturity stage (classifying individuals as juveniles 
 #' or adults depending on their morphometry).
 #'
 #' @param data The database with the X, Y and mature stages (juvelines = 0, adults = 1)

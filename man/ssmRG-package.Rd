@@ -6,7 +6,10 @@
 \alias{ssmRG.}
 \title{Size at Sexual Maturity based on Relative Growth.}
 \description{
-Package to estimate size at sexual maturity from morphometic data based on relative growth.
+Package to estimate size at sexual maturity from morphometic data based on relative growth. 
+Principal Components Analysis with two variables (x: independent variable, y: dependent variable), 
+hierarchical clustering and linear or quadratic discriminant analysis 
+are used to classify the individuals in two groups (juveniles or adults). 
 Some basic plotting (classification and maturity ogive) are also provided.
 }
 \details{
@@ -15,11 +18,16 @@ Package: ssmRG
 Type: Package
 }
 \author{
-Edgar Josymar Torrejon-Magallanes Maintainer: Edgar Josymar Torrejon-Magallanes
-<ejosymart@gmail.com>
+Edgar Josymar Torrejon-Magallanes <ejosymart@gmail.com>
 }
 \references{
 ssmRG: Size at Sexual Maturity based on Relative Growth (RJournal)
+
+Agostinho, C. S. (2000). Use of otoliths to estimate size at sexual maturity in fish. Brazilian Archives of Biology and Technology, 43(4), 0-0.
+
+Corgos, A., & Freire, J. (2006). Morphometric and gonad maturity in the spider crab Maja brachydactyla: a comparison of methods for estimating size at maturity in species with determinate growth. ICES Journal of Marine Science: Journal du Conseil, 63(5), 851-859.
+
+Somerton, D. A. (1980). A computer technique for estimating the size of sexual maturity in crabs. Canadian Journal of Fisheries and Aquatic Sciences, 37(10), 1488-1494.
 }
 \keyword{-}
 \keyword{alometric,}

@@ -17,8 +17,8 @@ list Database with the parameters and a data.frame with the X, Y and mature stag
 variables. Also the fitted values for the logistic regression and confidence intervals.
 }
 \description{
-Estimate the size at 50\% maturity using a logistic regression
-relating X variable and maturity stage (classifying individuals into juveniles 
+Estimate the size at maturity using a logistic regression
+relating X variable and maturity stage (classifying individuals as juveniles 
 or adults depending on their morphometry).
 }
 \examples{

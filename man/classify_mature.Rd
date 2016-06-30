@@ -15,7 +15,7 @@ Database with x (independent), y (dependent) and mature classification
 }
 \description{
 Classify in two groups (juvelines = 0 and adult = 1). The analisys is based on 
-Principal Components Analisys  with the variables 
+Principal Components Analisys with the variables 
 (x: independent variable, y: dependent variable) in log base, allowing to distinguish 
 two groups would represent juveniles and adult.
 The individuals are assigned to each group using a hierarchical classification 
