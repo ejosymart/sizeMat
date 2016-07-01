@@ -4,10 +4,14 @@
 \alias{classify_mature}
 \title{Classify mature}
 \usage{
-classify_mature(data)
+classify_mature(data, method = NULL)
 }
 \arguments{
 \item{data}{The database with two variables (x: independent variable, y: dependent variable)}
+
+\item{method}{The discriminant analysis method, linear discriminant analysis \code{"ld"},
+quadratic discriminant analysis \code{"qd"}. If \code{method} = \code{NULL} use the test of 
+homogeneity of covariance matrices to choose ld or qd.}
 }
 \value{
 Database with x (independent), y (dependent) and mature classification

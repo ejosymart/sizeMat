@@ -70,6 +70,9 @@ read_data <- function(file){
 #' to be classified as a juvenile or an adult on the basis of the X and Y variables.
 #'
 #' @param data The database with two variables (x: independent variable, y: dependent variable)
+#' @param method The discriminant analysis method, linear discriminant analysis \code{"ld"},
+#' quadratic discriminant analysis \code{"qd"}. If \code{method} = \code{NULL} use the test of 
+#' homogeneity of covariance matrices to choose ld or qd.
 #'
 #' @return Database with x (independent), y (dependent) and mature classification
 #' (juveniles = 0, adult = 1) variables.
@@ -80,7 +83,7 @@ read_data <- function(file){
 #' classify_data = classify_mature(data)
 #' classify_data
 #' @export
-classify_mature <- function(data){
+classify_mature <- function(data, method = NULL){
   
   data <- data[complete.cases(data), ]
   data <- log(data)
@@ -91,12 +94,17 @@ classify_mature <- function(data){
   mature_classify <- cutree(clusters, 2) - 1
   
   base            <- data.frame(data, mature_binom = mature_classify)
-  
-  test_cov_mat <- boxM(base[, c("x", "y")], base[, "mature_binom"])
-  if(test_cov_mat$p.value > 0.05){
-    dis_reg    <- lda(mature_binom ~ ., data = base)
-  }else{
-    dis_reg    <- qda(mature_binom ~ ., data = base)
+
+  if(is.null(method)){
+    test_cov_mat <- boxM(base[, c("x", "y")], base[, "mature_binom"])
+    if(test_cov_mat$p.value > 0.05){
+      dis_reg    <- lda(mature_binom ~ ., data = base)
+    }else{
+      dis_reg    <- qda(mature_binom ~ ., data = base)
+    }
+  } else {dis_reg  <- switch (method,
+                              ld = lda(mature_binom ~ ., data = base),
+                              qd = qda(mature_binom ~ ., data = base))
   }
   
   mature       <- as.numeric(as.character(predict(dis_reg)$class))
@@ -154,7 +162,7 @@ plot.classify <- function(x, xlab = "X", ylab = "Y", col = c(1, 2), pch = c(4, 5
 #' or adults depending on their morphometry).
 #'
 #' @param data The database with the X, Y and mature stages (juvelines = 0, adults = 1)
-#' @param method The method to be applied, "fq"frecuentist GLM, or "bayes" bayesian GLM
+#' @param method The method to be applied, "fq" frecuentist GLM, or "bayes" bayesian GLM
 #' (MCMClogit function).
 #' @return list Database with the parameters and a data.frame with the X, Y and mature stages
 #' variables. Also the fitted values for the logistic regression and confidence intervals.
@@ -218,8 +226,8 @@ plot.ogive <- function(x, xlab1 = "X", ylab1 = "Proportion mature", col = c("blu
   lines(sort(x_input), sort(fit$CIupper), col = col[1], lwd = 2, lty = 2)
   lines(c(wide50, wide50), c(-1, 0.5), col = col[2], lty = 2, lwd = 2)
   lines(c(-1, wide50), c(0.5, 0.5), col = col[2], lty = 2, lwd = 2)
-  legend("topleft", as.expression(bquote(bold(CW[50] == .(round(wide50, 1))))), bty = "n")
-  cat("Carapace width of 50% maturity =", round(wide50, 1), "\n")
-  cat("Carapace width of 95% maturity =", round(wide95, 1), "\n")
+  legend("topleft", as.expression(bquote(bold(L[50] == .(round(wide50, 1))))), bty = "n")
+  cat("Length of 50% maturity =", round(wide50, 1), "\n")
+  cat("Length of 95% maturity =", round(wide95, 1), "\n")
   return(invisible(NULL))
 }

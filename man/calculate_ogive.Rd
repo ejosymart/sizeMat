@@ -9,7 +9,7 @@ calculate_ogive(data, method = "fq")
 \arguments{
 \item{data}{The database with the X, Y and mature stages (juvelines = 0, adults = 1)}
 
-\item{method}{The method to be applied, "fq"frecuentist GLM, or "bayes" bayesian GLM
+\item{method}{The method to be applied, "fq" frecuentist GLM, or "bayes" bayesian GLM
 (MCMClogit function).}
 }
 \value{
