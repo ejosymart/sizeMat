@@ -3,8 +3,7 @@ Type: Package
 Title: Size at Sexual Maturity (ssm) based on relative growth (RG)
 Version: 0.1
 Date: 2016-06-12
-Authors@R: c(person("Josymar", "Torrejon-Magallanes", role = c("aut", "cre"),
-     email = "ejosymart@gmail.com"))
+Authors@R: c(person("Josymar", "Torrejon-Magallanes", role = c("aut", "cre"), email = "ejosymart@gmail.com"))
 Author: Josymar Torrejon-Magallanes [aut, cre]
 Maintainer: Edgar Josymar Torrejon-Magallanes <ejosymart@gmail.com>
 Description: Estimate size at sexual maturity from morphometic data based on

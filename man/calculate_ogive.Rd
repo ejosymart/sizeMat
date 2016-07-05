@@ -4,16 +4,20 @@
 \alias{calculate_ogive}
 \title{Calculate ogive}
 \usage{
-calculate_ogive(data, method = "fq")
+calculate_ogive(data, method = "fq", niter = 1000, seed = 70387)
 }
 \arguments{
-\item{data}{The database with the X, Y and mature stages (juvelines = 0, adults = 1)}
+\item{data}{object of class \code{classify} with the X, Y and mature classification (juvelines = 0, adults = 1).}
 
-\item{method}{The method to be applied, "fq" frecuentist GLM, or "bayes" bayesian GLM
+\item{method}{the method to be applied, \code{"fq"} frecuentist GLM, or \code{"bayes"} bayesian GLM
 (MCMClogit function).}
+
+\item{niter}{number of iterations (bootstrap resampling).}
+
+\item{seed}{a single value, interpreted as an integer.}
 }
 \value{
-list Database with the parameters and a data.frame with the X, Y and mature stages
+object of class \code{ogive} with the parameters, the L50 and data.frame with the X, Y and mature classification
 variables. Also the fitted values for the logistic regression and confidence intervals.
 }
 \description{
@@ -24,7 +28,11 @@ or adults depending on their morphometry).
 \examples{
 my_file = system.file("extdata", "crabdat.txt", package = "ssmRG")
 data    = read_data(my_file)
-classify_data = classify_mature(data)
+classify_data = classify_mature(data, sex = "all")
 my_ogive = calculate_ogive(classify_data, method = "fq")
+my_ogive$A_boot
+my_ogive$B_boot
+my_ogive$L50_boot
+my_ogive$out
 }
 

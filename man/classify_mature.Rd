@@ -4,24 +4,28 @@
 \alias{classify_mature}
 \title{Classify mature}
 \usage{
-classify_mature(data, method = NULL)
+classify_mature(data, sex = "all", method = NULL)
 }
 \arguments{
-\item{data}{The database with two variables (x: independent variable, y: dependent variable)}
+\item{data}{object of class \code{mature} with three variables 
+(x: independent variable, y: dependent variable, sex: sex category)}
 
-\item{method}{The discriminant analysis method, linear discriminant analysis \code{"ld"},
-quadratic discriminant analysis \code{"qd"}. If \code{method} = \code{NULL} use the test of 
-homogeneity of covariance matrices to choose ld or qd.}
+\item{sex}{filter sex category, \code{"m"} = male, \code{"f"} = female, \code{"ind"} = indeterminate sex.
+If \code{sex = "all"} all the individuals will be used in the analysis.}
+
+\item{method}{the discriminant analysis method, linear discriminant analysis \code{"ld"},
+quadratic discriminant analysis \code{"qd"}. If \code{method} = \code{NULL}, ld or qd will be used 
+in the discrimination analysis based on the test of homogeneity of covariance matrices.}
 }
 \value{
-Database with x (independent), y (dependent) and mature classification
+object of class \code{classify}, with x (independent), y (dependent) and mature classification
 (juveniles = 0, adult = 1) variables.
 }
 \description{
 Classify in two groups (juvelines = 0 and adult = 1). The analisys is based on 
 Principal Components Analisys with the variables 
 (x: independent variable, y: dependent variable) in log base, allowing to distinguish 
-two groups would represent juveniles and adult.
+two groups that would represent juveniles and adult.
 The individuals are assigned to each group using a hierarchical classification 
 procedure (hierarchical cluster). This method is based on establishing a predetermined 
 number of groups (in this case, two) and assigning individuals to one of the groups according 
@@ -33,7 +37,7 @@ to be classified as a juvenile or an adult on the basis of the X and Y variables
 \examples{
 my_file = system.file("extdata", "crabdat.txt", package = "ssmRG")
 data    = read_data(my_file)
-classify_data = classify_mature(data)
+classify_data = classify_mature(data, sex = "all", method = "ld")
 classify_data
 }
 

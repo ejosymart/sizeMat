@@ -1,38 +1,53 @@
-.calculate_ogive_fq <- function(input){
+.calculate_ogive_fq <- function(input, niter = niter, seed = seed){
   
-  model_glm <- glm(mature ~ x, data = input, family = binomial(link = "logit"))
+  set.seed(seed)
+  new_input <- list()
+  n_coef <- list()
+  for(i in 1:niter){
+  new_input[[i]] <- input[sample(nrow(input), nrow(input), replace = T), ]
+  model_glm <- glm(mature ~ x, data = new_input[[i]], family = binomial(link = "logit"))
+  glm_coef  <- coef(model_glm)
+  n_coef    <- rbind(glm_coef, n_coef)
+  }
   
-  A <- as.numeric(model_glm$coef[1])
-  B <- as.numeric(model_glm$coef[2])
-  params <- c(A, B)
+  A    <- as.numeric(n_coef[,1])
+  B    <- as.numeric(n_coef[,2])
+  L50  <- -A/B
+
+  create_x <- cbind(1, input$x)
+  x_fq     <- as.matrix(create_x) %*% t(as.matrix(cbind(A,B)))
+  pred_fq  <- as.data.frame(1 / (1 + exp(-x_fq)))
+  qtl      <- round(rowQuantiles(pred_fq, probs = c(0.05, 0.5, 0.95)), 3)
+  fitted   <- qtl[, 2]
+  lower    <- qtl[, 1]
+  upper    <- qtl[, 3]
   
-  pred_dat <- predict(model_glm, newdata = data.frame(x = input$x), se.fit = TRUE)
-  fitted   <- round(model_glm$fitted, 3)
-  lower    <- round(with(pred_dat, exp(fit - 1.96 * se.fit) / (1+exp(fit - 1.96 * se.fit))), 3)
-  upper    <- round(with(pred_dat, exp(fit + 1.96 * se.fit) / (1+exp(fit + 1.96 * se.fit))), 3)
+  estimate <- list(parameters_A = A, parameters_B = B, L50 = L50,
+                   lower = lower, fitted = fitted,  upper = upper)
   
-  estimate <- list(params = params, lower = lower, fitted = fitted,  upper = upper)
   return(estimate)
 }
 
 
-.calculate_ogive_bayes <- function(input){
+.calculate_ogive_bayes <- function(input, niter = niter, seed = seed){
   
-  model_bayes <- MCMClogit(input$mature ~ input$x, burnin = 1000, mcmc = 100000, thin = 10)
+  set.seed(seed)
+  model_bayes <- MCMClogit(input$mature ~ input$x, mcmc = niter, thin = 1)
   
-  stats  <- summary(model_bayes)
-  A      <- stats$quantiles[5]
-  B      <- stats$quantiles[6]
-  params <- c(A, B)
+  A    <- as.numeric(model_bayes[,1])
+  B    <- as.numeric(model_bayes[,2])
+  L50  <- -A/B
   
   create_x    <- cbind(1, input$x)
   x_bayes     <- as.matrix(create_x) %*% t(model_bayes)
   pred_bayes  <- as.data.frame(1 / (1 + exp(-x_bayes)))
-  qtl         <- round(rowQuantiles(pred_bayes, probs = c(0.025, 0.5, 0.975)), 3)
+  qtl         <- round(rowQuantiles(pred_bayes, probs = c(0.05, 0.5, 0.95)), 3)
   fitted      <- qtl[, 2]
   lower       <- qtl[, 1]
   upper       <- qtl[, 3]
   
-  estimate    <- list(params = params, lower = lower, fitted = fitted,  upper = upper)
+  estimate    <- list(parameters_A = A, parameters_B = B, L50 = L50, 
+                      lower = lower, fitted = fitted,  upper = upper)
+  
   return(estimate)
 }

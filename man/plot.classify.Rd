@@ -8,17 +8,17 @@
   pch = c(4, 5), ...)
 }
 \arguments{
-\item{x}{Database (a \code{list}) with x (independent), y (dependent) and mature classification (juveniles = 0, adult = 1) variables.}
+\item{x}{object of class \code{classify}, with x (independent), y (dependent) and mature classification (juveniles = 0, adult = 1) variables.}
 
-\item{xlab}{a title for the x axis}
+\item{xlab}{a title for the x axis.}
 
-\item{ylab}{a title for the y axis}
+\item{ylab}{a title for the y axis.}
 
-\item{col}{the colors for juveniles and adults group}
+\item{col}{the colors for juveniles and adults group.}
 
-\item{pch}{the character indicating the type of plotting}
+\item{pch}{the character indicating the type of plotting.}
 
-\item{\dots}{Additional arguments to be passed to methods}
+\item{\dots}{Additional arguments to be passed}
 }
 \description{
 Plot classify data
@@ -26,7 +26,7 @@ Plot classify data
 \examples{
 my_file = system.file("extdata", "crabdat.txt", package = "ssmRG")
 data    = read_data(my_file)
-classify_data = classify_mature(data)
+classify_data = classify_mature(data, sex = "all")
 plot(classify_data, xlab = "X", ylab = "Y", col = c(1, 2), pch = c(4, 5))
 }
 

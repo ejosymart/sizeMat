@@ -7,13 +7,16 @@
 read_data(file)
 }
 \arguments{
-\item{file}{The filename (extension: txt, csv, csv2)}
+\item{file}{the filename (extension: txt, csv, csv2).}
 }
 \value{
-Database with x (independent) and y (dependent) variables.
+an object of class \code{mature} with x (independent), y (dependent) variables and sex category (\code{m} = male,
+\code{f} = female, \code{ind} = indeterminate sex).
 }
 \description{
-Read a database with different extesions. The data base have only two variables, first variable is the independet variable and the second is the dependent variable.
+Read a database with different extesions. The database has three variables, "x", "y" and "sex".
+The variables "x" and "y" will be used in the regression. The variable "sex" 
+is the sex category (\code{m} = male, \code{f} = female, \code{ind} = indeterminate sex.)
 }
 \examples{
 my_file = system.file("extdata", "crabdat.txt", package = "ssmRG")

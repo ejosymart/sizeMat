@@ -21,9 +21,7 @@ Type: Package
 Edgar Josymar Torrejon-Magallanes <ejosymart@gmail.com>
 }
 \references{
-ssmRG: Size at Sexual Maturity based on Relative Growth (RJournal)
-
-Agostinho, C. S. (2000). Use of otoliths to estimate size at sexual maturity in fish. Brazilian Archives of Biology and Technology, 43(4), 0-0.
+Agostinho, C. S. (2000). Use of otoliths to estimate size at sexual maturity in fish. Brazilian Archives of Biology and Technology, 43(4).
 
 Corgos, A., & Freire, J. (2006). Morphometric and gonad maturity in the spider crab Maja brachydactyla: a comparison of methods for estimating size at maturity in species with determinate growth. ICES Journal of Marine Science: Journal du Conseil, 63(5), 851-859.
 
