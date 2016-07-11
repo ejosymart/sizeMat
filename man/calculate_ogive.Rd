@@ -7,28 +7,40 @@
 calculate_ogive(data, method = "fq", niter = 1000, seed = 70387)
 }
 \arguments{
-\item{data}{object of class \code{classify} with the X, Y and mature classification (juvelines = 0, adults = 1).}
+\item{data}{an object of class 'classify' with the X, Y and mature classification (juvelines = 0, adults = 1).}
 
-\item{method}{the method to be applied, \code{"fq"} frecuentist GLM, or \code{"bayes"} bayesian GLM
-(MCMClogit function).}
+\item{method}{the method to be applied, \code{"fq"} frecuentist GLM, or \code{"bayes"} bayesian GLM (MCMClogit function).}
 
 \item{niter}{number of iterations (bootstrap resampling).}
 
 \item{seed}{a single value, interpreted as an integer.}
 }
 \value{
-object of class \code{ogive} with the parameters, the L50 and data.frame with the X, Y and mature classification
-variables. Also the fitted values for the logistic regression and confidence intervals.
+object of class 'ogive'.
+
+\code{model} the summary model.
+
+\code{A_boot} the 'n iter'values of parameter A.
+
+\code{B_boot} the 'n iter'values of parameter B.
+
+\code{L50} the 'n iter'values of parameter L50 (size at sexual maturity).
+
+\code{out} a dataframe with the X, Y and mature classification variables. 
+Also the fitted values for the logistic regression and confidence intervals (95\%).
 }
 \description{
-Estimate the size at maturity using a logistic regression
-relating X variable and maturity stage (classifying individuals as juveniles 
-or adults depending on their morphometry).
+Estimate the size at sexual maturity (L50).
+}
+\details{
+Estimate the size at sexual maturity using a logit regression with X variable and maturity stage (two categories: juveniles 
+and adults).
 }
 \examples{
-my_file = system.file("extdata", "crabdat.txt", package = "ssmRG")
-data    = read_data(my_file)
-classify_data = classify_mature(data, sex = "all")
+data(crabdata)
+classify_data = classify_mature(crabdata, varnames = c("carapace_width", "chela_heigth"), 
+varsex = "sex_category", useSex = NULL, method = "ld")
+classify_data
 my_ogive = calculate_ogive(classify_data, method = "fq")
 my_ogive$A_boot
 my_ogive$B_boot

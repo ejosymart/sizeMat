@@ -4,30 +4,41 @@
 \alias{plot.ogive}
 \title{Plot maturity ogive}
 \usage{
-\method{plot}{ogive}(x, xlab1 = "X", ylab1 = "Proportion mature",
-  col = c("blue", "red"), ...)
+\method{plot}{ogive}(x, xlab = "X", ylab = "Proportion mature",
+  col = c("blue", "red"), lwd = 2, lty = 2, vline_hist = "black",
+  lwd_hist = 2, lty_hist = 2, ...)
 }
 \arguments{
-\item{x}{object of class \code{ogive} with the ogive parameters and a data.frame with the X, Y and mature classification
-variables. Also the fitted values for the logistic regression and confidence intervals.}
+\item{x}{object of class 'ogive' with the ogive parameters and a data.frame with the X, Y and mature classification
+variables. Also the fitted values for the logistic regression and confidence intervals (95\%).}
 
-\item{xlab1}{a title for the x axis.}
+\item{xlab}{a title for the x axis.}
 
-\item{ylab1}{a title for the y axis.}
+\item{ylab}{a title for the y axis.}
 
-\item{col}{the color for the logistic curve and for the L50\% size at sexual maturity.}
+\item{col}{color for the logistic curve and for the L50\% size at sexual maturity.}
 
-\item{\dots}{Additional arguments to be passed to methods}
+\item{lwd}{line with for drawing fitted values and confidence intervals.}
+
+\item{lty}{line type line type for drawing fitted values and confidence intervals}
+
+\item{vline_hist}{color of the vertival lines in the histogram. The lines represent the 
+confidence intervals and the median.}
+
+\item{lwd_hist}{line with for the vertical line in the histogram.}
+
+\item{lty_hist}{line type for the vertical line in the histogram.}
+
+\item{\dots}{Additional arguments to the plot method.}
 }
 \description{
 Plot maturity ogive
 }
 \examples{
-my_file = system.file("extdata", "crabdat.txt", package = "ssmRG")
-data    = read_data(my_file)
-classify_data = classify_mature(data, sex = "all")
+data(crabdata)
+classify_data = classify_mature(crabdata, varnames = c("carapace_width", "chela_heigth"), 
+varsex = "sex_category", useSex = NULL, method = "ld")
 my_ogive = calculate_ogive(classify_data, method = "fq")
-print(my_ogive)
-plot(my_ogive, xlab1 = "X", ylab1 = "Proportion mature", col = c("blue", "red"))
+plot(my_ogive, xlab = "X", ylab = "Proportion mature", col = c("blue", "red"))
 }
 

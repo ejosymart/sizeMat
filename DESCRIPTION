@@ -1,14 +1,16 @@
 Package: ssmRG
 Type: Package
-Title: Size at Sexual Maturity (ssm) based on relative growth (RG)
+Title: Size at Sexual Maturity based on relative growth
 Version: 0.1
-Date: 2016-06-12
-Authors@R: c(person("Josymar", "Torrejon-Magallanes", role = c("aut", "cre"), email = "ejosymart@gmail.com"))
+Date: 2016-06-29
+Authors@R: c(person("Josymar", "Torrejon-Magallanes", role = c("aut", "cre"),
+     email = "ejosymart@gmail.com"))
 Author: Josymar Torrejon-Magallanes [aut, cre]
 Maintainer: Edgar Josymar Torrejon-Magallanes <ejosymart@gmail.com>
 Description: Estimate size at sexual maturity from morphometic data based on
     relative growth.
-Depends: UsingR, matrixStats, MCMCpack, biotools, MASS
+Depends: R (>= 2.15)
+Imports: MCMCpack, matrixStats, biotools, MASS, grDevices, tools, graphics, stats, utils
 License: GPL-2
 LazyData: TRUE
 RoxygenNote: 5.0.1

@@ -1,17 +1,13 @@
 
 # Load data ---------------------------------------------------------------
-my_file = system.file("extdata", "crabdat.txt", package = "ssmRG")
+data(crabdata)
 
-# Read database -----------------------------------------------------------
-data    = read_data(my_file)
-print(data)
+# Classify data -----------------------------------------------------------
+classify_data = classify_mature(crabdata, varnames = c("carapace_width", "chela_heigth"), 
+varsex = "sex_category", useSex = NULL, method = "qd")
+plot(classify_data, col = c(1, 2), pch = c(4, 5))
 
-# Classify data --------------------------------------------------------
-classify_data = classify_mature(data, sex = "all", method = "ld")
-plot(classify_data)
-
-
-# Calculate ogive ---------------------------------------------------------
-my_ogive = calculate_ogive(classify_data, method = "fq")
+# Estimate size at sexual maturity ----------------------------------------
+my_ogive = calculate_ogive(classify_data, method = "bayes")
 print(my_ogive)
-plot(my_ogive, xlab1 = "X", ylab1 = "fitted (Proportion mature)", col = c("blue", "red"))
+plot(my_ogive, xlab = "X", ylab = "Proportion mature", col = c("blue", "red"))

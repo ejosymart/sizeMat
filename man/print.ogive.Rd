@@ -4,10 +4,10 @@
 \alias{print.ogive}
 \title{Print maturity ogive}
 \usage{
-\method{print}{ogive}(x, probs = c(0.05, 0.5, 0.95), ...)
+\method{print}{ogive}(x, probs = c(0.025, 0.5, 0.975), ...)
 }
 \arguments{
-\item{x}{object of class \code{ogive} with the ogive parameters and a data.frame with the X, Y and mature classification
+\item{x}{object of class 'ogive' with the ogive parameters and a data.frame with the X, Y and mature classification
 variables. Also the fitted values for the logistic regression and confidence intervals.}
 
 \item{probs}{numeric vector of probabilities with values in \code{[0,1]}.}
@@ -18,9 +18,10 @@ variables. Also the fitted values for the logistic regression and confidence int
 Print maturity ogive
 }
 \examples{
-my_file = system.file("extdata", "crabdat.txt", package = "ssmRG")
-data    = read_data(my_file)
-classify_data = classify_mature(data, sex = "all")
+data(crabdata)
+classify_data = classify_mature(crabdata, varnames = c("carapace_width", "chela_heigth"), 
+varsex = "sex_category", useSex = NULL, method = "ld")
+classify_data
 my_ogive = calculate_ogive(classify_data, method = "fq")
 print(my_ogive)
 }

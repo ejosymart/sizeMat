@@ -4,28 +4,34 @@
 \alias{classify_mature}
 \title{Classify mature}
 \usage{
-classify_mature(data, sex = "all", method = NULL)
+classify_mature(data, varnames = c("x", "y"), varsex = "sex",
+  useSex = NULL, method = NULL)
 }
 \arguments{
-\item{data}{object of class \code{mature} with three variables 
-(x: independent variable, y: dependent variable, sex: sex category)}
+\item{data}{data.frame with alometric variables and sex category (male, female). 
+If sex category has NA's, the row will be filter.}
 
-\item{sex}{filter sex category, \code{"m"} = male, \code{"f"} = female, \code{"ind"} = indeterminate sex.
-If \code{sex = "all"} all the individuals will be used in the analysis.}
+\item{varnames}{the name of two allometric variables to be used for analysis.}
+
+\item{varsex}{the name of the variable containing sex information.}
+
+\item{useSex}{sex category to be used for analysis. If \code{useSex = NULL} all the individuals will be used in the analysis.}
 
 \item{method}{the discriminant analysis method, linear discriminant analysis \code{"ld"},
 quadratic discriminant analysis \code{"qd"}. If \code{method} = \code{NULL}, ld or qd will be used 
 in the discrimination analysis based on the test of homogeneity of covariance matrices.}
 }
 \value{
-object of class \code{classify}, with x (independent), y (dependent) and mature classification
+object of class 'classify', with x (independent), y (dependent) and mature classification
 (juveniles = 0, adult = 1) variables.
 }
 \description{
+Classify te individuals in two groups (0: juvelines, 1: adults).
+}
+\details{
 Classify in two groups (juvelines = 0 and adult = 1). The analisys is based on 
-Principal Components Analisys with the variables 
-(x: independent variable, y: dependent variable) in log base, allowing to distinguish 
-two groups that would represent juveniles and adult.
+Principal Components Analisys with the variables (x: independent variable, y: dependent variable) in log base, 
+allowing to distinguish two groups that would represent juveniles and adult.
 The individuals are assigned to each group using a hierarchical classification 
 procedure (hierarchical cluster). This method is based on establishing a predetermined 
 number of groups (in this case, two) and assigning individuals to one of the groups according 
@@ -35,9 +41,9 @@ is conducted to obtain a discriminating function that permitted any individuals
 to be classified as a juvenile or an adult on the basis of the X and Y variables.
 }
 \examples{
-my_file = system.file("extdata", "crabdat.txt", package = "ssmRG")
-data    = read_data(my_file)
-classify_data = classify_mature(data, sex = "all", method = "ld")
+data(crabdata)
+classify_data = classify_mature(crabdata, varnames = c("carapace_width", "chela_heigth"), 
+varsex = "sex_category", useSex = NULL, method = "ld")
 classify_data
 }
 

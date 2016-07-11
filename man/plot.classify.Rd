@@ -5,10 +5,10 @@
 \title{Plot classify data}
 \usage{
 \method{plot}{classify}(x, xlab = "X", ylab = "Y", col = c(1, 2),
-  pch = c(4, 5), ...)
+  pch = c(4, 5), lty = c(1, 1), lwd = c(1, 1), cex = c(1, 1), ...)
 }
 \arguments{
-\item{x}{object of class \code{classify}, with x (independent), y (dependent) and mature classification (juveniles = 0, adult = 1) variables.}
+\item{x}{an object of class 'classify', with x (independent), y (dependent) and mature classification (juveniles = 0, adult = 1) variables.}
 
 \item{xlab}{a title for the x axis.}
 
@@ -18,15 +18,22 @@
 
 \item{pch}{the character indicating the type of plotting.}
 
-\item{\dots}{Additional arguments to be passed}
+\item{lty}{the line type in the regression.}
+
+\item{lwd}{the line width in the regression.}
+
+\item{cex}{character expansion in the regression.}
+
+\item{\dots}{Additional arguments to the plot method.}
 }
 \description{
 Plot classify data
 }
 \examples{
-my_file = system.file("extdata", "crabdat.txt", package = "ssmRG")
-data    = read_data(my_file)
-classify_data = classify_mature(data, sex = "all")
+data(crabdata)
+classify_data = classify_mature(crabdata, varnames = c("carapace_width", "chela_heigth"), 
+varsex = "sex_category", useSex = NULL, method = "ld")
+classify_data
 plot(classify_data, xlab = "X", ylab = "Y", col = c(1, 2), pch = c(4, 5))
 }
 
