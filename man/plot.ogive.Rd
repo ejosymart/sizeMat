@@ -23,7 +23,7 @@ variables. Also the fitted values for the logistic regression and confidence int
 \item{lty}{line type line type for drawing fitted values and confidence intervals}
 
 \item{vline_hist}{color of the vertival lines in the histogram. The lines represent the 
-confidence intervals and the median.}
+the median and the confidece intervals.}
 
 \item{lwd_hist}{line with for the vertical line in the histogram.}
 
@@ -37,7 +37,7 @@ Plot maturity ogive
 \examples{
 data(crabdata)
 classify_data = classify_mature(crabdata, varnames = c("carapace_width", "chela_heigth"), 
-varsex = "sex_category", useSex = NULL, method = "ld")
+varsex = "sex_category", selectSex = NULL, method = "ld")
 my_ogive = calculate_ogive(classify_data, method = "fq")
 plot(my_ogive, xlab = "X", ylab = "Proportion mature", col = c("blue", "red"))
 }

@@ -4,8 +4,9 @@
 \name{crabdata}
 \alias{crabdata}
 \title{Crab data}
-\format{A data frame with 3 variables: \code{carapace_width} in mm, 
-\code{chela_heigth} in mm and \code{sex_category} (m: male, f: female).}
+\format{A data frame with different variables: \code{year}, \code{month},
+\code{carapace_width}, \code{carapace_length}, \code{chela_heigth}, \code{chela_width} in mm 
+and \code{sex_category} (m: male, f: female).}
 \usage{
 crabdata
 }

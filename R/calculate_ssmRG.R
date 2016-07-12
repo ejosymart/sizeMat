@@ -35,13 +35,13 @@ NULL
 #' If sex category has NA's, the row will be filter.
 #' @param varnames the name of two allometric variables to be used for analysis.
 #' @param varsex the name of the variable containing sex information.
-#' @param useSex sex category to be used for analysis. If \code{useSex = NULL} all the individuals will be used in the analysis. 
-#' @param method the discriminant analysis method, linear discriminant analysis \code{"ld"},
+#' @param selectSex sex category to be used for analysis. If \code{selectSex = NULL} all the individuals will be used in the analysis. 
+#' @param method a character string indicating the discriminant analysis method, linear discriminant analysis \code{"ld"},
 #' quadratic discriminant analysis \code{"qd"}. If \code{method} = \code{NULL}, ld or qd will be used 
 #' in the discrimination analysis based on the test of homogeneity of covariance matrices.
 #' @return object of class 'classify', with x (independent), y (dependent) and mature classification
 #' (juveniles = 0, adult = 1) variables.
-#' @details Classify in two groups (juvelines = 0 and adult = 1). The analisys is based on 
+#' @details Classify the individuals in two groups (juvelines = 0 and adult = 1). The analisys is based on 
 #' Principal Components Analisys with the variables (x: independent variable, y: dependent variable) in log base, 
 #' allowing to distinguish two groups that would represent juveniles and adult.
 #' The individuals are assigned to each group using a hierarchical classification 
@@ -55,22 +55,22 @@ NULL
 #' @examples
 #' data(crabdata)
 #' classify_data = classify_mature(crabdata, varnames = c("carapace_width", "chela_heigth"), 
-#' varsex = "sex_category", useSex = NULL, method = "ld")
+#' varsex = "sex_category", selectSex = NULL, method = "ld")
 #' classify_data
 #' @export
 classify_mature <- function(data, varnames = c("x", "y"), varsex = "sex", 
-                            useSex = NULL, method = NULL) {
+                            selectSex = NULL, method = NULL) {
   if(length(varnames) != 2) stop("You must provide two variables only.")
   if(!all(varnames %in% names(data))) stop("'varnames' have not been found in data.")
   input <- data[, c(varnames, varsex)]
   names(input)  <-  c("x", "y", "sex")
   input <- input[complete.cases(input), ] 
   
-  if(is.null(useSex)) {
+  if(is.null(selectSex)) {
      input <- input[, c("x", "y")]
      cat("all individuals were used in the analysis", "\n\n")
   } else {
-    input <-input[which(input$sex == useSex),]
+    input <-input[which(input$sex == selectSex),]
     cat("only", paste0(unique(input$sex), "-sex", sep =""), "individuals were used in the analysis", "\n\n")
     input <- input[, c("x", "y")]
   }
@@ -114,50 +114,59 @@ classify_mature <- function(data, varnames = c("x", "y"), varsex = "sex",
 #' @param ylab a title for the y axis.
 #' @param col the colors for juveniles and adults group.
 #' @param pch the character indicating the type of plotting.
-#' @param lty the line type in the regression.
-#' @param lwd the line width in the regression.
+#' @param lty_lines the line type in the regression.
+#' @param lwd_lines the line width in the regression.
 #' @param cex character expansion in the regression.
 #' @param \dots Additional arguments to the plot method.
 #' @examples
 #' data(crabdata)
 #' classify_data = classify_mature(crabdata, varnames = c("carapace_width", "chela_heigth"), 
-#' varsex = "sex_category", useSex = NULL, method = "ld")
+#' varsex = "sex_category", selectSex = NULL, method = "ld")
 #' classify_data
 #' plot(classify_data, xlab = "X", ylab = "Y", col = c(1, 2), pch = c(4, 5))
 #' @export
 #' @method plot classify
 plot.classify <- function(x, xlab = "X", ylab = "Y", col = c(1, 2), pch = c(4, 5), 
-                          lty = c(1, 1), lwd = c(1, 1), cex = c(1, 1), ...){
+                          cex = c(1, 1), lty_lines = c(1, 1), lwd_lines = c(1, 1), ...){
   
   data <- data.frame(do.call("cbind", x))
   juv  <- data[data$mature == 0, ]
   adt  <- data[data$mature == 1, ]
   
   fit_juv <- glm(y ~ x, data = juv)
+  juv_smr <- summary(fit_juv)
   fit_adt <- glm(y ~ x, data = adt)
-  
-  PCH <- ifelse (data$mature == 0, pch[1], pch[2])
-  COL <- ifelse (data$mature == 0, col[1], col[2])
+  adt_smr <- summary(fit_adt)
   
   if(length(col) < 2) stop('col argument must have 2 values. The colors could be the same')
   if(length(col) > 2) warning('col: only the first two colors will be used in the plot')
   if(length(pch) < 2) stop('pch argument must have 2 values. The plotting character could be the same')
   if(length(pch) > 2) warning('pch: only the first two plotting character will be used in the plot')
-  if(length(lty) < 2) stop('lty argument must have 2 values. The line type could be the same')
-  if(length(lty) > 2) warning('lty: only the first two line type  will be used in the plot')
-  if(length(lwd) < 2) stop('lwd argument must have 2 values. The line width could be the same')
-  if(length(lwd) > 2) warning('lwd: only the first two line width will be used in the plot')
   if(length(cex) < 2) stop('cex argument must have 2 values. The character expansion could be the same')
   if(length(cex) > 2) warning('cex: only the first two character expansion will be used in the plot')
+  if(length(lty_lines) < 2) stop('lty argument must have 2 values. The line type could be the same')
+  if(length(lty_lines) > 2) warning('lty: only the first two line type  will be used in the plot')
+  if(length(lwd_lines) < 2) stop('lwd argument must have 2 values. The line width could be the same')
+  if(length(lwd_lines) > 2) warning('lwd: only the first two line width will be used in the plot')
   
-  plot(data$x, data$y, col = COL, xlab = xlab, ylab = ylab, pch = PCH, 
-       lty = lty, lwd = lwd, cex = cex, ...)
-  lines(juv$x, predict(fit_juv), col = COL[1], lwd = 2)
-  lines(adt$x, predict(fit_adt), col = COL[2], lwd = 2)
+  PCH <- ifelse (data$mature == 0, pch[1], pch[2])
+  COL <- ifelse (data$mature == 0, col[1], col[2])
+  CEX <- ifelse (data$mature == 0, cex[1], cex[2])
+  LTY <- ifelse (data$mature == 0, lty_lines[1], lty_lines[2])
+  LWD <- ifelse (data$mature == 0, lwd_lines[1], lwd_lines[2])
+  
+  plot(data$x, data$y, type = "p", col = COL, xlab = xlab, ylab = ylab, pch = PCH, cex = CEX, ...)
+  lines(juv$x, predict(fit_juv), col = COL[1], lwd = LWD[1], lty = LTY[1], ...)
+  lines(adt$x, predict(fit_adt), col = COL[2], lwd = LWD[2], lty = LTY[2], ...)
   eq_juv <- paste0("Y = ", round(as.numeric(coef(fit_juv)[1]), 2), " + ", round(as.numeric(coef(fit_juv)[2]),2), " *X", sep = "")
   eq_adt <- paste0("Y = ", round(as.numeric(coef(fit_adt)[1]), 2), " + ", round(as.numeric(coef(fit_adt)[2]),2), " *X", sep = "")
   legend("topleft", c(paste("Juveniles: ", eq_juv), paste("Adults: ", eq_adt)), 
          bty = "n", pch = PCH, col = COL, cex = 0.8)
+  cat("1) Linear regression for juveniles", "\n")
+  print(juv_smr)
+  cat("--------------------------------------------------------", "\n")
+  cat("2) Linear regression for adults", "\n")
+  print(adt_smr)
   return(invisible(NULL))
 }
 
@@ -167,7 +176,7 @@ plot.classify <- function(x, xlab = "X", ylab = "Y", col = c(1, 2), pch = c(4, 5
 #' Estimate the size at sexual maturity (L50).
 #'
 #' @param data an object of class 'classify' with the X, Y and mature classification (juvelines = 0, adults = 1).
-#' @param method the method to be applied, \code{"fq"} frecuentist GLM, or \code{"bayes"} bayesian GLM (MCMClogit function).
+#' @param method a character string indicating the method to be applied, \code{"fq"} frecuentist GLM, or \code{"bayes"} bayesian GLM (MCMClogit function).
 #' @param niter number of iterations (bootstrap resampling).
 #' @param seed a single value, interpreted as an integer.
 #' @return object of class 'ogive'.
@@ -188,7 +197,7 @@ plot.classify <- function(x, xlab = "X", ylab = "Y", col = c(1, 2), pch = c(4, 5
 #' @examples
 #' data(crabdata)
 #' classify_data = classify_mature(crabdata, varnames = c("carapace_width", "chela_heigth"), 
-#' varsex = "sex_category", useSex = NULL, method = "ld")
+#' varsex = "sex_category", selectSex = NULL, method = "ld")
 #' classify_data
 #' my_ogive = calculate_ogive(classify_data, method = "fq")
 #' my_ogive$A_boot
@@ -196,11 +205,13 @@ plot.classify <- function(x, xlab = "X", ylab = "Y", col = c(1, 2), pch = c(4, 5
 #' my_ogive$L50_boot
 #' my_ogive$out
 #' @export
-calculate_ogive <- function(data, method = "fq", niter = 1000, seed = 70387){
+calculate_ogive <- function(data, method = "fq", niter = 999, seed = 70387){
   
+  if (!inherits(data, "classify"))
+    stop("Use only with 'classify' objects")
   estimate <- switch(method,
-                     fq = .calculate_ogive_fq(data,  niter = niter, seed = seed),
-                     bayes = .calculate_ogive_bayes(data,  niter = niter, seed = seed)) 
+                     fq = .calculate_ogive_fq(data = data,  niter = niter, seed = seed),
+                     bayes = .calculate_ogive_bayes(data = data,  niter = niter, seed = seed))
   
   out   <- data.frame(x = data$x, y = data$y, mature = data$mature, CIlower = estimate$lower, 
                       fitted = estimate$fitted, CIupper = estimate$upper)
@@ -222,11 +233,11 @@ calculate_ogive <- function(data, method = "fq", niter = 1000, seed = 70387){
 #' @param x object of class 'ogive' with the ogive parameters and a data.frame with the X, Y and mature classification
 #' variables. Also the fitted values for the logistic regression and confidence intervals.
 #' @param probs numeric vector of probabilities with values in \code{[0,1]}. 
-#' @param \dots Additional arguments to be passed
+#' @param \dots Additional arguments to the print method.
 #' @examples
 #' data(crabdata)
 #' classify_data = classify_mature(crabdata, varnames = c("carapace_width", "chela_heigth"), 
-#' varsex = "sex_category", useSex = NULL, method = "ld")
+#' varsex = "sex_category", selectSex = NULL, method = "ld")
 #' classify_data
 #' my_ogive = calculate_ogive(classify_data, method = "fq")
 #' print(my_ogive)
@@ -253,14 +264,14 @@ print.ogive <- function(x, probs = c(0.025, 0.5, 0.975), ...){
 #' @param lwd line with for drawing fitted values and confidence intervals.
 #' @param lty line type line type for drawing fitted values and confidence intervals
 #' @param vline_hist color of the vertival lines in the histogram. The lines represent the 
-#' confidence intervals and the median.
+#' the median and the confidece intervals.
 #' @param lwd_hist line with for the vertical line in the histogram.
 #' @param lty_hist line type for the vertical line in the histogram.
 #' @param \dots Additional arguments to the plot method.
 #' @examples
 #' data(crabdata)
 #' classify_data = classify_mature(crabdata, varnames = c("carapace_width", "chela_heigth"), 
-#' varsex = "sex_category", useSex = NULL, method = "ld")
+#' varsex = "sex_category", selectSex = NULL, method = "ld")
 #' my_ogive = calculate_ogive(classify_data, method = "fq")
 #' plot(my_ogive, xlab = "X", ylab = "Proportion mature", col = c("blue", "red"))
 #' @export
@@ -275,7 +286,7 @@ plot.ogive <- function(x, xlab = "X", ylab = "Proportion mature", col = c("blue"
   wide    <- quantile(x$L50_boot, probs = c(0.025, 0.5, 0.975), na.rm = TRUE)
   
   # figure 1
-  hist(x$A_boot, main = "", xlab = "A")
+  hist(x$A_boot, main = "", xlab = "A", col = "grey90")
   abline(v = as.numeric(quantile(x$A_boot, probs = c(0.5), na.rm = TRUE)), 
          lwd = lwd_hist, col = vline_hist)
   abline(v = c(as.numeric(quantile(x$A_boot, probs = c(0.025, 0.975), na.rm = TRUE))), 
@@ -283,7 +294,7 @@ plot.ogive <- function(x, xlab = "X", ylab = "Proportion mature", col = c("blue"
   box()
 
   # figure 2
-  hist(x$B_boot, main = "", xlab = "B")
+  hist(x$B_boot, main = "", xlab = "B", col = "grey90")
   abline(v = as.numeric(quantile(x$B_boot, probs = c(0.5), na.rm = TRUE)), 
          lwd = lwd_hist, col = vline_hist)
   abline(v = c(as.numeric(quantile(x$B_boot, probs = c(0.025, 0.975), na.rm = TRUE))), 
@@ -291,7 +302,7 @@ plot.ogive <- function(x, xlab = "X", ylab = "Proportion mature", col = c("blue"
   box()
 
   # figure 3
-  hist(x$L50_boot, main = "", xlab = "Length of 50% maturity")
+  hist(x$L50_boot, main = "", xlab = "Length of 50% maturity", col = "grey90")
   abline(v = as.numeric(quantile(x$L50_boot, probs = c(0.5), na.rm = TRUE)), 
          lwd = lwd_hist, col = vline_hist)
   abline(v = c(as.numeric(quantile(x$L50_boot, probs = c(0.025, 0.975), na.rm = TRUE))), 

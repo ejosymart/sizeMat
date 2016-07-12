@@ -5,7 +5,7 @@
 \title{Classify mature}
 \usage{
 classify_mature(data, varnames = c("x", "y"), varsex = "sex",
-  useSex = NULL, method = NULL)
+  selectSex = NULL, method = NULL)
 }
 \arguments{
 \item{data}{data.frame with alometric variables and sex category (male, female). 
@@ -15,9 +15,9 @@ If sex category has NA's, the row will be filter.}
 
 \item{varsex}{the name of the variable containing sex information.}
 
-\item{useSex}{sex category to be used for analysis. If \code{useSex = NULL} all the individuals will be used in the analysis.}
+\item{selectSex}{sex category to be used for analysis. If \code{selectSex = NULL} all the individuals will be used in the analysis.}
 
-\item{method}{the discriminant analysis method, linear discriminant analysis \code{"ld"},
+\item{method}{a character string indicating the discriminant analysis method, linear discriminant analysis \code{"ld"},
 quadratic discriminant analysis \code{"qd"}. If \code{method} = \code{NULL}, ld or qd will be used 
 in the discrimination analysis based on the test of homogeneity of covariance matrices.}
 }
@@ -29,7 +29,7 @@ object of class 'classify', with x (independent), y (dependent) and mature class
 Classify te individuals in two groups (0: juvelines, 1: adults).
 }
 \details{
-Classify in two groups (juvelines = 0 and adult = 1). The analisys is based on 
+Classify the individuals in two groups (juvelines = 0 and adult = 1). The analisys is based on 
 Principal Components Analisys with the variables (x: independent variable, y: dependent variable) in log base, 
 allowing to distinguish two groups that would represent juveniles and adult.
 The individuals are assigned to each group using a hierarchical classification 
@@ -43,7 +43,7 @@ to be classified as a juvenile or an adult on the basis of the X and Y variables
 \examples{
 data(crabdata)
 classify_data = classify_mature(crabdata, varnames = c("carapace_width", "chela_heigth"), 
-varsex = "sex_category", useSex = NULL, method = "ld")
+varsex = "sex_category", selectSex = NULL, method = "ld")
 classify_data
 }
 

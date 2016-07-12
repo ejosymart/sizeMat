@@ -5,7 +5,8 @@
 \title{Plot classify data}
 \usage{
 \method{plot}{classify}(x, xlab = "X", ylab = "Y", col = c(1, 2),
-  pch = c(4, 5), lty = c(1, 1), lwd = c(1, 1), cex = c(1, 1), ...)
+  pch = c(4, 5), cex = c(1, 1), lty_lines = c(1, 1), lwd_lines = c(1,
+  1), ...)
 }
 \arguments{
 \item{x}{an object of class 'classify', with x (independent), y (dependent) and mature classification (juveniles = 0, adult = 1) variables.}
@@ -18,11 +19,11 @@
 
 \item{pch}{the character indicating the type of plotting.}
 
-\item{lty}{the line type in the regression.}
-
-\item{lwd}{the line width in the regression.}
-
 \item{cex}{character expansion in the regression.}
+
+\item{lty_lines}{the line type in the regression.}
+
+\item{lwd_lines}{the line width in the regression.}
 
 \item{\dots}{Additional arguments to the plot method.}
 }
@@ -32,7 +33,7 @@ Plot classify data
 \examples{
 data(crabdata)
 classify_data = classify_mature(crabdata, varnames = c("carapace_width", "chela_heigth"), 
-varsex = "sex_category", useSex = NULL, method = "ld")
+varsex = "sex_category", selectSex = NULL, method = "ld")
 classify_data
 plot(classify_data, xlab = "X", ylab = "Y", col = c(1, 2), pch = c(4, 5))
 }

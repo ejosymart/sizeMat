@@ -11,6 +11,8 @@ Description: Estimate size at sexual maturity from morphometic data based on
     relative growth.
 Depends: R (>= 2.15)
 Imports: MCMCpack, matrixStats, biotools, MASS, grDevices, tools, graphics, stats, utils
+Suggests: knitr, rmarkdown
+VignetteBuilder: knitr
 License: GPL-2
 LazyData: TRUE
 RoxygenNote: 5.0.1

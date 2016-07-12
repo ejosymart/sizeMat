@@ -12,7 +12,7 @@ variables. Also the fitted values for the logistic regression and confidence int
 
 \item{probs}{numeric vector of probabilities with values in \code{[0,1]}.}
 
-\item{\dots}{Additional arguments to be passed}
+\item{\dots}{Additional arguments to the print method.}
 }
 \description{
 Print maturity ogive
@@ -20,7 +20,7 @@ Print maturity ogive
 \examples{
 data(crabdata)
 classify_data = classify_mature(crabdata, varnames = c("carapace_width", "chela_heigth"), 
-varsex = "sex_category", useSex = NULL, method = "ld")
+varsex = "sex_category", selectSex = NULL, method = "ld")
 classify_data
 my_ogive = calculate_ogive(classify_data, method = "fq")
 print(my_ogive)

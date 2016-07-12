@@ -4,12 +4,12 @@
 \alias{calculate_ogive}
 \title{Calculate ogive}
 \usage{
-calculate_ogive(data, method = "fq", niter = 1000, seed = 70387)
+calculate_ogive(data, method = "fq", niter = 999, seed = 70387)
 }
 \arguments{
 \item{data}{an object of class 'classify' with the X, Y and mature classification (juvelines = 0, adults = 1).}
 
-\item{method}{the method to be applied, \code{"fq"} frecuentist GLM, or \code{"bayes"} bayesian GLM (MCMClogit function).}
+\item{method}{a character string indicating the method to be applied, \code{"fq"} frecuentist GLM, or \code{"bayes"} bayesian GLM (MCMClogit function).}
 
 \item{niter}{number of iterations (bootstrap resampling).}
 
@@ -39,7 +39,7 @@ and adults).
 \examples{
 data(crabdata)
 classify_data = classify_mature(crabdata, varnames = c("carapace_width", "chela_heigth"), 
-varsex = "sex_category", useSex = NULL, method = "ld")
+varsex = "sex_category", selectSex = NULL, method = "ld")
 classify_data
 my_ogive = calculate_ogive(classify_data, method = "fq")
 my_ogive$A_boot
