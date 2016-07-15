@@ -1,4 +1,4 @@
-.calculate_ogive_fq <- function(data, niter, seed){
+.calculate_mature_fq <- function(data, niter, seed){
   
   model_glm <- glm(mature ~ x, data = data, family = binomial(link = "logit"))
   smry_model <- summary(model_glm)
@@ -37,7 +37,7 @@
 }
 
 
-.calculate_ogive_bayes <- function(data, niter, seed){
+.calculate_mature_bayes <- function(data, niter, seed){
   
   set.seed(seed)
   model_bayes <- MCMCpack::MCMClogit(data$mature ~ data$x, mcmc = niter, thin = 1)
