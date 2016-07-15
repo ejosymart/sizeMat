@@ -1,4 +1,5 @@
 # ssmRG package: Morphometric Size at Sexual Maturity based on Relative Growth---------------
+
 #' @importFrom MCMCpack MCMClogit
 #' @importFrom matrixStats rowQuantiles
 #' @importFrom MASS lda qda
@@ -9,8 +10,11 @@
 #'
 #' @title Morphometric Size at Sexual Maturity based on Relative Growth.
 #'
+#' @description Package to estimate morphometric size at sexual maturity based on relative growth.
 #' @name ssmRG-package
-#' @description Package to estimate morphometric size at sexual maturity based on relative growth. 
+#' @aliases ssmRG-package ssmRG
+#' @docType package
+#' @author Edgar Josymar Torrejon-Magallanes <ejosymart@@gmail.com>
 #' @details Package: ssmRG
 #' @details Type: Package
 #' @details The estimation involves two process:
@@ -43,9 +47,6 @@
 #' 
 #' Some basic plotting (classification, \eqn{beta_0}, \eqn{beta_1} and \eqn{L_50} histogram, and maturity ogive) 
 #' are also provided.
-#' @aliases ssmRG-package ssmRG.
-#' @docType package
-#' @author Edgar Josymar Torrejon-Magallanes <ejosymart@@gmail.com>
 #' @references Agostinho, C. S. (2000). Use of otoliths to estimate size at sexual maturity in fish. Brazilian Archives of Biology and Technology, 43(4).
 #' @references Corgos, A. & Freire, J. (2006). Morphometric and gonad maturity in the spider crab Maja brachydactyla: a comparison of methods for estimating size at maturity in species with determinate growth. ICES Journal of Marine Science: Journal du Conseil, 63(5), 851-859.
 #' @references Roa, R., Ernst, B. & Tapia, F. (1999). Estimation of size at sexual maturity: an evaluation of analytical and resampling procedures. Fishery Bulletin, 97(3), 570-580.

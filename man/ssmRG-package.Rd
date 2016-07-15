@@ -2,8 +2,8 @@
 % Please edit documentation in R/ssmRG-main.R
 \docType{package}
 \name{ssmRG-package}
+\alias{ssmRG}
 \alias{ssmRG-package}
-\alias{ssmRG.}
 \title{Morphometric Size at Sexual Maturity based on Relative Growth.}
 \description{
 Package to estimate morphometric size at sexual maturity based on relative growth.
