@@ -65,8 +65,8 @@ plot(classify_data, xlab = "Carapace width (mm.)", ylab = "Chela heigth (mm)",
 ```
 
 
-## Estimate size at sexual maturity (maturity ogive estimation)
-The `calculate_mature` use the logistic approach (frequentist or bayesian). The size at 50% maturity ($L_{50}$) was estimated as the length at which a randomly chosen specimen has a 50% chance of being mature (Somerton  1980, Roa  et al.  1999). 
+## Estimate morphometric size at sexual maturity (maturity ogive estimation)
+The `calculate_mature` use the logistic approach (frequentist or bayesian). The morphometric size at 50% maturity ($L_{50}$) was estimated as the length at which a randomly chosen specimen has a 50% chance of being mature (Somerton  1980, Roa  et al.  1999). 
 
 In the regression analysis, $X$ (e.g: carapace width) is considered the explanatory variable and the classification stage $CS$ (juvelines: 0, adults: 1) is considered the response variable (binomial). The variables are fitted to a logistic function with the form: 
 
@@ -84,7 +84,7 @@ If `method = "fq"` the regression is based on GLM (frequentist) and if `method =
 
 The argument `niter` requires a number. For the GLM regression (`method = "fq"`), a non-parametric bootstrap method consists in generate B bootstrap samples, by resampling with replacement the original data. Then all statistics for each parameter can be calculated from each bootstrap sample (median and confidence intervals). For the `method = "bayes"`, the argument `niter` is related to the number of Metropolis iterations for the sampler.
 
-The output is an object of class "mature". This object contains a dataframe with the X, Y and mature classification variables. Also the fitted values for the curve logistic regression and confidence intervals (95\%). If you print the object the median and confidence intervals (for `method = "bayes"` - credible intervals) of the size at sexual maturity estimation (L50).
+The output is an object of class "mature". This object contains a dataframe with the X, Y and mature classification variables. Also the fitted values for the curve logistic regression and confidence intervals (95\%). If you print the object the median and confidence intervals (for `method = "bayes"` - credible intervals) of the morphometric size at sexual maturity estimation (L50).
 
 ```{r echo = TRUE}
 #Frequentist regression 
@@ -101,7 +101,7 @@ print(my_mature_bayes)
 
 
 ## Plot maturity ogive
-For plotting the maturity ogive you need the object of class "mature". But the function `plot` generates 4 graphics: 1), 2) and 3) are histograms for the A, B parameters and the size at sexual maturity (L50), the last is the maturity ogive.
+For plotting the maturity ogive you need the object of class "mature". But the function `plot` generates 4 graphics: 1), 2) and 3) are histograms for the A, B parameters and the morphometric size at sexual maturity (L50), the last is the maturity ogive.
 
 ```{r echo = TRUE, fig.width = 10, fig.height = 10, warning=FALSE}
 par(mfrow = c(2,2))
