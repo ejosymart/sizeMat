@@ -5,7 +5,7 @@
 #' @importFrom grDevices colors
 #' @importFrom graphics axis box legend lines plot points hist par abline
 #' @importFrom stats binomial quantile coef complete.cases cutree dist glm hclust prcomp predict cov pchisq
-#' @importFrom utils data read.csv read.csv2 read.table
+#' @importFrom utils data read.csv
 #'
 #' @title Morphometric Size at Sexual Maturity based on Relative Growth.
 #'
