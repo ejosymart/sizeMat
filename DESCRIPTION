@@ -9,7 +9,7 @@ Author: Josymar Torrejon-Magallanes [aut, cre]
 Maintainer: Edgar Josymar Torrejon-Magallanes <ejosymart@gmail.com>
 Description: This packages allows to estimate morphometric size at sexual maturity data based on relative growth. The estimation involves two process. First, a Principal Components Analisys is conducted with two allometric variables (x: independent variable, y: dependent variable) in log base, allowing to distinguish two groups that would represent juveniles and adult. The individuals are assigned to each group using a hierarchical classification procedure (hierarchical cluster). This method is based on establishing a predetermined number of groups (in this case, two) and assigning individuals to one of the groups according to their loads on the two axes of the PCA (Corgos & Freire, 2006). Using the results of the classification (PCA + cluster), a discriminant analysis (linear or quadratic) is carried out to obtain a discriminating function that permitted any individuals to be classified as a juvenile or an adult on the basis of the X and Y allometric variables. Secondly, After classification, the logistic approach is used. The morphometric size at 50% maturity is estimated as the length at which a randomly chosen specimen has a 50% chance of being mature (Somerton  1980, Roa  et al. 1999, Corgos & Freire 2006).
 Depends: R (>= 2.15)
-Imports: MCMCpack, matrixStats, biotools, MASS, grDevices, tools, graphics, stats, utils
+Imports: MCMCpack, matrixStats, MASS, grDevices, graphics, stats, utils
 Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
 License: GPL-2

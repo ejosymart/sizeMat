@@ -2,16 +2,15 @@
 #' @importFrom MCMCpack MCMClogit
 #' @importFrom matrixStats rowQuantiles
 #' @importFrom MASS lda qda
-#' @importFrom biotools boxM
 #' @importFrom grDevices colors
 #' @importFrom graphics axis box legend lines plot points hist par abline
-#' @importFrom stats binomial quantile coef complete.cases cutree dist glm hclust prcomp predict
+#' @importFrom stats binomial quantile coef complete.cases cutree dist glm hclust prcomp predict cov pchisq
 #' @importFrom utils data read.csv read.csv2 read.table
 #'
 #' @title Morphometric Size at Sexual Maturity based on Relative Growth.
 #'
 #' @name ssmRG-package
-#' @description  Package to estimate morphometric size at sexual maturity based on relative growth. 
+#' @description Package to estimate morphometric size at sexual maturity based on relative growth. 
 #' @details Package: ssmRG
 #' @details Type: Package
 #' @details The estimation involves two process:
@@ -113,7 +112,7 @@ classify_mature <- function(data, varnames = c("x", "y"), varsex = "sex",
   base            <- data.frame(input, mature_binom = mature_classify)
 
   if(is.null(method)){
-    test_cov_mat <- biotools::boxM(base[, c("x", "y")], base[, "mature_binom"])
+    test_cov_mat <- .boxM(base[, c("x", "y")], base[, "mature_binom"])
     if(test_cov_mat$p.value > 0.05){
       dis_reg    <- MASS::lda(mature_binom ~ ., data = base)
     }else{
@@ -166,6 +165,9 @@ classify_mature <- function(data, varnames = c("x", "y"), varsex = "sex",
 #' @method plot classify
 plot.classify <- function(x, xlab = "X", ylab = "Y", col = c(1, 2), pch = c(4, 5), 
                           cex = c(1, 1), lty_lines = c(1, 1), lwd_lines = c(1, 1), ...){
+  
+  if (!inherits(x, "classify"))
+    stop("Use only with 'classify' objects")
   
   data <- x
   juv  <- data[data$mature == 0, ]
@@ -293,6 +295,8 @@ calculate_mature <- function(data, method = "fq", niter = 999, seed = 70387){
 #' @export
 #' @method print mature
 print.mature <- function(x, probs = c(0.025, 0.5, 0.975), ...){
+  if (!inherits(x, "mature"))
+    stop("Use only with 'mature' objects")
   L50     <- quantile(x$L50_boot, probs = probs, na.rm = TRUE)
   cat("formula: Y = 1/1+exp-(A + B*X)", "\n\n")
   tab <- matrix(as.numeric(c(L50)), nrow = 1, ncol = 3, byrow = TRUE)
@@ -327,6 +331,9 @@ print.mature <- function(x, probs = c(0.025, 0.5, 0.975), ...){
 #' @method plot mature
 plot.mature <- function(x, xlab = "X", ylab = "Proportion mature", col = c("blue", "red"), 
                        lwd = 2, lty = 2, vline_hist = "black", lwd_hist = 2, lty_hist = 2, ...){
+  
+  if (!inherits(x, "mature"))
+    stop("Use only with 'mature' objects")
   
   fit     <- x$out
   x_input <- fit$x
