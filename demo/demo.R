@@ -10,7 +10,7 @@ plot(classify_data, col = c(1, 2), pch = c(1, 2), cex = c(1, 1),
      lty_lines = c(6, 1), lwd_lines =  c(1, 4))
 
 # Estimate Morphometric Size at Sexual Maturity based on Relative Growth --
-my_ogive = calculate_ogive(classify_data, method = "fq", niter = 1000)
+my_ogive = calculate_mature(classify_data, method = "fq", niter = 1000)
 
 print(my_ogive)
 
