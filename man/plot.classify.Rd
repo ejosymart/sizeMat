@@ -31,6 +31,7 @@
 Plot classify data
 }
 \examples{
+\dontrun{
 data(crabdata)
 
 classify_data = classify_mature(crabdata, varnames = c("carapace_width", "chela_heigth"), 
@@ -46,6 +47,6 @@ pch = c(4, 5), cex = c(1, 3), lwd_lines = c(1, 3))
 
 plot(classify_data, xlab = "Carapace width (mm.)", ylab = "Y", col = c(1, 2), 
 pch = c(4, 5), cex = c(1, 3), lwd_lines = c(1, 3), main = "Classification")
-
+}
 }
 

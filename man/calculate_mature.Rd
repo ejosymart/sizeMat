@@ -48,6 +48,7 @@ can be calculated from each bootstrap sample (median and confidence intervals).
 For the `method = "bayes"`, the argument `niter` is related to the number of Metropolis iterations for the sampler.
 }
 \examples{
+\dontrun{
 data(crabdata)
 
 classify_data = classify_mature(crabdata, varnames = c("carapace_width", "chela_heigth"), 
@@ -60,5 +61,6 @@ my_mature$A_boot
 my_mature$B_boot
 my_mature$L50_boot
 my_mature$out
+}
 }
 

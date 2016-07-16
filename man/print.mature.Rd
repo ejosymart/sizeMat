@@ -18,6 +18,7 @@ variables. Also the fitted values for the logistic regression and confidence int
 Print morphometric size at sexual maturity
 }
 \examples{
+\dontrun{
 data(crabdata)
 
 classify_data = classify_mature(crabdata, varnames = c("carapace_width", "chela_heigth"), 
@@ -26,5 +27,6 @@ varsex = "sex_category", selectSex = NULL, method = "ld")
 my_mature = calculate_mature(classify_data, method = "fq")
 
 print(my_mature)
+}
 }
 

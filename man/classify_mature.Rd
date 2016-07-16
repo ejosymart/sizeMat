@@ -42,9 +42,12 @@ to obtain a discriminating function that permitted any individuals to be classif
 juvenile or an adult on the basis of the X and Y allometric variables.
 }
 \examples{
+\dontrun{
 data(crabdata)
+
 classify_data = classify_mature(crabdata, varnames = c("carapace_width", "chela_heigth"), 
 varsex = "sex_category", selectSex = NULL, method = "ld")
-classify_data
+
+classify_data}
 }
 

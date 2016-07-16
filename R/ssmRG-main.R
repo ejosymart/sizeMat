@@ -80,10 +80,13 @@ NULL
 #' juvenile or an adult on the basis of the X and Y allometric variables.
 #' @exportClass classify
 #' @examples
+#' \dontrun{
 #' data(crabdata)
+#' 
 #' classify_data = classify_mature(crabdata, varnames = c("carapace_width", "chela_heigth"), 
 #' varsex = "sex_category", selectSex = NULL, method = "ld")
-#' classify_data
+#' 
+#' classify_data}
 #' @export
 classify_mature <- function(data, varnames = c("x", "y"), varsex = "sex", 
                             selectSex = NULL, method = "ld") {
@@ -138,6 +141,7 @@ classify_mature <- function(data, varnames = c("x", "y"), varsex = "sex",
 #' @param cex character expansion in the regression.
 #' @param \dots Additional arguments to the plot method.
 #' @examples
+#' \dontrun{
 #' data(crabdata)
 #' 
 #' classify_data = classify_mature(crabdata, varnames = c("carapace_width", "chela_heigth"), 
@@ -153,7 +157,7 @@ classify_mature <- function(data, varnames = c("x", "y"), varsex = "sex",
 #' 
 #' plot(classify_data, xlab = "Carapace width (mm.)", ylab = "Y", col = c(1, 2), 
 #' pch = c(4, 5), cex = c(1, 3), lwd_lines = c(1, 3), main = "Classification")
-#' 
+#' }
 #' @export
 #' @method plot classify
 plot.classify <- function(x, xlab = "X", ylab = "Y", col = c(1, 2), pch = c(4, 5), 
@@ -239,6 +243,7 @@ plot.classify <- function(x, xlab = "X", ylab = "Y", col = c(1, 2), pch = c(4, 5
 #' For the `method = "bayes"`, the argument `niter` is related to the number of Metropolis iterations for the sampler.
 #' @exportClass mature
 #' @examples
+#' \dontrun{
 #' data(crabdata)
 #' 
 #' classify_data = classify_mature(crabdata, varnames = c("carapace_width", "chela_heigth"), 
@@ -251,6 +256,7 @@ plot.classify <- function(x, xlab = "X", ylab = "Y", col = c(1, 2), pch = c(4, 5
 #' my_mature$B_boot
 #' my_mature$L50_boot
 #' my_mature$out
+#' }
 #' @export
 calculate_mature <- function(data, method = "fq", niter = 999, seed = 70387){
   
@@ -282,6 +288,7 @@ calculate_mature <- function(data, method = "fq", niter = 999, seed = 70387){
 #' @param probs numeric vector of probabilities with values in \code{[0,1]}. 
 #' @param \dots Additional arguments to the print method.
 #' @examples
+#' \dontrun{
 #' data(crabdata)
 #' 
 #' classify_data = classify_mature(crabdata, varnames = c("carapace_width", "chela_heigth"), 
@@ -290,6 +297,7 @@ calculate_mature <- function(data, method = "fq", niter = 999, seed = 70387){
 #' my_mature = calculate_mature(classify_data, method = "fq")
 #' 
 #' print(my_mature)
+#' }
 #' @export
 #' @method print mature
 print.mature <- function(x, probs = c(0.025, 0.5, 0.975), ...){
@@ -320,6 +328,7 @@ print.mature <- function(x, probs = c(0.025, 0.5, 0.975), ...){
 #' @param lty_hist line type for the vertical line in the histogram.
 #' @param \dots Additional arguments to the plot method.
 #' @examples
+#' \dontrun{
 #' data(crabdata)
 #' 
 #' classify_data = classify_mature(crabdata, varnames = c("carapace_width", "chela_heigth"), 
@@ -328,6 +337,7 @@ print.mature <- function(x, probs = c(0.025, 0.5, 0.975), ...){
 #' my_mature = calculate_mature(classify_data, method = "fq")
 #' 
 #' plot(my_mature, xlab = "Carapace width (mm.)", ylab = "Proportion mature", col = c("blue", "red"))
+#' }
 #' @export
 #' @method plot mature
 plot.mature <- function(x, xlab = "X", ylab = "Proportion mature", col = c("blue", "red"), 

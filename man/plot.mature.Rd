@@ -35,6 +35,7 @@ the median and the confidece intervals.}
 Plot maturity ogive
 }
 \examples{
+\dontrun{
 data(crabdata)
 
 classify_data = classify_mature(crabdata, varnames = c("carapace_width", "chela_heigth"), 
@@ -43,5 +44,6 @@ varsex = "sex_category", selectSex = NULL, method = "ld")
 my_mature = calculate_mature(classify_data, method = "fq")
 
 plot(my_mature, xlab = "Carapace width (mm.)", ylab = "Proportion mature", col = c("blue", "red"))
+}
 }
 
