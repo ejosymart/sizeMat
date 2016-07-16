@@ -5,7 +5,7 @@
 \title{Classify mature}
 \usage{
 classify_mature(data, varnames = c("x", "y"), varsex = "sex",
-  selectSex = NULL, method = NULL)
+  selectSex = NULL, method = "ld")
 }
 \arguments{
 \item{data}{data.frame with allometric variables and sex category (male, female). 
@@ -18,9 +18,8 @@ If sex category contains NA's, that row will be filtered.}
 \item{selectSex}{sex category to be used for analysis. If \code{selectSex = NULL} all the individuals will be used in the analysis.}
 
 \item{method}{a character string indicating the discriminant analysis method, linear discriminant analysis \code{"ld"},
-quadratic discriminant analysis \code{"qd"}. If \code{method} = \code{NULL}, ld or qd will be used 
-in the discrimination analysis based on the test of homogeneity of covariance matrices.
-We suggest begin the analysis using \code{method = "ld"}.}
+quadratic discriminant analysis \code{"qd"}.
+We suggest begin the analysis using the \code{method = "ld"}.}
 }
 \value{
 data.frame of class 'classify', with x (independent), y (dependent) and mature classification

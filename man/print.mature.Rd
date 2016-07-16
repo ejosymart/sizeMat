@@ -19,10 +19,12 @@ Print morphometric size at sexual maturity
 }
 \examples{
 data(crabdata)
+
 classify_data = classify_mature(crabdata, varnames = c("carapace_width", "chela_heigth"), 
 varsex = "sex_category", selectSex = NULL, method = "ld")
-classify_data
+
 my_mature = calculate_mature(classify_data, method = "fq")
+
 print(my_mature)
 }
 

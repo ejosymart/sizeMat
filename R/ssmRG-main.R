@@ -63,9 +63,8 @@ NULL
 #' @param varsex the name of the variable containing sex information.
 #' @param selectSex sex category to be used for analysis. If \code{selectSex = NULL} all the individuals will be used in the analysis. 
 #' @param method a character string indicating the discriminant analysis method, linear discriminant analysis \code{"ld"},
-#' quadratic discriminant analysis \code{"qd"}. If \code{method} = \code{NULL}, ld or qd will be used 
-#' in the discrimination analysis based on the test of homogeneity of covariance matrices.
-#' We suggest begin the analysis using \code{method = "ld"}.
+#' quadratic discriminant analysis \code{"qd"}.
+#' We suggest begin the analysis using the \code{method = "ld"}.
 #' @return data.frame of class 'classify', with x (independent), y (dependent) and mature classification
 #' (juveniles = 0, adult = 1) variables.
 #' @details Classify the individuals in two groups (juvelines = 0 and adult = 1).
@@ -87,7 +86,7 @@ NULL
 #' classify_data
 #' @export
 classify_mature <- function(data, varnames = c("x", "y"), varsex = "sex", 
-                            selectSex = NULL, method = NULL) {
+                            selectSex = NULL, method = "ld") {
   if(length(varnames) != 2) stop("You must provide two variables only.")
   if(!all(varnames %in% names(data))) stop("'varnames' have not been found in data.")
   input <- data[, c(varnames, varsex)]
@@ -112,17 +111,9 @@ classify_mature <- function(data, varnames = c("x", "y"), varsex = "sex",
   
   base            <- data.frame(input, mature_binom = mature_classify)
 
-  if(is.null(method)){
-    test_cov_mat <- .boxM(base[, c("x", "y")], base[, "mature_binom"])
-    if(test_cov_mat$p.value > 0.05){
-      dis_reg    <- MASS::lda(mature_binom ~ ., data = base)
-    }else{
-      dis_reg    <- MASS::qda(mature_binom ~ ., data = base)
-    }
-  } else {dis_reg  <- switch (method,
-                              ld = MASS::lda(mature_binom ~ ., data = base),
-                              qd = MASS::qda(mature_binom ~ ., data = base))
-  }
+  dis_reg  <- switch (method, 
+                      ld = MASS::lda(mature_binom ~ ., data = base), 
+                      qd = MASS::qda(mature_binom ~ ., data = base))
   
   mature       <- as.numeric(as.character(predict(dis_reg)$class))
   cat("number in juveline group =", as.numeric(table(mature)[1]), "\n\n")
@@ -152,6 +143,7 @@ classify_mature <- function(data, varnames = c("x", "y"), varsex = "sex",
 #' classify_data = classify_mature(crabdata, varnames = c("carapace_width", "chela_heigth"), 
 #' varsex = "sex_category", selectSex = NULL, method = "ld")
 #' 
+#' ## Showing different plots
 #' plot(classify_data, xlab = "X")
 #' 
 #' plot(classify_data, xlab = "X", ylab = "Y", col = c(1, 2), pch = c(4, 5), cex = c(1, 3))
@@ -248,10 +240,13 @@ plot.classify <- function(x, xlab = "X", ylab = "Y", col = c(1, 2), pch = c(4, 5
 #' @exportClass mature
 #' @examples
 #' data(crabdata)
+#' 
 #' classify_data = classify_mature(crabdata, varnames = c("carapace_width", "chela_heigth"), 
 #' varsex = "sex_category", selectSex = NULL, method = "ld")
-#' classify_data
+#' 
 #' my_mature = calculate_mature(classify_data, method = "fq")
+#' 
+#' ## \eqn{niter} parameters
 #' my_mature$A_boot
 #' my_mature$B_boot
 #' my_mature$L50_boot
@@ -288,10 +283,12 @@ calculate_mature <- function(data, method = "fq", niter = 999, seed = 70387){
 #' @param \dots Additional arguments to the print method.
 #' @examples
 #' data(crabdata)
+#' 
 #' classify_data = classify_mature(crabdata, varnames = c("carapace_width", "chela_heigth"), 
 #' varsex = "sex_category", selectSex = NULL, method = "ld")
-#' classify_data
+#' 
 #' my_mature = calculate_mature(classify_data, method = "fq")
+#' 
 #' print(my_mature)
 #' @export
 #' @method print mature
@@ -324,9 +321,12 @@ print.mature <- function(x, probs = c(0.025, 0.5, 0.975), ...){
 #' @param \dots Additional arguments to the plot method.
 #' @examples
 #' data(crabdata)
+#' 
 #' classify_data = classify_mature(crabdata, varnames = c("carapace_width", "chela_heigth"), 
 #' varsex = "sex_category", selectSex = NULL, method = "ld")
+#' 
 #' my_mature = calculate_mature(classify_data, method = "fq")
+#' 
 #' plot(my_mature, xlab = "Carapace width (mm.)", ylab = "Proportion mature", col = c("blue", "red"))
 #' @export
 #' @method plot mature

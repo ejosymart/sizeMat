@@ -36,6 +36,7 @@ data(crabdata)
 classify_data = classify_mature(crabdata, varnames = c("carapace_width", "chela_heigth"), 
 varsex = "sex_category", selectSex = NULL, method = "ld")
 
+## Showing different plots
 plot(classify_data, xlab = "X")
 
 plot(classify_data, xlab = "X", ylab = "Y", col = c(1, 2), pch = c(4, 5), cex = c(1, 3))

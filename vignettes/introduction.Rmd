@@ -33,7 +33,7 @@ The `classify_data` function classify the individuals in two groups (juvelines =
 
 Using the results of the classification (PCA + cluster), a discriminant analysis (linear or quadratic) is conducted to obtain a discriminating function that permitted any individuals to be classified as a juvenile or an adult on the basis of the X and Y variables.
 
-The `classify_data` function requires a data.frame (e.g. crabdata) with alometric variables and sex category. The argument `varnames` is a character string that requires two allometric variables only, and `varsex` requires the sex variable name. If the argument `selecSex` is `NULL` all the individuals will be used in the classification analysis. Finally the `method` is focus in the discriminant analysis to be used ("ld": linear discriminant analysis, "qd": quadratic discriminant analysis), if `method` is `NULL` ld or qd will be used in the discrimination analysis based on the test of homogeneity of covariance matrices.
+The `classify_data` function requires a data.frame (e.g. crabdata) with alometric variables and sex category. The argument `varnames` is a character string that requires two allometric variables only, and `varsex` requires the sex variable name. If the argument `selecSex` is `NULL` all the individuals will be used in the classification analysis. Finally the `method` is focus in the discriminant analysis to be used ("ld": linear discriminant analysis, "qd": quadratic discriminant analysis). We reccomend begin the analysis with the `method = "ld"`.
 
 The `classify_data` function returns an object of class "classify", with the allometric variables "x" (independent) and "y"" (dependent), and classification stage (juveniles = 0, adult = 1).
 

@@ -49,10 +49,13 @@ For the `method = "bayes"`, the argument `niter` is related to the number of Met
 }
 \examples{
 data(crabdata)
+
 classify_data = classify_mature(crabdata, varnames = c("carapace_width", "chela_heigth"), 
 varsex = "sex_category", selectSex = NULL, method = "ld")
-classify_data
+
 my_mature = calculate_mature(classify_data, method = "fq")
+
+## \\eqn{niter} parameters
 my_mature$A_boot
 my_mature$B_boot
 my_mature$L50_boot
