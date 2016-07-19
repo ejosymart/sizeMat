@@ -1,22 +1,24 @@
 ---
-title: "Introduction to ssmRG R-package"
+title: "Extending SexMat R-package"
 date: "`r Sys.Date()`"
 output: 
   rmarkdown::html_vignette:
     fig_caption: yes
 vignette: >
-  %\VignetteIndexEntry{Introduction to ssmRG R-package}
+  %\VignetteIndexEntry{Extending SexMat R-package}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
 ```{r, echo = FALSE, message = FALSE}
 knitr::opts_chunk$set(collapse = T)
-library(ssmRG)
+library(sexMat)
 ```
 
-This vignette introduces you to ssmRG functions and shows you how to apply them to estimate morphometric size at sexual maturity based on relative growth (allometric relationship).
+This vignette introduces you to SexMat functions and shows you how to apply them to estimate morphometric and gonadal size at sexual maturity.
 
+### 1. Morphometric size at sexual maturity
+For estimating morphometric maturity use the *crabdata* base.
 
 ## Load data
 ```{r echo=TRUE}
@@ -28,14 +30,14 @@ names(crabdata)
 ```
 
 
-## Classify data and plot
-The `classify_data` function classify the individuals in two groups (juvelines = 0 and adult = 1). The classification analisys is based on Principal Components Analisys with two allometric variables (x: independent variable, y: dependent variable) in log base, allowing to distinguish two groups that would represent juveniles and adult. The individuals are assigned to each group using a hierarchical classification procedure (hierarchical cluster). This method is based on establishing a predetermined number of groups (in this case, two) and assigning individuals to one of the groups according to their loads on the two axes of the PCA (Corgos & Freire, 2006).
+## Classify data (print and plot)
+The `classify_mature` function, classify the individuals in two groups (juvelines = 0 and adult = 1). The classification analisys is based on Principal Components Analisys with two allometric variables (x: independent variable, y: dependent variable) in log base, allowing to distinguish two groups that would represent juveniles and adult. The individuals are assigned to each group using a hierarchical classification procedure (hierarchical cluster with agglomeration method: "Ward.D" and the distance measure: "euclidean"). This method is based on establishing a predetermined number of groups (in this case, two) and assigning individuals to one of the groups according to their loads on the two axes of the PCA (Corgos & Freire, 2006).
 
 Using the results of the classification (PCA + cluster), a discriminant analysis (linear or quadratic) is conducted to obtain a discriminating function that permitted any individuals to be classified as a juvenile or an adult on the basis of the X and Y variables.
 
-The `classify_data` function requires a data.frame (e.g. crabdata) with alometric variables and sex category. The argument `varnames` is a character string that requires two allometric variables only, and `varsex` requires the sex variable name. If the argument `selecSex` is `NULL` all the individuals will be used in the classification analysis. Finally the `method` is focus in the discriminant analysis to be used ("ld": linear discriminant analysis, "qd": quadratic discriminant analysis). We reccomend begin the analysis with the `method = "ld"`.
+The `classify_mature` function requires a data.frame (e.g. crabdata) with alometric variables and sex category. The argument `varnames` is a character string that requires two allometric variables only, and `varsex` requires the sex variable name. If the argument `selecSex` is `NULL` all the individuals will be used in the classification analysis. Finally the `method` is focus in the discriminant analysis to be used ("ld": linear discriminant analysis, "qd": quadratic discriminant analysis). We reccomend begin the analysis with the `method = "ld"`.
 
-The `classify_data` function returns an object of class "classify", with the allometric variables "x" (independent) and "y"" (dependent), and classification stage (juveniles = 0, adult = 1).
+The `classify_mature` function returns an object of class "classify", with the allometric variables "x" (independent) - "y"" (dependent), and classification of maturity (juveniles = 0, adult = 1).
 
 ```{r, echo = TRUE}
 #For all the individuals
@@ -45,10 +47,16 @@ varsex = "sex_category", selectSex = NULL, method = "ld")
 #For males only
 classify_data_males = classify_mature(crabdata, varnames = c("carapace_width", "chela_heigth"), 
 varsex = "sex_category", selectSex = "m", method = "ld")
-
 ```
 
-The example shows the arguments that can be used in the plot:
+
+Print results of the "classify_data" object. Shows the number of juveniles and adults after classification and the regression analysis for juveniles and adults. 
+```{r, echo = TRUE}
+print(classify_data)
+```
+
+
+The example shows the arguments that can be used in the plot for "classify_data" object:
 
 ```{r, echo = TRUE, fig.width = 10, fig.height = 10, results='hide', warning=FALSE}
 par(mfrow = c(2,2))
@@ -66,9 +74,9 @@ plot(classify_data, xlab = "Carapace width (mm.)", ylab = "Chela heigth (mm)",
 
 
 ## Estimate morphometric size at sexual maturity (maturity ogive estimation)
-The `calculate_mature` use the logistic approach (frequentist or bayesian). The morphometric size at 50% maturity ($L_{50}$) was estimated as the length at which a randomly chosen specimen has a 50% chance of being mature (Somerton  1980, Roa  et al.  1999). 
+The `morph_mature` function use the logistic approach (frequentist or bayesian). The morphometric size at 50% maturity ($L_{50}$) was estimated as the length at which a randomly chosen specimen has a 50% chance of being mature (Somerton  1980, Roa  et al.  1999). 
 
-In the regression analysis, $X$ (e.g: carapace width) is considered the explanatory variable and the classification stage $CS$ (juvelines: 0, adults: 1) is considered the response variable (binomial). The variables are fitted to a logistic function with the form: 
+In the regression analysis, $X$ (e.g: carapace width) is considered the explanatory variable and the classification of maturity $CS$ (juvelines: 0, adults: 1) is considered the response variable (binomial). The variables are fitted to a logistic function with the form: 
 
 $$P_{CS} = 1/1+e^{-(\hat{\beta}_{0} + \hat{\beta}_{1}*X)}$$
 
@@ -77,41 +85,96 @@ where $P_{CL}$ is the probability of an individual of being mature at a determin
 $$L_{50} = -\frac{\hat{\beta}_{0}}{\hat{\beta}_{1}}$$
 
 
-The `calculate_mature` function requires an object of class "classify" with the X, Y (allometric variables) and classification stage (juvelines = 0, adults = 1).
+The `morph_mature` function requires an object of class "classify" with the X, Y (allometric variables) and classification of maturity (juvelines = 0, adults = 1).
 
-The argument `method` requires a string character indicanting which regression will be used for the test.
-If `method = "fq"` the regression is based on GLM (frequentist) and if `method = "bayes"` a sample from the posterior distribution of a logistic regression model using a random walk Metropolis algorithm is generated (see MCMClogit function).
+The argument `method` requires a character string indicanting which regression will be used for the test.
+If `method = "fq"` the logit regression is based on GLM (frequentist) and if `method = "bayes"` a sample from the posterior distribution of a logit regression model using a random walk Metropolis algorithm is generated (see MCMClogit function).
 
 The argument `niter` requires a number. For the GLM regression (`method = "fq"`), a non-parametric bootstrap method consists in generate B bootstrap samples, by resampling with replacement the original data. Then all statistics for each parameter can be calculated from each bootstrap sample (median and confidence intervals). For the `method = "bayes"`, the argument `niter` is related to the number of Metropolis iterations for the sampler.
 
-The output is an object of class "mature". This object contains a dataframe with the X, Y and mature classification variables. Also the fitted values for the curve logistic regression and confidence intervals (95\%). If you print the object the median and confidence intervals (for `method = "bayes"` - credible intervals) of the morphometric size at sexual maturity estimation (L50).
+The output is an object of class "morphMat". This object contains a dataframe with the allometric variables X - Y and the classification of maturity. Also the fitted values for the curve logistic regression and confidence intervals (95\%). If you print the object, the median of the morphometric size at sexual maturity estimation (L50) and parameters are shown.
 
 ```{r echo = TRUE}
 #Frequentist regression 
-my_mature_fq = calculate_mature(classify_data, method = "fq", niter = 1000)
+my_ogive_fq = morph_mature(classify_data, method = "fq", niter = 1000)
 
-print(my_mature_fq)
+print(my_ogive_fq)
 
 
 #Bayesian regression
-my_mature_bayes = calculate_mature(classify_data, method = "bayes", niter = 1000)
+my_ogive_bayes = morph_mature(classify_data, method = "bayes", niter = 1000)
 
-print(my_mature_bayes)
+print(my_ogive_bayes)
 ```
 
 
 ## Plot maturity ogive
-For plotting the maturity ogive you need the object of class "mature". But the function `plot` generates 4 graphics: 1), 2) and 3) are histograms for the A, B parameters and the morphometric size at sexual maturity (L50), the last is the maturity ogive.
+For plotting the maturity ogive the object of class "morphMat"is required. The function `plot` generates 4 graphics: 1), 2) and 3) are histograms for the A, B parameters and the morphometric size at sexual maturity (L50), the last is the maturity ogive.
 
 ```{r echo = TRUE, fig.width = 10, fig.height = 10, warning=FALSE}
 par(mfrow = c(2,2))
-plot(my_mature_fq, xlab = "Carapace width (mm.)", ylab = "Proportion mature", col = c("blue", "red"))
+plot(my_ogive_fq, xlab = "Carapace width (mm.)", ylab = "Proportion mature", col = c("blue", "red"))
 
 par(mfrow = c(2,2))
-plot(my_mature_bayes, xlab = "Carapace width (mm.)", ylab = "Proportion mature", col = c("blue", "red"))
+plot(my_ogive_bayes, xlab = "Carapace width (mm.)", ylab = "Proportion mature", col = c("blue", "red"))
 ```
 
 This methodology has been used mainly in the estimation of morphological sexual maturity in crabs, but it can be extended to other taxas as Agostinho (2000) reported. 
+
+
+
+### 2. Gonadal size at sexual maturity
+For estimating gonadal maturity use the *matFish* database. This data base contains two variables: 
+* `length`: total length in cm.
+* `stage`: I, II, III, IV, where I is considered inmature and the others mature.
+
+## Load data
+```{r echo=TRUE}
+data(matFish)
+
+head(matFish)
+```
+
+The `gonad_mature` as the `morph_mature` function use the logistic approach (see section: Estimate morphometric size at sexual maturity).
+
+The `gonad_mature` function requires a data.frame with the X (allometric variable, e.g: total length, fork length) and stages of sexual maturity. 
+
+The arguments `inmName` and `matName` require a character string indicanting the name of the stages of sexual maturity in the data. The arguments could be a vector (e.g `matName = c("II", "III", "IV")`). The variable `stage` in the *matFish* database, contains the stages of the sexual maturity. In this case, stage I is considered inmature and II, III, IV are considered mature. Then the this stages of sexual maturity are transformed in a binomial variable where inmature = 0 and mature = 1.
+
+The argument `method` requires a character string indicanting which regression will be used for the test.
+If `method = "fq"` the logit regression is based on GLM (frequentist) and if `method = "bayes"` a sample from the posterior distribution of a logit regression model using a random walk Metropolis algorithm is generated (see MCMClogit function).
+
+The argument `niter` requires a number. For the GLM regression (`method = "fq"`), a non-parametric bootstrap method consists in generate B bootstrap samples, by resampling with replacement the original data. Then all statistics for each parameter can be calculated from each bootstrap sample (median and confidence intervals). For the `method = "bayes"`, the argument `niter` is related to the number of Metropolis iterations for the sampler.
+
+The output is an object of class "gonadMat". This object contains a dataframe with the allometric variable "X" and stage of sexual maturity (inmature = 0, mature  = 1). Also the fitted values for the curve logistic regression and confidence intervals (95\%). If you print the object, the median of the gonadal size at sexual maturity estimation (L50) and parameters are shown.
+
+
+```{r, echo=TRUE}
+#Frequentist regression 
+my_ogive_fq = gonad_mature(matFish, inmName = "I", matName = c("II", "III", "IV" ), 
+                           method = "fq", niter = 999)
+
+print(my_ogive_fq)
+
+
+#Bayesian regression 
+my_ogive_bayes = gonad_mature(matFish, inmName = "I", matName = c("II", "III", "IV" ), 
+                              method = "bayes", niter = 999)
+
+print(my_ogive_bayes)
+```
+
+
+For plotting the maturity ogive the object of class "gonadMat"is required. The function `plot` generates 4 graphics: 1), 2) and 3) are histograms for the A, B parameters and the morphometric size at sexual maturity (L50), the last is the maturity ogive.
+
+```{r echo = TRUE, fig.width = 10, fig.height = 10, warning=FALSE}
+par(mfrow = c(2,2))
+plot(my_ogive_fq, xlab = "Total length (cm.)", ylab = "Proportion mature", col = c("blue", "red"))
+
+par(mfrow = c(2,2))
+plot(my_ogive_bayes, xlab = "Total length (cm.)", ylab = "Proportion mature", col = c("blue", "red"))
+```
+
 
 
 ##References

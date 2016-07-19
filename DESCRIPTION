@@ -1,11 +1,11 @@
-Package: ssmRG
+Package: sexMat
 Type: Package
-Title: Morphometric Size at Sexual Maturity based on Relative Growth
+Title: Estimate Size at Sexual Maturity
 Version: 0.1
 Date: 2016-07-14
 Authors@R: c(person("Josymar", "Torrejon-Magallanes", email = "ejosymart@gmail.com", role = c("cre", "aut")), person("Wencheng", "Lau-Medrano", role = "ctb"))
 Maintainer: Josymar Torrejon-Magallanes <ejosymart@gmail.com>
-Description: Morphometric size at sexual maturity based on relative growth. This packages allows to estimate morphometric size at sexual maturity using allometric variables. The estimation involves two process. First, a Principal Components Analisys is conducted with two allometric variables (x: independent variable, y: dependent variable) in log base, allowing to distinguish two groups that would represent juveniles and adult. The individuals are assigned to each group using a hierarchical classification procedure (hierarchical cluster). This method is based on establishing a predetermined number of groups (in this case, two) and assigning individuals to one of the groups according to their loads on the two axes of the PCA (Corgos & Freire, 2006). Using the results of the classification (PCA + cluster), a discriminant analysis (linear or quadratic) is carried out to obtain a discriminating function that permitted any individuals to be classified as a juvenile or an adult on the basis of the X and Y allometric variables. Finally, after classification, the logistic approach is used and the morphometric size at 50% maturity is estimated as the length at which a randomly chosen specimen has a 50% chance of being mature (Somerton  1980, Roa  et al. 1999, Corgos & Freire 2006).
+Description: Estimate size at sexual maturity. This packages allows to estimate morphometric and gonadal size at sexual maturity for organisms, usually fish and invertebrates. The size at sexual maturity is defined as the length at which a randomly chosen specimen has a 50% chance of being mature. The package includes methods for classification (PCA, hierarchical clustering, discriminant analysis), logit regression (frequentist or bayesian), predictions and some basic plots.
 Depends: R (>= 2.15)
 Imports: MCMCpack, matrixStats, MASS, grDevices, graphics, stats, utils
 Suggests: knitr, rmarkdown

@@ -30,3 +30,19 @@
 #' Watters, G., & Hobday, A. J. (1998). A new method for estimating the morphometric size at maturity of crabs. 
 #' Canadian Journal of Fisheries and Aquatic Sciences, 55(3), 704-714.
 NULL
+
+
+#' @title Fish gonadal maturity data
+#' @name Fish maturity
+#' 
+#' @description A data set containing the total length and the stages of sexua maturity of 1733 fishes.
+#' 
+#' @aliases matFish
+#' @docType data
+#' @format A data frame with two variables:
+#' 
+#' \code{length} the total lenght in cm.
+#' 
+#' \code{stage} the stages of sexual maturity (I: inmature, II-III-IV: mature)
+#' @usage data(matFish)
+NULL
