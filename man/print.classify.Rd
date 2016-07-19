@@ -21,8 +21,8 @@ Print classify data
 \dontrun{
 data(crabdata)
 
-classify_data = classify_mature(crabdata, varnames = c("carapace_width", "chela_heigth"), 
-varsex = "sex_category", selectSex = NULL, method = "ld")
+classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_heigth"), 
+varSex = "sex_category", selectSex = NULL, method = "ld")
 
 print(classify_data)
 }

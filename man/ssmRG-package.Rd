@@ -13,16 +13,18 @@ Package: ssmRG
 
 Type: Package
 
-The estimation of the morphometric size at sexual maturity involves two process:
+The Morphometric and Gonadal size at sexual maturity are estimating using differents functions (process).
 
-1) A Principal Components Analisys is conducted with two allometric variables (x: independent variable, y: dependent variable) in log base, allowing to distinguish 
+1) The estimation of the Morphometric Size at Sexual Maturity involves two process:
+
+1.1) A Principal Components Analisys is conducted with two allometric variables (x: independent variable, y: dependent variable) in log base, allowing to distinguish 
 two groups that would represent juveniles and adult. The individuals are assigned to each group using a hierarchical classification procedure (hierarchical cluster). 
 This method is based on establishing a predetermined number of groups (in this case, two) and assigning individuals to one of the groups according to 
 their loads on the two axes of the PCA (Corgos & Freire, 2006). Using the results of the classification (PCA + cluster), a discriminant analysis (linear or quadratic) 
 is carried out to obtain a discriminating function that permitted any individuals to be classified as a juvenile or an adult on the basis of the X and Y 
 allometric variables.
 
-2) After classification, the logistic approach is used. The morphometric size at 50\% maturity (\eqn{L_50}) is estimated as the length at
+1.2) After classification, the logistic approach is used. The morphometric size at 50\% maturity (\eqn{L_50}) is estimated as the length at
 which a randomly chosen specimen has a 50\% chance of being mature (Somerton  1980, Roa  et al. 1999, Corgos & Freire 2006). 
 In the regression analysis, \eqn{X} (e.g: carapace width) is considered the explanatory variable and the classification \eqn{CS} 
 (juvelines: 0, adults: 1) is considered the response variable (binomial). 
@@ -45,13 +47,15 @@ Some basic plotting (classification, \eqn{beta_0}, \eqn{beta_1} and \eqn{L_50} h
 are also provided.
 
 
-The estimation of gonadal size at sexual maturity use the logistic approach only. Unlike the previous method, no classification analysis is required,  
+2) The estimation of Gonadal Size at Sexual Maturity use the logistic approach only. 
+
+Unlike the previous method, no classification analysis is required,  
 because in this case the data contains the stage of sexual maturity (e.g: inmature and mature) and one allometric variable (e.g: total length, fork length) only.
 So, in the regression analysis, the allometric variable (e.g: total length) is considered the explanatory variable and the stage of sexual maturity (inmature: 0, mature: 1) 
 is considered the response variable (binomial). The regression  analysis is performed in the same way as the morphometric size at sexual maturity.
 }
 \examples{
-#See examples for functions \\code{morph_mature()} and \\code{gonad_mature()}.
+#See examples for functions morph_mature() and gonad_mature().
 }
 \author{
 Josymar Torrejon-Magallanes <ejosymart@gmail.com>

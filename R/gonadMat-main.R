@@ -1,7 +1,9 @@
 #' Estimate gonadal maturity
 #' 
 #' Estimate gonadal size at sexual maturity.
-#' @param data data.frame with two variables: size (length) and stage of sexual maturity.
+#' @param data data.frame with allometric variables and stage of sexual maturity.
+#' @param varNames a character string indicating the name of the allometric 
+#' and the stage of sexual maturity variable to be used for analysis.
 #' @param inmName a character string indicating the name of the inmaturity stage.
 #' @param matName a character string indicating the name of the maturity stage.
 #' @param method a character string indicating the method to be applied, \code{"fq"} frecuentist GLM, or \code{"bayes"} bayesian GLM (MCMClogit function). 
@@ -24,6 +26,8 @@
 #' 
 #' The function requires a data.frame with the X (allometric variable) and the stage of sexual maturity.
 #' 
+#' The argument \code{varNames} requires a character string indicating the name of the allometric variable to be used in the analysis.
+#' 
 #' The arguments \code{inmName} and \code{matName} require a character string indicanting the 
 #' name of the stages of sexual maturity in the data (e.g inmature and mature, ind and mat, 0 and 1, etc). 
 #' 
@@ -40,20 +44,26 @@
 #' \dontrun{
 #' data(matFish)
 #' 
-#' gonad_mat = gonad_mature(matFish, inmName = "I", matName = c("II", "III", "IV"), 
-#' method = "fq", niter = 999)
+#' gonad_mat = gonad_mature(matFish, varNames = c("total_length", "stage_mat"), inmName = "I", 
+#' matName = c("II", "III", "IV"), method = "fq", niter = 999)
 #' 
 #' gonad_mat}
 #' @export
-gonad_mature <- function(data, inmName = "x", matName = "y", method = "fq", niter = 999, seed = 70387){
+gonad_mature <- function(data, varNames = c("allometric", "stage") , inmName = "inm", matName = "mad", 
+                         method = "fq", niter = 999, seed = 70387){
   
+  if(length(varNames) != 2) stop("You must provide two variables.")
+  if(!all(varNames %in% names(data))) stop("'varNames' have not been found in data.")
+  
+  data <- data[, varNames]
   names(data) <- c("x", "stage")
   data$stage <- as.factor(data$stage)
+  data <- data[complete.cases(data), ] 
+  
   if(!all(c(inmName, matName) %in% levels(data$stage))) stop("'inmName' or 'matName' have not been found in data.")
   if(all(inmName %in% matName)) stop("'inmName' and 'matName' must have different stage names")
-
+  
   data$stage <- ifelse(data$stage == inmName, 0, 1)
-  data <- data[complete.cases(data), ] 
   estimate <- switch(method,
                      fq = .gonad_mature_fq(data = data, niter = niter, seed = seed),
                      bayes = .gonad_mature_bayes(data = data, niter = niter, seed = seed))
@@ -82,8 +92,8 @@ gonad_mature <- function(data, inmName = "x", matName = "y", method = "fq", nite
 #' \dontrun{
 #' data(matFish)
 #' 
-#' gonad_mat = gonad_mature(matFish, inmName = "I", matName = c("II", "III", "IV"), 
-#' method = "fq", niter = 999)
+#' gonad_mat = gonad_mature(matFish, varNames = c("total_length", "stage_mat"), inmName = "I", 
+#' matName = c("II", "III", "IV"), method = "fq", niter = 999)
 #' 
 #' print(gonad_mat)
 #' }
@@ -140,10 +150,10 @@ print.gonadMat <- function(x, ...){
 #' \dontrun{
 #' data(matFish)
 #' 
-#' gonad_mat = gonad_mature(matFish, inmName = "I", matName = c("II", "III", "IV"), 
-#' method = "fq", niter = 999)
+#' gonad_mat = gonad_mature(matFish, varNames = c("total_length", "stage_mat"), inmName = "I", 
+#' matName = c("II", "III", "IV"), method = "fq", niter = 999)
 #' 
-#' plot(gonad_mat, xlab = "Length", ylab = "Proportion mature", col = c("blue", "red"))
+#' plot(gonad_mat, xlab = "Total length (cm.)", ylab = "Proportion mature", col = c("blue", "red"))
 #' }
 #' @export
 #' @method plot gonadMat

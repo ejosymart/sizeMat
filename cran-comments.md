@@ -1,5 +1,5 @@
 ## Test environments
-* windows 7, R 3.1.3
+* windows 7, R 3.3.0
 * fedora 19, R 3.1.2
 
 ## R CMD check results

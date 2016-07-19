@@ -4,11 +4,14 @@
 \alias{gonad_mature}
 \title{Estimate gonadal maturity}
 \usage{
-gonad_mature(data, inmName = "x", matName = "y", method = "fq",
-  niter = 999, seed = 70387)
+gonad_mature(data, varNames = c("allometric", "stage"), inmName = "inm",
+  matName = "mad", method = "fq", niter = 999, seed = 70387)
 }
 \arguments{
-\item{data}{data.frame with two variables: size (length) and stage of sexual maturity.}
+\item{data}{data.frame with allometric variables and stage of sexual maturity.}
+
+\item{varNames}{a character string indicating the name of the allometric 
+and the stage of sexual maturity variable to be used for analysis.}
 
 \item{inmName}{a character string indicating the name of the inmaturity stage.}
 
@@ -43,6 +46,8 @@ stages of sexual maturity (two categories: inmature and mature).
 
 The function requires a data.frame with the X (allometric variable) and the stage of sexual maturity.
 
+The argument \code{varNames} requires a character string indicating the name of the allometric variable to be used in the analysis.
+
 The arguments \code{inmName} and \code{matName} require a character string indicanting the 
 name of the stages of sexual maturity in the data (e.g inmature and mature, ind and mat, 0 and 1, etc). 
 
@@ -59,8 +64,8 @@ For the \code{method = "bayes"}, the argument \code{niter} is related to the num
 \dontrun{
 data(matFish)
 
-gonad_mat = gonad_mature(matFish, inmName = "I", matName = c("II", "III", "IV"), 
-method = "fq", niter = 999)
+gonad_mat = gonad_mature(matFish, varNames = c("total_length", "stage_mat"), inmName = "I", 
+matName = c("II", "III", "IV"), method = "fq", niter = 999)
 
 gonad_mat}
 }

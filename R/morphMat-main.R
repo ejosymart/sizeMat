@@ -17,16 +17,18 @@
 #' @author Josymar Torrejon-Magallanes <ejosymart@@gmail.com>
 #' @details Package: ssmRG
 #' @details Type: Package
-#' @details The estimation of the morphometric size at sexual maturity involves two process:
+#' @details The Morphometric and Gonadal size at sexual maturity are estimating using differents functions (process).
 #' 
-#' 1) A Principal Components Analisys is conducted with two allometric variables (x: independent variable, y: dependent variable) in log base, allowing to distinguish 
+#' 1) The estimation of the Morphometric Size at Sexual Maturity involves two process:
+#' 
+#' 1.1) A Principal Components Analisys is conducted with two allometric variables (x: independent variable, y: dependent variable) in log base, allowing to distinguish 
 #' two groups that would represent juveniles and adult. The individuals are assigned to each group using a hierarchical classification procedure (hierarchical cluster). 
 #' This method is based on establishing a predetermined number of groups (in this case, two) and assigning individuals to one of the groups according to 
 #' their loads on the two axes of the PCA (Corgos & Freire, 2006). Using the results of the classification (PCA + cluster), a discriminant analysis (linear or quadratic) 
 #' is carried out to obtain a discriminating function that permitted any individuals to be classified as a juvenile or an adult on the basis of the X and Y 
 #' allometric variables.
 #' 
-#' 2) After classification, the logistic approach is used. The morphometric size at 50\% maturity (\eqn{L_50}) is estimated as the length at
+#' 1.2) After classification, the logistic approach is used. The morphometric size at 50\% maturity (\eqn{L_50}) is estimated as the length at
 #' which a randomly chosen specimen has a 50\% chance of being mature (Somerton  1980, Roa  et al. 1999, Corgos & Freire 2006). 
 #' In the regression analysis, \eqn{X} (e.g: carapace width) is considered the explanatory variable and the classification \eqn{CS} 
 #' (juvelines: 0, adults: 1) is considered the response variable (binomial). 
@@ -49,7 +51,9 @@
 #' are also provided.
 #' 
 #' 
-#' The estimation of gonadal size at sexual maturity use the logistic approach only. Unlike the previous method, no classification analysis is required,  
+#' 2) The estimation of Gonadal Size at Sexual Maturity use the logistic approach only. 
+#' 
+#' Unlike the previous method, no classification analysis is required,  
 #' because in this case the data contains the stage of sexual maturity (e.g: inmature and mature) and one allometric variable (e.g: total length, fork length) only.
 #' So, in the regression analysis, the allometric variable (e.g: total length) is considered the explanatory variable and the stage of sexual maturity (inmature: 0, mature: 1) 
 #' is considered the response variable (binomial). The regression  analysis is performed in the same way as the morphometric size at sexual maturity.
@@ -60,7 +64,7 @@
 #' @references Somerton, D. A. (1980). A computer technique for estimating the size of sexual maturity in crabs. Canadian Journal of Fisheries and Aquatic Sciences, 37(10), 1488-1494.
 #' @keywords morphometric, size, sexual-maturity, alometric, relative-growth.
 #' @examples
-#' #See examples for functions \code{morph_mature()} and \code{gonad_mature()}.
+#' #See examples for functions morph_mature() and gonad_mature().
 
 NULL
 #' Classify mature
@@ -68,8 +72,8 @@ NULL
 #' Classify te individuals in two groups (0: juvelines, 1: adults) based on relative growth.
 #' @param data data.frame with allometric variables and sex category (male, female). 
 #' If sex category contains NA's, that row will be filtered.
-#' @param varnames the name of two allometric variables to be used for analysis.
-#' @param varsex the name of the variable containing sex information.
+#' @param varNames the name of two allometric variables to be used for analysis.
+#' @param varSex the name of the variable containing sex information.
 #' @param selectSex sex category to be used for analysis. If \code{selectSex = NULL} all the individuals will be used in the analysis. 
 #' @param method a character string indicating the discriminant analysis method, linear discriminant analysis \code{"ld"},
 #' quadratic discriminant analysis \code{"qd"}.
@@ -93,20 +97,20 @@ NULL
 #' \dontrun{
 #' data(crabdata)
 #' 
-#' classify_data = classify_mature(crabdata, varnames = c("carapace_width", "chela_heigth"), 
-#' varsex = "sex_category", selectSex = NULL, method = "ld")
+#' classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_heigth"), 
+#' varSex = "sex_category", selectSex = NULL, method = "ld")
 #' 
 #' classify_data}
 #' @export
-classify_mature <- function(data, varnames = c("x", "y"), varsex = "sex", 
+classify_mature <- function(data, varNames = c("x", "y"), varSex = "sex", 
                             selectSex = NULL, method = "ld") {
   
-  if(length(varnames) != 2) stop("You must provide two variables only.")
-  if(!all(varnames %in% names(data))) stop("'varnames' have not been found in data.")
-  if(varnames[1] == varnames[2]) stop("'varnames' must have different names")
-  if(!all(varsex %in% names(data))) stop("'varsex' have not been found in data.")
+  if(length(varNames) != 2) stop("You must provide two variables only.")
+  if(!all(varNames %in% names(data))) stop("'varNames' have not been found in data.")
+  if(varNames[1] == varNames[2]) stop("'varNames' must have different names")
+  if(!all(varSex %in% names(data))) stop("'varSex' have not been found in data.")
   
-  input <- data[, c(varnames, varsex)]
+  input <- data[, c(varNames, varSex)]
   names(input)  <-  c("x", "y", "sex")
   input <- input[complete.cases(input), ] 
   
@@ -150,8 +154,8 @@ classify_mature <- function(data, varnames = c("x", "y"), varsex = "sex",
 #' \dontrun{
 #' data(crabdata)
 #' 
-#' classify_data = classify_mature(crabdata, varnames = c("carapace_width", "chela_heigth"), 
-#' varsex = "sex_category", selectSex = NULL, method = "ld")
+#' classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_heigth"), 
+#' varSex = "sex_category", selectSex = NULL, method = "ld")
 #'
 #' print(classify_data)
 #' }
@@ -195,8 +199,8 @@ print.classify <- function(x, ...){
 #' \dontrun{
 #' data(crabdata)
 #' 
-#' classify_data = classify_mature(crabdata, varnames = c("carapace_width", "chela_heigth"), 
-#' varsex = "sex_category", selectSex = NULL, method = "ld")
+#' classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_heigth"), 
+#' varSex = "sex_category", selectSex = NULL, method = "ld")
 #' 
 #' ## Showing different plots
 #' plot(classify_data, xlab = "X")
@@ -290,8 +294,8 @@ plot.classify <- function(x, xlab = "X", ylab = "Y", col = c(1, 2), pch = c(4, 5
 #' \dontrun{
 #' data(crabdata)
 #' 
-#' classify_data = classify_mature(crabdata, varnames = c("carapace_width", "chela_heigth"), 
-#' varsex = "sex_category", selectSex = NULL, method = "ld")
+#' classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_heigth"), 
+#' varSex = "sex_category", selectSex = NULL, method = "ld")
 #' 
 #' my_mature = morph_mature(classify_data, method = "fq")
 #' 
@@ -334,8 +338,8 @@ morph_mature <- function(data, method = "fq", niter = 999, seed = 70387){
 #' \dontrun{
 #' data(crabdata)
 #' 
-#' classify_data = classify_mature(crabdata, varnames = c("carapace_width", "chela_heigth"), 
-#' varsex = "sex_category", selectSex = NULL, method = "ld")
+#' classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_heigth"), 
+#' varSex = "sex_category", selectSex = NULL, method = "ld")
 #' 
 #' my_mature = morph_mature(classify_data, method = "fq")
 #' 
@@ -393,8 +397,8 @@ print.morphMat <- function(x, ...){
 #' \dontrun{
 #' data(crabdata)
 #' 
-#' classify_data = classify_mature(crabdata, varnames = c("carapace_width", "chela_heigth"), 
-#' varsex = "sex_category", selectSex = NULL, method = "ld")
+#' classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_heigth"), 
+#' varSex = "sex_category", selectSex = NULL, method = "ld")
 #' 
 #' my_mature = morph_mature(classify_data, method = "fq")
 #' 

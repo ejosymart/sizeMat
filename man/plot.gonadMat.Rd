@@ -38,10 +38,10 @@ Plot gonadal maturity ogive
 \dontrun{
 data(matFish)
 
-gonad_mat = gonad_mature(matFish, inmName = "I", matName = c("II", "III", "IV"), 
-method = "fq", niter = 999)
+gonad_mat = gonad_mature(matFish, varNames = c("total_length", "stage_mat"), inmName = "I", 
+matName = c("II", "III", "IV"), method = "fq", niter = 999)
 
-plot(gonad_mat, xlab = "Length", ylab = "Proportion mature", col = c("blue", "red"))
+plot(gonad_mat, xlab = "Total length (cm.)", ylab = "Proportion mature", col = c("blue", "red"))
 }
 }
 

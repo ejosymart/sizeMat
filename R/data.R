@@ -41,8 +41,8 @@ NULL
 #' @docType data
 #' @format A data frame with two variables:
 #' 
-#' \code{length} the total lenght in cm.
+#' \code{total_length} the total lenght in cm.
 #' 
-#' \code{stage} the stages of sexual maturity (I: inmature, II-III-IV: mature)
+#' \code{stage_mat} the stages of sexual maturity (I: inmature, II-III-IV: mature)
 #' @usage data(matFish)
 NULL

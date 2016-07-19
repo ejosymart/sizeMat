@@ -4,16 +4,16 @@
 \alias{classify_mature}
 \title{Classify mature}
 \usage{
-classify_mature(data, varnames = c("x", "y"), varsex = "sex",
+classify_mature(data, varNames = c("x", "y"), varSex = "sex",
   selectSex = NULL, method = "ld")
 }
 \arguments{
 \item{data}{data.frame with allometric variables and sex category (male, female). 
 If sex category contains NA's, that row will be filtered.}
 
-\item{varnames}{the name of two allometric variables to be used for analysis.}
+\item{varNames}{the name of two allometric variables to be used for analysis.}
 
-\item{varsex}{the name of the variable containing sex information.}
+\item{varSex}{the name of the variable containing sex information.}
 
 \item{selectSex}{sex category to be used for analysis. If \code{selectSex = NULL} all the individuals will be used in the analysis.}
 
@@ -46,8 +46,8 @@ juvenile or an adult on the basis of the X and Y allometric variables.
 \dontrun{
 data(crabdata)
 
-classify_data = classify_mature(crabdata, varnames = c("carapace_width", "chela_heigth"), 
-varsex = "sex_category", selectSex = NULL, method = "ld")
+classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_heigth"), 
+varSex = "sex_category", selectSex = NULL, method = "ld")
 
 classify_data}
 }

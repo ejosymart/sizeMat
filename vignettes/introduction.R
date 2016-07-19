@@ -1,6 +1,6 @@
 ## ---- echo = FALSE, message = FALSE--------------------------------------
 knitr::opts_chunk$set(collapse = T)
-library(ssmRG)
+library(sexMat)
 
 ## ----echo=TRUE-----------------------------------------------------------
 data(crabdata)
@@ -11,13 +11,15 @@ names(crabdata)
 
 ## ---- echo = TRUE--------------------------------------------------------
 #For all the individuals
-classify_data = classify_mature(crabdata, varnames = c("carapace_width", "chela_heigth"), 
-varsex = "sex_category", selectSex = NULL, method = "ld")
+classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_heigth"), 
+varSex = "sex_category", selectSex = NULL, method = "ld")
 
 #For males only
-classify_data_males = classify_mature(crabdata, varnames = c("carapace_width", "chela_heigth"), 
-varsex = "sex_category", selectSex = "m", method = "ld")
+classify_data_males = classify_mature(crabdata, varNames = c("carapace_width", "chela_heigth"), 
+varSex = "sex_category", selectSex = "m", method = "ld")
 
+## ---- echo = TRUE--------------------------------------------------------
+print(classify_data)
 
 ## ---- echo = TRUE, fig.width = 10, fig.height = 10, results='hide', warning=FALSE----
 par(mfrow = c(2,2))
@@ -34,20 +36,46 @@ plot(classify_data, xlab = "Carapace width (mm.)", ylab = "Chela heigth (mm)",
 
 ## ----echo = TRUE---------------------------------------------------------
 #Frequentist regression 
-my_mature_fq = calculate_mature(classify_data, method = "fq", niter = 1000)
+my_ogive_fq = morph_mature(classify_data, method = "fq", niter = 1000)
 
-print(my_mature_fq)
+print(my_ogive_fq)
 
 
 #Bayesian regression
-my_mature_bayes = calculate_mature(classify_data, method = "bayes", niter = 1000)
+my_ogive_bayes = morph_mature(classify_data, method = "bayes", niter = 1000)
 
-print(my_mature_bayes)
+print(my_ogive_bayes)
 
 ## ----echo = TRUE, fig.width = 10, fig.height = 10, warning=FALSE---------
 par(mfrow = c(2,2))
-plot(my_mature_fq, xlab = "Carapace width (mm.)", ylab = "Proportion mature", col = c("blue", "red"))
+plot(my_ogive_fq, xlab = "Carapace width (mm.)", ylab = "Proportion mature", col = c("blue", "red"))
 
 par(mfrow = c(2,2))
-plot(my_mature_bayes, xlab = "Carapace width (mm.)", ylab = "Proportion mature", col = c("blue", "red"))
+plot(my_ogive_bayes, xlab = "Carapace width (mm.)", ylab = "Proportion mature", col = c("blue", "red"))
+
+## ----echo=TRUE-----------------------------------------------------------
+data(matFish)
+
+head(matFish)
+
+## ---- echo=TRUE----------------------------------------------------------
+#Frequentist regression 
+my_ogive_fq = gonad_mature(matFish, varNames = c("total_length", "stage_mat"), inmName = "I",
+                           matName = c("II", "III", "IV" ), method = "fq", niter = 999)
+
+print(my_ogive_fq)
+
+
+#Bayesian regression 
+my_ogive_bayes = gonad_mature(matFish, varNames = c("total_length", "stage_mat"), inmName = "I", 
+                              matName = c("II", "III", "IV" ), method = "bayes", niter = 999)
+
+print(my_ogive_bayes)
+
+## ----echo = TRUE, fig.width = 10, fig.height = 10, warning=FALSE---------
+par(mfrow = c(2,2))
+plot(my_ogive_fq, xlab = "Total length (cm.)", ylab = "Proportion mature", col = c("blue", "red"))
+
+par(mfrow = c(2,2))
+plot(my_ogive_bayes, xlab = "Total length (cm.)", ylab = "Proportion mature", col = c("blue", "red"))
 

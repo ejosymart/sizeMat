@@ -8,8 +8,8 @@ library(sexMat)
 data(crabdata)
 
 # Classify data -----------------------------------------------------------
-classify_data = classify_mature(crabdata, varnames = c("carapace_width", "chela_heigth"), 
-varsex = "sex_category", selectSex = NULL, method = "ld")
+classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_heigth"), 
+                                varSex = "sex_category", selectSex = NULL, method = "ld")
 
 print(classify_data)
 
@@ -34,7 +34,8 @@ plot(my_ogive, xlab = "X", ylab = "Proportion mature", col = c("blue", "red"))
 data(matFish)
 
 # Estimate Gonadal Size at Sexual Maturity
-my_ogive = gonad_mature(matFish, inmName = "I", matName = c("II", "III", "IV"), method = "fq", niter = 1000)
+my_ogive = gonad_mature(matFish, varNames = c("length", "stage"), inmName = "I", matName = c("II", "III", "IV"), 
+                        method = "fq", niter = 1000)
 
 print(my_ogive)
 
