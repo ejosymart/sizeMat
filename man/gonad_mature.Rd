@@ -24,7 +24,7 @@ and the stage of sexual maturity variable to be used for analysis.}
 \item{seed}{a single value, interpreted as an integer.}
 }
 \value{
-object of class 'mature'.
+An object of class 'gonadMat'.
 
 \code{model} the summary model.
 

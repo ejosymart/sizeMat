@@ -78,7 +78,7 @@ NULL
 #' @param method a character string indicating the discriminant analysis method, linear discriminant analysis \code{"ld"},
 #' quadratic discriminant analysis \code{"qd"}.
 #' We suggest begin the analysis using the \code{method = "ld"}.
-#' @return data.frame of class 'classify', with x (independent), y (dependent) and classification of maturity
+#' @return A data.frame of class 'classify', with x (independent), y (dependent) and classification of maturity
 #' (juveniles = 0, adult = 1) variables.
 #' @details Classify the individuals in two groups (juvelines = 0 and adult = 1).
 #' 
@@ -264,7 +264,7 @@ plot.classify <- function(x, xlab = "X", ylab = "Y", col = c(1, 2), pch = c(4, 5
 #' @param method a character string indicating the method to be applied, \code{"fq"} frecuentist GLM, or \code{"bayes"} bayesian GLM (MCMClogit function).
 #' @param niter number of iterations (bootstrap resampling).
 #' @param seed a single value, interpreted as an integer.
-#' @return object of class 'morphMat'.
+#' @return An object of class 'morphMat'.
 #' 
 #' \code{model} the summary model.
 #' 

@@ -9,7 +9,7 @@
 #' @param method a character string indicating the method to be applied, \code{"fq"} frecuentist GLM, or \code{"bayes"} bayesian GLM (MCMClogit function). 
 #' @param niter number of iterations (bootstrap resampling).
 #' @param seed a single value, interpreted as an integer.
-#' @return object of class 'mature'.
+#' @return An object of class 'gonadMat'.
 #' 
 #' \code{model} the summary model.
 #' 

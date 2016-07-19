@@ -28,7 +28,7 @@ Chionoecetes tanneri and C. angulatus, in the eastern Bering Sea. Fishery Bullet
 data(crabdata)
 }
 \description{
-A data set containing allometric measures and other atribbutes of 223 crabs of the specie \eqn{Chionoectes tanneri}.
+A database containing allometric measures and other atribbutes of 223 crabs of the specie \eqn{Chionoectes tanneri}.
 The variables carapace width and chela heigth were published in Somerton & Donaldson (1996).
 }
 \references{

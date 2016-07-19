@@ -22,7 +22,7 @@ quadratic discriminant analysis \code{"qd"}.
 We suggest begin the analysis using the \code{method = "ld"}.}
 }
 \value{
-data.frame of class 'classify', with x (independent), y (dependent) and classification of maturity
+A data.frame of class 'classify', with x (independent), y (dependent) and classification of maturity
 (juveniles = 0, adult = 1) variables.
 }
 \description{

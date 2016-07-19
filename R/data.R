@@ -1,7 +1,7 @@
 #' @title Crab data
 #' @name Crab data
 #' 
-#' @description A data set containing allometric measures and other atribbutes of 223 crabs of the specie \eqn{Chionoectes tanneri}.
+#' @description A database containing allometric measures and other atribbutes of 223 crabs of the specie \eqn{Chionoectes tanneri}.
 #' The variables carapace width and chela heigth were published in Somerton & Donaldson (1996).
 #' 
 #' @aliases crabdata

@@ -16,7 +16,7 @@ morph_mature(data, method = "fq", niter = 999, seed = 70387)
 \item{seed}{a single value, interpreted as an integer.}
 }
 \value{
-object of class 'morphMat'.
+An object of class 'morphMat'.
 
 \code{model} the summary model.
 

@@ -24,7 +24,7 @@ install.packages("sexMat")
 ```
 
 ### 1. Morphometric size at sexual maturity
-For estimating morphometric maturity use the *crabdata* base.
+For estimating morphometric maturity use the *crabdata* base. Ths data set containing allometric measures and other atribbutes (year, month, sex category) of 223 crabs of the specie *Chionoectes tanneri*.
 
 ## Load data
 ```{r echo=TRUE}
