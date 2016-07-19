@@ -1,6 +1,8 @@
 ## ---- echo = FALSE, message = FALSE--------------------------------------
-knitr::opts_chunk$set(collapse = T)
 library(sexMat)
+
+## ---- eval=FALSE---------------------------------------------------------
+#  install.packages("sexMat")
 
 ## ----echo=TRUE-----------------------------------------------------------
 data(crabdata)

@@ -1,4 +1,4 @@
-# ssmRG package: Size at Sexual Maturity ---------------
+# sexMat package: Estimate Size at Sexual Maturity ---------------
 
 #' @importFrom MCMCpack MCMClogit
 #' @importFrom matrixStats rowQuantiles
@@ -6,11 +6,11 @@
 #' @importFrom grDevices colors
 #' @importFrom graphics axis box legend lines plot points hist par abline
 #' @importFrom stats binomial quantile coef complete.cases cutree dist glm hclust prcomp predict cov pchisq
-#' @importFrom utils data read.csv
+#' @importFrom utils data read.csv installed.packages
 #'
 #' @title Size at Sexual Maturity.
 #'
-#' @description Package to estimate morphometric (based on relative growth) and gonadal size at sexual maturity, for organisms, usually fish and invertebrates.
+#' @description This package allows to estimate morphometric and gonadal size at sexual maturity for organisms, usually fish and invertebrates. The size at sexual maturity is defined as the length at which a randomly chosen specimen has a 50% chance of being mature. The package includes methods for classification based on relative growth (PCA, hierarchical clustering, discriminant analysis), logit regression (frequentist or bayesian), parameters estimation and some basic plots.
 #' @name ssmRG-package
 #' @aliases ssmRG-package ssmRG
 #' @docType package

@@ -1,21 +1,27 @@
 ---
-title: "Extending SexMat R-package"
+title: 'sexMat: An R Package to Estimate Size at Sexual Maturity'
+author: 'Josymar Torrejon-Magallanes'
 date: "`r Sys.Date()`"
-output: 
-  rmarkdown::html_vignette:
-    fig_caption: yes
+output:
+  html_document:
+    highlight: default
+    toc: yes
 vignette: >
-  %\VignetteIndexEntry{Extending SexMat R-package}
+  %\VignetteIndexEntry{sexMat}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
 ```{r, echo = FALSE, message = FALSE}
-knitr::opts_chunk$set(collapse = T)
 library(sexMat)
 ```
 
-This vignette introduces you to SexMat functions and shows you how to apply them to estimate morphometric and gonadal size at sexual maturity.
+This vignette introduces you to `sexMat` package and provide a way to estimate **morphometric and gonadal size at sexual maturity**.
+
+##Install package
+```{r, eval=FALSE}
+install.packages("sexMat")
+```
 
 ### 1. Morphometric size at sexual maturity
 For estimating morphometric maturity use the *crabdata* base.
@@ -124,8 +130,10 @@ This methodology has been used mainly in the estimation of morphological sexual 
 
 
 ### 2. Gonadal size at sexual maturity
-For estimating gonadal maturity use the *matFish* database. This database contains two variables: 
+For estimating gonadal maturity use the *matFish* database. This database contains two variables:
+
 * `total_length`: total length in cm.
+
 * `stage_mat`: I, II, III, IV, where I is considered inmature.
 
 ## Load data
@@ -150,7 +158,7 @@ The argument `niter` requires a number. For the GLM regression (`method = "fq"`)
 
 The output is an object of class "gonadMat". This object contains a dataframe with the allometric variable "X" and stage of sexual maturity (inmature = 0, mature  = 1). Also the fitted values for the curve logistic regression and confidence intervals (95\%). If you print the object, the median of the gonadal size at sexual maturity estimation (L50) and parameters are shown.
 
-
+## Estimate gonadal size at sexual maturity (maturity ogive estimation)
 ```{r, echo=TRUE}
 #Frequentist regression 
 my_ogive_fq = gonad_mature(matFish, varNames = c("total_length", "stage_mat"), inmName = "I",
@@ -166,7 +174,7 @@ my_ogive_bayes = gonad_mature(matFish, varNames = c("total_length", "stage_mat")
 print(my_ogive_bayes)
 ```
 
-
+## Plot maturity ogive
 For plotting the maturity ogive the object of class "gonadMat"is required. The function `plot` generates 4 graphics: 1), 2) and 3) are histograms for the A, B parameters and the morphometric size at sexual maturity (L50), the last is the maturity ogive.
 
 ```{r echo = TRUE, fig.width = 10, fig.height = 10, warning=FALSE}
