@@ -1,5 +1,5 @@
-sexMat
-======
+sizeMat
+=======
 
 **Estimate Size at Sexual Maturity**
 
@@ -16,7 +16,7 @@ Get the development version from github:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("ejosymart/sexMat")
+devtools::install_github("ejosymart/sizeMat")
 ```
 
 Examples
