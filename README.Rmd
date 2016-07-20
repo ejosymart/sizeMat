@@ -20,7 +20,7 @@ library(sexMat)
 
 This package allows to estimate Morphometric and Gonadal Size at Sexual maturity for organisms, usually fish and invertebrates.
 
-The estimation of morphometric maturity used two allometric variables and is based in the relative growth.
+The estimation of morphometric maturity used two allometric variables and is based on the relative growth.
 
 The estimation of gonadal maturity used one allometric variable and the stage of sexual maturity (gonad maturation stage).
 
