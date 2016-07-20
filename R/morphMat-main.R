@@ -10,7 +10,7 @@
 #'
 #' @title Size at Sexual Maturity.
 #'
-#' @description This package allows to estimate morphometric and gonadal size at sexual maturity for organisms, usually fish and invertebrates. The size at sexual maturity is defined as the length at which a randomly chosen specimen has a 50% chance of being mature. The package includes methods for classification based on relative growth (PCA, hierarchical clustering, discriminant analysis), logit regression (frequentist or bayesian), parameters estimation and some basic plots.
+#' @description This package allows to estimate morphometric and gonadal size at sexual maturity for organisms, usually fish and invertebrates. The size at sexual maturity is defined as the length at which a randomly chosen specimen has a 50% chance of being mature. The package includes methods for classification based on relative growth (PCA, hierarchical clustering, discriminant analysis), logistic regression (frequentist or Bayesian), parameters estimation and some basic plots.
 #' @name sizeMat-package
 #' @aliases sizeMat-package sizeMat
 #' @docType package
@@ -98,13 +98,12 @@ NULL
 #' juvenile or an adult on the basis of the X and Y allometric variables.
 #' @exportClass classify
 #' @examples
-#' \dontrun{
 #' data(crabdata)
 #' 
 #' classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_heigth"), 
 #' varSex = "sex_category", selectSex = NULL, method = "ld")
 #' 
-#' classify_data}
+#' classify_data
 #' @export
 classify_mature <- function(data, varNames = c("x", "y"), varSex = "sex", 
                             selectSex = NULL, method = "ld") {
@@ -155,14 +154,12 @@ classify_mature <- function(data, varNames = c("x", "y"), varSex = "sex",
 #' @param \dots Additional arguments to the print method.
 #' @return The number of juveniles and adults. Also shows the regression analysis for juveniles and adults.
 #' @examples
-#' \dontrun{
 #' data(crabdata)
 #' 
 #' classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_heigth"), 
 #' varSex = "sex_category", selectSex = NULL, method = "ld")
 #'
 #' print(classify_data)
-#' }
 #' @export
 #' @method print classify
 print.classify <- function(x, ...){
@@ -200,7 +197,6 @@ print.classify <- function(x, ...){
 #' @param cex character expansion in the regression.
 #' @param \dots Additional arguments to the plot method.
 #' @examples
-#' \dontrun{
 #' data(crabdata)
 #' 
 #' classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_heigth"), 
@@ -216,7 +212,6 @@ print.classify <- function(x, ...){
 #' 
 #' plot(classify_data, xlab = "Carapace width (mm.)", ylab = "Y", col = c(1, 2), 
 #' pch = c(4, 5), cex = c(1, 3), lwd_lines = c(1, 3), main = "Classification")
-#' }
 #' @export
 #' @method plot classify
 plot.classify <- function(x, xlab = "X", ylab = "Y", col = c(1, 2), pch = c(4, 5), 
@@ -265,7 +260,7 @@ plot.classify <- function(x, xlab = "X", ylab = "Y", col = c(1, 2), pch = c(4, 5
 #' Estimate the morphometric size at sexual maturity (\eqn{L50}).
 #'
 #' @param data an object of class 'classify' with the allometric variables (X", "Y") and classification of maturity (juvelines = 0, adults = 1).
-#' @param method a character string indicating the method to be applied, \code{"fq"} frecuentist GLM, or \code{"bayes"} bayesian GLM (MCMClogit function).
+#' @param method a character string indicating the method to be applied, \code{"fq"} frecuentist GLM, or \code{"bayes"} Bayesian GLM (MCMClogit function).
 #' @param niter number of iterations (bootstrap resampling).
 #' @param seed a single value, interpreted as an integer.
 #' @return An object of class 'morphMat'.
@@ -280,7 +275,7 @@ plot.classify <- function(x, xlab = "X", ylab = "Y", col = c(1, 2), pch = c(4, 5
 #' 
 #' \code{out} a dataframe with the allometric variables "X" and "Y", classification of maturity, the fitted values for  
 #' logistic regression and confidence intervals (95\%). Also the summary statistics of the model is provided.
-#' @details Estimate the morphometric size at sexual maturity using a logit regression with X variable 
+#' @details Estimate the morphometric size at sexual maturity using a logistic regression with X variable 
 #' and maturity classification (two categories: juveniles and adults). 
 #' 
 #' The function requires an object of class "classify" with the X, Y (allometric variables) and classification of maturity (juvelines = 0, adults = 1).
@@ -295,7 +290,6 @@ plot.classify <- function(x, xlab = "X", ylab = "Y", col = c(1, 2), pch = c(4, 5
 #' For the `method = "bayes"`, the argument `niter` is related to the number of Metropolis iterations for the sampler.
 #' @exportClass morphMat
 #' @examples
-#' \dontrun{
 #' data(crabdata)
 #' 
 #' classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_heigth"), 
@@ -308,7 +302,6 @@ plot.classify <- function(x, xlab = "X", ylab = "Y", col = c(1, 2), pch = c(4, 5
 #' my_mature$B_boot
 #' my_mature$L50_boot
 #' my_mature$out
-#' }
 #' @export
 morph_mature <- function(data, method = "fq", niter = 999, seed = 70387){
   
@@ -339,7 +332,6 @@ morph_mature <- function(data, method = "fq", niter = 999, seed = 70387){
 #' and classification of maturity. Also the fitted values for the logistic regression and confidence intervals (95\%).
 #' @param \dots Additional arguments to the print method.
 #' @examples
-#' \dontrun{
 #' data(crabdata)
 #' 
 #' classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_heigth"), 
@@ -348,7 +340,6 @@ morph_mature <- function(data, method = "fq", niter = 999, seed = 70387){
 #' my_mature = morph_mature(classify_data, method = "fq")
 #' 
 #' print(my_mature)
-#' }
 #' @export
 #' @method print morphMat
 print.morphMat <- function(x, ...){
@@ -398,7 +389,6 @@ print.morphMat <- function(x, ...){
 #' @param lty_hist line type for the vertical line in the histogram.
 #' @param \dots Additional arguments to the plot method.
 #' @examples
-#' \dontrun{
 #' data(crabdata)
 #' 
 #' classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_heigth"), 
@@ -407,7 +397,6 @@ print.morphMat <- function(x, ...){
 #' my_mature = morph_mature(classify_data, method = "fq")
 #' 
 #' plot(my_mature, xlab = "Carapace width (mm.)", ylab = "Proportion mature", col = c("blue", "red"))
-#' }
 #' @export
 #' @method plot morphMat
 plot.morphMat <- function(x, xlab = "X", ylab = "Proportion mature", col = c("blue", "red"), 

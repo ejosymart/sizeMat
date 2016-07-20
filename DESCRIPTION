@@ -5,7 +5,7 @@ Version: 0.1.0
 Date: 2016-07-19
 Authors@R: c(person("Josymar", "Torrejon-Magallanes", email = "ejosymart@gmail.com", role = c("cre", "aut")), person("Wencheng", "Lau-Medrano", role = "ctb"))
 Maintainer: Josymar Torrejon-Magallanes <ejosymart@gmail.com>
-Description: Estimate Size at Sexual Maturity. This packages allows to estimate morphometric and gonadal size at sexual maturity for organisms, usually fish and invertebrates. The size at sexual maturity is defined as the length at which a randomly chosen specimen has a 50% chance of being mature. The package includes methods for classification based on relative growth (PCA, hierarchical clustering, discriminant analysis), logit regression (frequentist or bayesian), parameters estimation and some basic plots.
+Description: Estimate Size at Sexual Maturity. This packages allows to estimate morphometric and gonadal size at sexual maturity for organisms, usually fish and invertebrates. The size at sexual maturity is defined as the length at which a randomly chosen specimen has a 50% chance of being mature. The package includes methods for classification based on relative growth (PCA, hierarchical clustering, discriminant analysis), logistic regression (frequentist or Bayesian), parameters estimation and some basic plots.
 Depends: R (>= 2.15)
 Imports: MCMCpack, matrixStats, MASS, grDevices, graphics, stats, utils
 Suggests: knitr, rmarkdown

@@ -6,7 +6,7 @@
 #' and the stage of sexual maturity variables to be used for analysis.
 #' @param inmName a character string indicating the name or names of the inmaturity stage.
 #' @param matName a character string indicating the name or names of the maturity stage.
-#' @param method a character string indicating the method to be applied, \code{"fq"} frecuentist GLM, or \code{"bayes"} bayesian GLM (MCMClogit function). 
+#' @param method a character string indicating the method to be applied, \code{"fq"} frecuentist GLM, or \code{"bayes"} Bayesian GLM (MCMClogit function). 
 #' @param niter number of iterations (bootstrap resampling).
 #' @param seed a single value, interpreted as an integer.
 #' @return An object of class 'gonadMat'.
@@ -21,7 +21,7 @@
 #' 
 #' \code{out} a dataframe with the allometric variable "X", stage of sexual maturity, the fitted values for  
 #' logistic regression and confidence intervals (95\%). Also the summary statistics of the model is provided.
-#' @details Estimate the gonadal size at sexual maturity using a logit regression with X variable and 
+#' @details Estimate the gonadal size at sexual maturity using a logistic regression with X variable and 
 #' stages of sexual maturity (two categories: inmature and mature). 
 #' 
 #' The function requires a data.frame with the X (allometric variable) and 
@@ -46,7 +46,6 @@
 #' For the \code{method = "bayes"}, the argument \code{niter} is related to the number of Metropolis iterations for the sampler.
 #' @exportClass gonad_mature
 #' @examples
-#' \dontrun{
 #' data(matFish)
 #' 
 #' gonad_mat = gonad_mature(matFish, varNames = c("total_length", "stage_mat"), inmName = "I", 
@@ -57,7 +56,6 @@
 #' gonad_mat$B_boot
 #' gonad_mat$L50_boot
 #' gonad_mat$out
-#' }
 #' @export
 gonad_mature <- function(data, varNames = c("allometric", "stage") , inmName = "inm", matName = "mad", 
                          method = "fq", niter = 999, seed = 70387){
@@ -99,14 +97,12 @@ gonad_mature <- function(data, varNames = c("allometric", "stage") , inmName = "
 #' variables. Also the fitted values for the logistic regression and confidence intervals (95\%).
 #' @param \dots Additional arguments to the print method.
 #' @examples
-#' \dontrun{
 #' data(matFish)
 #' 
 #' gonad_mat = gonad_mature(matFish, varNames = c("total_length", "stage_mat"), inmName = "I", 
 #' matName = c("II", "III", "IV"), method = "fq", niter = 999)
 #' 
 #' print(gonad_mat)
-#' }
 #' @export
 #' @method print gonadMat
 print.gonadMat <- function(x, ...){
@@ -157,14 +153,12 @@ print.gonadMat <- function(x, ...){
 #' @param lty_hist line type for the vertical line in the histogram.
 #' @param \dots Additional arguments to the plot method.
 #' @examples
-#' \dontrun{
 #' data(matFish)
 #' 
 #' gonad_mat = gonad_mature(matFish, varNames = c("total_length", "stage_mat"), inmName = "I", 
 #' matName = c("II", "III", "IV"), method = "fq", niter = 999)
 #' 
 #' plot(gonad_mat, xlab = "Total length (cm.)", ylab = "Proportion mature", col = c("blue", "red"))
-#' }
 #' @export
 #' @method plot gonadMat
 plot.gonadMat <- function(x, xlab = "X", ylab = "Proportion mature", col = c("blue", "red"), 

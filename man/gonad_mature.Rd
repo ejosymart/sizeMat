@@ -17,7 +17,7 @@ and the stage of sexual maturity variables to be used for analysis.}
 
 \item{matName}{a character string indicating the name or names of the maturity stage.}
 
-\item{method}{a character string indicating the method to be applied, \code{"fq"} frecuentist GLM, or \code{"bayes"} bayesian GLM (MCMClogit function).}
+\item{method}{a character string indicating the method to be applied, \code{"fq"} frecuentist GLM, or \code{"bayes"} Bayesian GLM (MCMClogit function).}
 
 \item{niter}{number of iterations (bootstrap resampling).}
 
@@ -41,7 +41,7 @@ logistic regression and confidence intervals (95\%). Also the summary statistics
 Estimate gonadal size at sexual maturity.
 }
 \details{
-Estimate the gonadal size at sexual maturity using a logit regression with X variable and 
+Estimate the gonadal size at sexual maturity using a logistic regression with X variable and 
 stages of sexual maturity (two categories: inmature and mature). 
 
 The function requires a data.frame with the X (allometric variable) and 
@@ -66,7 +66,6 @@ can be calculated from each bootstrap sample (median and confidence intervals).
 For the \code{method = "bayes"}, the argument \code{niter} is related to the number of Metropolis iterations for the sampler.
 }
 \examples{
-\dontrun{
 data(matFish)
 
 gonad_mat = gonad_mature(matFish, varNames = c("total_length", "stage_mat"), inmName = "I", 
@@ -77,6 +76,5 @@ gonad_mat$A_boot
 gonad_mat$B_boot
 gonad_mat$L50_boot
 gonad_mat$out
-}
 }
 

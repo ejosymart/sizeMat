@@ -9,7 +9,7 @@ morph_mature(data, method = "fq", niter = 999, seed = 70387)
 \arguments{
 \item{data}{an object of class 'classify' with the allometric variables (X", "Y") and classification of maturity (juvelines = 0, adults = 1).}
 
-\item{method}{a character string indicating the method to be applied, \code{"fq"} frecuentist GLM, or \code{"bayes"} bayesian GLM (MCMClogit function).}
+\item{method}{a character string indicating the method to be applied, \code{"fq"} frecuentist GLM, or \code{"bayes"} Bayesian GLM (MCMClogit function).}
 
 \item{niter}{number of iterations (bootstrap resampling).}
 
@@ -33,7 +33,7 @@ logistic regression and confidence intervals (95\%). Also the summary statistics
 Estimate the morphometric size at sexual maturity (\eqn{L50}).
 }
 \details{
-Estimate the morphometric size at sexual maturity using a logit regression with X variable 
+Estimate the morphometric size at sexual maturity using a logistic regression with X variable 
 and maturity classification (two categories: juveniles and adults). 
 
 The function requires an object of class "classify" with the X, Y (allometric variables) and classification of maturity (juvelines = 0, adults = 1).
@@ -48,7 +48,6 @@ can be calculated from each bootstrap sample (median and confidence intervals).
 For the `method = "bayes"`, the argument `niter` is related to the number of Metropolis iterations for the sampler.
 }
 \examples{
-\dontrun{
 data(crabdata)
 
 classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_heigth"), 
@@ -61,6 +60,5 @@ my_mature$A_boot
 my_mature$B_boot
 my_mature$L50_boot
 my_mature$out
-}
 }
 

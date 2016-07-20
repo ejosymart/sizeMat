@@ -35,7 +35,6 @@ the median and the confidece intervals.}
 Plot method for morphMat (morphometric size at sexual maturity)
 }
 \examples{
-\dontrun{
 data(crabdata)
 
 classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_heigth"), 
@@ -44,6 +43,5 @@ varSex = "sex_category", selectSex = NULL, method = "ld")
 my_mature = morph_mature(classify_data, method = "fq")
 
 plot(my_mature, xlab = "Carapace width (mm.)", ylab = "Proportion mature", col = c("blue", "red"))
-}
 }
 
