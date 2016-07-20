@@ -18,7 +18,7 @@ morph_mature(data, method = "fq", niter = 999, seed = 70387)
 \value{
 An object of class 'morphMat'.
 
-\code{model} the summary model.
+\code{model} the summary statistics of the model.
 
 \code{A_boot} the 'n iter' values of parameter A.
 
@@ -27,7 +27,7 @@ An object of class 'morphMat'.
 \code{L50} the 'n iter' values of parameter L50 (morphometric size at sexual maturity).
 
 \code{out} a dataframe with the allometric variables "X" and "Y", classification of maturity, the fitted values for  
-logistic regression and confidence intervals (95\%). Also the summary model is provided.
+logistic regression and confidence intervals (95\%). Also the summary statistics of the model is provided.
 }
 \description{
 Estimate the morphometric size at sexual maturity (\eqn{L50}).

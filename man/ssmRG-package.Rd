@@ -15,7 +15,7 @@ Type: Package
 
 The Morphometric and Gonadal size at sexual maturity are estimating using differents functions (process).
 
-1) The estimation of the Morphometric Size at Sexual Maturity involves two process:
+1) The estimation of the Morphometric Size at Sexual Maturity involves two processes:
 
 1.1) A Principal Components Analisys is conducted with two allometric variables (x: independent variable, y: dependent variable) in log base, allowing to distinguish 
 two groups that would represent juveniles and adult. The individuals are assigned to each group using a hierarchical classification procedure (hierarchical cluster). 
@@ -49,10 +49,14 @@ are also provided.
 
 2) The estimation of Gonadal Size at Sexual Maturity use the logistic approach only. 
 
-Unlike the previous method, no classification analysis is required,  
-because in this case the data contains the stage of sexual maturity (e.g: inmature and mature) and one allometric variable (e.g: total length, fork length) only.
-So, in the regression analysis, the allometric variable (e.g: total length) is considered the explanatory variable and the stage of sexual maturity (inmature: 0, mature: 1) 
-is considered the response variable (binomial). The regression  analysis is performed in the same way as the morphometric size at sexual maturity.
+To estimate gonadal size at sexual maturity, the database must contains the stage of sexual 
+maturity and at least one allometric variable (e.g: total length, fork length, carapace width).
+The stage of sexual maturity is refered to the gonadal maturarion stages (e.g: I, II, III, IV or 0, 1, etc).
+
+So, in the regression analysis, the allometric variable (e.g: total length) is considered the
+explanatory variable and the stage of sexual maturity (inmature: 0, mature: 1) 
+is considered the response variable (binomial). The regression  analysis is performed 
+in the same way as the morphometric size at sexual maturity.
 }
 \examples{
 #See examples for functions morph_mature() and gonad_mature().

@@ -1,17 +1,17 @@
 #' Estimate gonadal maturity
 #' 
 #' Estimate gonadal size at sexual maturity.
-#' @param data data.frame with allometric variables and stage of sexual maturity.
+#' @param data data.frame with allometric variables and stage of sexual maturity (gonad maturation stages).
 #' @param varNames a character string indicating the name of the allometric 
-#' and the stage of sexual maturity variable to be used for analysis.
-#' @param inmName a character string indicating the name of the inmaturity stage.
-#' @param matName a character string indicating the name of the maturity stage.
+#' and the stage of sexual maturity variables to be used for analysis.
+#' @param inmName a character string indicating the name or names of the inmaturity stage.
+#' @param matName a character string indicating the name or names of the maturity stage.
 #' @param method a character string indicating the method to be applied, \code{"fq"} frecuentist GLM, or \code{"bayes"} bayesian GLM (MCMClogit function). 
 #' @param niter number of iterations (bootstrap resampling).
 #' @param seed a single value, interpreted as an integer.
 #' @return An object of class 'gonadMat'.
 #' 
-#' \code{model} the summary model.
+#' \code{model} the summary statistics of the model.
 #' 
 #' \code{A_boot} the 'n iter' values of parameter A.
 #' 
@@ -20,16 +20,21 @@
 #' \code{L50} the 'n iter' values of parameter L50 (gonadal size at sexual maturity).
 #' 
 #' \code{out} a dataframe with the allometric variable "X", stage of sexual maturity, the fitted values for  
-#' logistic regression and confidence intervals (95\%). Also the summary model is provided.
+#' logistic regression and confidence intervals (95\%). Also the summary statistics of the model is provided.
 #' @details Estimate the gonadal size at sexual maturity using a logit regression with X variable and 
 #' stages of sexual maturity (two categories: inmature and mature). 
 #' 
-#' The function requires a data.frame with the X (allometric variable) and the stage of sexual maturity.
+#' The function requires a data.frame with the X (allometric variable) and 
+#' the stage of sexual maturity (gonad maturation stage).
 #' 
-#' The argument \code{varNames} requires a character string indicating the name of the allometric variable to be used in the analysis.
+#' The argument `varNames` requires a character string indicating the name of one allometric and the stage
+#' of sexual maturity variable to be used for analysis (e.g \code{varNames = c("total_length", "stage_mat")}). 
+#' So the argument `varNames` must contain two character strings only, the first is the allometric variable 
+#' and the second is the stage of sexual maturity.
 #' 
-#' The arguments \code{inmName} and \code{matName} require a character string indicanting the 
-#' name of the stages of sexual maturity in the data (e.g inmature and mature, ind and mat, 0 and 1, etc). 
+#' The arguments \code{inmName} and \code{matName} require a character string indicanting the name 
+#' of the stages of sexual maturity in the data.frame. The argument could contain one character string 
+#' or could be a vector (e.g \code{inmName = "I"}, \code{matName = c("II", "III", "IV")}).
 #' 
 #' The argument \code{method} requires a character string indicating which regression will be used for the test.
 #' If \code{method = "fq"} the regression is based on GLM (frequentist), if \code{method = "bayes"} a sample from 

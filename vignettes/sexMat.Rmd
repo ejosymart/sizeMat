@@ -16,7 +16,7 @@ vignette: >
 library(sexMat)
 ```
 
-This vignette introduces you to `sexMat` package and provide a way to estimate **morphometric and gonadal size at sexual maturity**.
+This vignette introduces you to `sexMat` package and provide a way to estimate **Morphometric and Gonadal Size at Sexual Maturity**.
 
 ##Install package
 ```{r, eval=FALSE}
@@ -35,6 +35,10 @@ head(crabdata)
 names(crabdata)
 ```
 
+The estimation of morphometric sexual maturity involves two processes:
+
+First the *data classification*, which is refered to the classification of the individuals in two groups.
+The second is the *estimation*. This process uses the previous classification to estimate the morphometric size at sexual maturity. The details are given below.
 
 ## Classify data (print and plot)
 The `classify_mature` function, classify the individuals in two groups (juvelines = 0 and adult = 1). The classification analisys is based on Principal Components Analisys with two allometric variables (x: independent variable, y: dependent variable) in log base, allowing to distinguish two groups that would represent juveniles and adult. The individuals are assigned to each group using a hierarchical classification procedure (hierarchical cluster with agglomeration method: "Ward.D" and the distance measure: "euclidean"). This method is based on establishing a predetermined number of groups (in this case, two) and assigning individuals to one of the groups according to their loads on the two axes of the PCA (Corgos & Freire, 2006).
@@ -132,9 +136,9 @@ This methodology has been used mainly in the estimation of morphological sexual 
 ### 2. Gonadal size at sexual maturity
 For estimating gonadal maturity use the *matFish* database. This database contains two variables:
 
-* `total_length`: total length in cm.
+* `total_length`: Total length in cm.
 
-* `stage_mat`: I, II, III, IV, where I is considered inmature.
+* `stage_mat`: The gonadal maturation stages: I, II, III, IV, where I is considered inmature.
 
 ## Load data
 ```{r echo=TRUE}
@@ -143,13 +147,13 @@ data(matFish)
 head(matFish)
 ```
 
-The `gonad_mature` function use the logistic approach (see section: Estimate morphometric size at sexual maturity).
+The function to be used to estimate gonadal maturity is `gonad_mature`. This function use the logistic approach.
 
-The `gonad_mature` function requires a data.frame with allometric variables (e.g: total length, fork length) and a variable containing the stages of sexual maturity. The function will use one of the allometric variables only, and it is specipied in the `varNames` argument. 
+The `gonad_mature` function requires a data.frame with allometric variables (e.g: total length, fork length, carapace width, etc) and a variable containing the stages of sexual maturity (gonadal maturation stages). 
 
-The argument `varNames` requires a character string indicating the name of the allometric and the stage of sexual maturity variable to be used for analysis (e.g `varNames = c("total_length", "stage_mat")`).
+The argument `varNames` requires a character string indicating the name of one allometric and the stage of sexual maturity variable to be used for analysis (e.g `varNames = c("total_length", "stage_mat")`). So the argument `varNames` must contain two character strings only, the first is the allometric variable and the second is the stage of sexual maturity.
 
-The arguments `inmName` and `matName` require a character string indicanting the name of the stages of sexual maturity in the data.frame. The arguments could be a vector (e.g `matName = c("II", "III", "IV")`). The variable `stage_mat` in the *matFish* database, contains the stages of the sexual maturity. In this case, stage I is considered inmature and II, III, IV are considered mature. Then the stages of sexual maturity are transformed in a binomial variable where inmature = 0 and mature = 1.
+The arguments `inmName` and `matName` require a character string indicanting the name of the stages of sexual maturity in the data.frame. The argument could contain one character string or could be a vector (e.g `inmName = "I"`, `matName = c("II", "III", "IV")`). The variable *stage_mat* in the *matFish* database, contains the stages of the sexual maturity. In this case, stage I is considered inmature and II, III, IV are mature. Then the stages of sexual maturity are transformed in a binomial variable where inmature = 0 and mature = 1.
 
 The argument `method` requires a character string indicanting which regression will be used for the test.
 If `method = "fq"` the logit regression is based on GLM (frequentist) and if `method = "bayes"` a sample from the posterior distribution of a logit regression model using a random walk Metropolis algorithm is generated (see MCMClogit function).

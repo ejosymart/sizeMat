@@ -19,7 +19,7 @@
 #' @details Type: Package
 #' @details The Morphometric and Gonadal size at sexual maturity are estimating using differents functions (process).
 #' 
-#' 1) The estimation of the Morphometric Size at Sexual Maturity involves two process:
+#' 1) The estimation of the Morphometric Size at Sexual Maturity involves two processes:
 #' 
 #' 1.1) A Principal Components Analisys is conducted with two allometric variables (x: independent variable, y: dependent variable) in log base, allowing to distinguish 
 #' two groups that would represent juveniles and adult. The individuals are assigned to each group using a hierarchical classification procedure (hierarchical cluster). 
@@ -53,10 +53,14 @@
 #' 
 #' 2) The estimation of Gonadal Size at Sexual Maturity use the logistic approach only. 
 #' 
-#' Unlike the previous method, no classification analysis is required,  
-#' because in this case the data contains the stage of sexual maturity (e.g: inmature and mature) and one allometric variable (e.g: total length, fork length) only.
-#' So, in the regression analysis, the allometric variable (e.g: total length) is considered the explanatory variable and the stage of sexual maturity (inmature: 0, mature: 1) 
-#' is considered the response variable (binomial). The regression  analysis is performed in the same way as the morphometric size at sexual maturity.
+#' To estimate gonadal size at sexual maturity, the database must contains the stage of sexual 
+#' maturity and at least one allometric variable (e.g: total length, fork length, carapace width).
+#' The stage of sexual maturity is refered to the gonadal maturarion stages (e.g: I, II, III, IV or 0, 1, etc).
+#' 
+#' So, in the regression analysis, the allometric variable (e.g: total length) is considered the
+#' explanatory variable and the stage of sexual maturity (inmature: 0, mature: 1) 
+#' is considered the response variable (binomial). The regression  analysis is performed 
+#' in the same way as the morphometric size at sexual maturity.
 #' 
 #' @references Agostinho, C. S. (2000). Use of otoliths to estimate size at sexual maturity in fish. Brazilian Archives of Biology and Technology, 43(4).
 #' @references Corgos, A. & Freire, J. (2006). Morphometric and gonad maturity in the spider crab Maja brachydactyla: a comparison of methods for estimating size at maturity in species with determinate growth. ICES Journal of Marine Science: Journal du Conseil, 63(5), 851-859.
@@ -266,7 +270,7 @@ plot.classify <- function(x, xlab = "X", ylab = "Y", col = c(1, 2), pch = c(4, 5
 #' @param seed a single value, interpreted as an integer.
 #' @return An object of class 'morphMat'.
 #' 
-#' \code{model} the summary model.
+#' \code{model} the summary statistics of the model.
 #' 
 #' \code{A_boot} the 'n iter' values of parameter A.
 #' 
@@ -275,7 +279,7 @@ plot.classify <- function(x, xlab = "X", ylab = "Y", col = c(1, 2), pch = c(4, 5
 #' \code{L50} the 'n iter' values of parameter L50 (morphometric size at sexual maturity).
 #' 
 #' \code{out} a dataframe with the allometric variables "X" and "Y", classification of maturity, the fitted values for  
-#' logistic regression and confidence intervals (95\%). Also the summary model is provided.
+#' logistic regression and confidence intervals (95\%). Also the summary statistics of the model is provided.
 #' @details Estimate the morphometric size at sexual maturity using a logit regression with X variable 
 #' and maturity classification (two categories: juveniles and adults). 
 #' 
