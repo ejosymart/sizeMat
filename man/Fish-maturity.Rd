@@ -9,7 +9,7 @@
 
 \code{total_length} the total lenght in cm.
 
-\code{stage_mat} the stages of sexual maturity (I: inmature, II-III-IV: mature)}
+\code{stage_mat} the stages of sexual maturity (gonadal maturation stages, I: inmature, II-III-IV: mature)}
 \usage{
 data(matFish)
 }

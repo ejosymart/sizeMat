@@ -1,8 +1,8 @@
 ## ---- echo = FALSE, message = FALSE--------------------------------------
-library(sexMat)
+library(sizeMat)
 
 ## ---- eval=FALSE---------------------------------------------------------
-#  install.packages("sexMat")
+#  install.packages("sizeMat")
 
 ## ----echo=TRUE-----------------------------------------------------------
 data(crabdata)

@@ -1,5 +1,5 @@
 ---
-title: 'sexMat: An R Package to Estimate Size at Sexual Maturity'
+title: 'sizeMat: An R Package to Estimate Size at Sexual Maturity'
 author: 'Josymar Torrejon-Magallanes'
 date: "`r Sys.Date()`"
 output:
@@ -7,20 +7,20 @@ output:
     highlight: default
     toc: yes
 vignette: >
-  %\VignetteIndexEntry{sexMat}
+  %\VignetteIndexEntry{sizeMat}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
 ```{r, echo = FALSE, message = FALSE}
-library(sexMat)
+library(sizeMat)
 ```
 
-This vignette introduces you to `sexMat` package and provide a way to estimate **Morphometric and Gonadal Size at Sexual Maturity**.
+This vignette introduces you to `sizeMat` package and provide a way to estimate **Morphometric and Gonadal Size at Sexual Maturity**.
 
 ##Install package
 ```{r, eval=FALSE}
-install.packages("sexMat")
+install.packages("sizeMat")
 ```
 
 ### 1. Morphometric size at sexual maturity
