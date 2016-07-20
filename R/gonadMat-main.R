@@ -52,7 +52,12 @@
 #' gonad_mat = gonad_mature(matFish, varNames = c("total_length", "stage_mat"), inmName = "I", 
 #' matName = c("II", "III", "IV"), method = "fq", niter = 999)
 #' 
-#' gonad_mat}
+#' ## \eqn{niter} parameters:
+#' gonad_mat$A_boot
+#' gonad_mat$B_boot
+#' gonad_mat$L50_boot
+#' gonad_mat$out
+#' }
 #' @export
 gonad_mature <- function(data, varNames = c("allometric", "stage") , inmName = "inm", matName = "mad", 
                          method = "fq", niter = 999, seed = 70387){

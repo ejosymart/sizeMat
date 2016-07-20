@@ -303,7 +303,7 @@ plot.classify <- function(x, xlab = "X", ylab = "Y", col = c(1, 2), pch = c(4, 5
 #' 
 #' my_mature = morph_mature(classify_data, method = "fq")
 #' 
-#' ## \eqn{niter} parameters
+#' ## \eqn{niter} parameters:
 #' my_mature$A_boot
 #' my_mature$B_boot
 #' my_mature$L50_boot
