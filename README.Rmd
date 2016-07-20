@@ -16,7 +16,7 @@ library(sexMat)
 
 # sexMat
 
-** Estimate Size at Sexual Maturity**
+**Estimate Size at Sexual Maturity**
 
 This package allows to estimate Morphometric and Gonadal Size at Sexual maturity for organisms, usually fish and invertebrates.
 
@@ -53,13 +53,15 @@ data(crabdata)
 classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_heigth"), 
                                 varSex = "sex_category", selectSex = NULL, method = "ld")
 
-plot(classify_data)
+print(classify_data)
+
+# plot(classify_data)
 
 my_ogive = morph_mature(classify_data, method = "fq")
 
 print(my_ogive)
 
-plot(my_ogive)
+# plot(my_ogive)
 ```
 
 
@@ -73,5 +75,5 @@ my_ogive = gonad_mature(matFish, varNames = c("total_length", "stage_mat"),
 
 print(my_ogive)
 
-plot(my_ogive)
+# plot(my_ogive)
 ```
