@@ -2,7 +2,7 @@
 % Please edit documentation in R/morphMat-main.R
 \name{print.morphMat}
 \alias{print.morphMat}
-\title{Print morphometric size at sexual maturity}
+\title{Print method for morphMat (morphometric size at sexual maturity)}
 \usage{
 \method{print}{morphMat}(x, ...)
 }
@@ -13,7 +13,7 @@ and classification of maturity. Also the fitted values for the logistic regressi
 \item{\dots}{Additional arguments to the print method.}
 }
 \description{
-Print morphometric size at sexual maturity
+Print method for morphMat (morphometric size at sexual maturity)
 }
 \examples{
 \dontrun{

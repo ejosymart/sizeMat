@@ -93,7 +93,7 @@ gonad_mature <- function(data, varNames = c("allometric", "stage") , inmName = "
 }
 
 
-#' Print gonadal size at sexual maturity
+#' Print method for gonadMat (gonadal size at sexual maturity)
 #'
 #' @param x object of class 'gonadMat' with the mature parameters and a data.frame with the X and stage of sexual maturity.
 #' variables. Also the fitted values for the logistic regression and confidence intervals (95\%).
@@ -142,7 +142,7 @@ print.gonadMat <- function(x, ...){
 
 
 
-#' Plot gonadal maturity ogive
+#' Plot method for gonadMat (gonadal size at sexual maturity)
 #'
 #' @param x object of class 'gonadMat' with the mature parameters and a data.frame with the X and stage of sexual maturity.
 #' variables. Also the fitted values for the logistic regression and confidence intervals (95\%).

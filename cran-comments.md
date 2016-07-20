@@ -1,17 +1,10 @@
 ## Test environments
-* Win 7: R 3.3.0
+* win-builder (devel and release)
 * Fedora 20, linux-gnu x86_64: R 3.2.0
 
 ## R CMD check results
-* For windows: 
+There was no ERROR or WARNING
 
-0 errors | 0 warnings | 0 notes
+There was 1 NOTE:
 
-Nevertheless there was a message about 1 WARNING:
-
-"'qpdf' is needed for checks on size reduction of PDFs"
-
-
-* For linux:
-
-0 errors | 0 warnings | 0 notes
+* Possibly mis-spelled words in DESCRIPTION:  PCA, bayesian, frequentist, logit, morphometric - this are not misspelled.

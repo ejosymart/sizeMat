@@ -149,7 +149,7 @@ classify_mature <- function(data, varNames = c("x", "y"), varSex = "sex",
 }
 
 
-#' Print classify data
+#' Print method for classify class
 #'
 #' @param x an object of class 'classify' with the allometric variables ("X", "Y") and classification of maturity (juvelines = 0, adults = 1).
 #' @param \dots Additional arguments to the print method.
@@ -188,7 +188,7 @@ print.classify <- function(x, ...){
 }
 
 
-#' Plot classify data
+#' Plot method for classify class
 #'
 #' @param x an object of class 'classify' with the allometric variables ("X", "Y") and classification of maturity (juvelines = 0, adults = 1).
 #' @param xlab a title for the x axis.
@@ -333,7 +333,7 @@ morph_mature <- function(data, method = "fq", niter = 999, seed = 70387){
 }
 
 
-#' Print morphometric size at sexual maturity
+#' Print method for morphMat (morphometric size at sexual maturity)
 #'
 #' @param x object of class 'morphMat' with the mature parameters and a data.frame with the allometric variables ("X", "Y") 
 #' and classification of maturity. Also the fitted values for the logistic regression and confidence intervals (95\%).
@@ -383,7 +383,7 @@ print.morphMat <- function(x, ...){
 }
 
 
-#' Plot maturity ogive
+#' Plot method for morphMat (morphometric size at sexual maturity)
 #'
 #' @param x object of class 'morphMat' with the mature parameters and a data.frame with the allometric variables ("X", "Y") 
 #' and classification of maturity. Also the fitted values for the logistic regression and confidence intervals (95\%).

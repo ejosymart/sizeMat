@@ -2,7 +2,7 @@
 % Please edit documentation in R/morphMat-main.R
 \name{print.classify}
 \alias{print.classify}
-\title{Print classify data}
+\title{Print method for classify class}
 \usage{
 \method{print}{classify}(x, ...)
 }
@@ -15,7 +15,7 @@
 The number of juveniles and adults. Also shows the regression analysis for juveniles and adults.
 }
 \description{
-Print classify data
+Print method for classify class
 }
 \examples{
 \dontrun{

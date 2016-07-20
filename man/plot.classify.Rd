@@ -2,7 +2,7 @@
 % Please edit documentation in R/morphMat-main.R
 \name{plot.classify}
 \alias{plot.classify}
-\title{Plot classify data}
+\title{Plot method for classify class}
 \usage{
 \method{plot}{classify}(x, xlab = "X", ylab = "Y", col = c(1, 2),
   pch = c(4, 5), cex = c(1, 1), lty_lines = c(1, 1), lwd_lines = c(1,
@@ -28,7 +28,7 @@
 \item{\dots}{Additional arguments to the plot method.}
 }
 \description{
-Plot classify data
+Plot method for classify class
 }
 \examples{
 \dontrun{

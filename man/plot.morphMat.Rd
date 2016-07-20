@@ -2,7 +2,7 @@
 % Please edit documentation in R/morphMat-main.R
 \name{plot.morphMat}
 \alias{plot.morphMat}
-\title{Plot maturity ogive}
+\title{Plot method for morphMat (morphometric size at sexual maturity)}
 \usage{
 \method{plot}{morphMat}(x, xlab = "X", ylab = "Proportion mature",
   col = c("blue", "red"), lwd = 2, lty = 2, vline_hist = "black",
@@ -32,7 +32,7 @@ the median and the confidece intervals.}
 \item{\dots}{Additional arguments to the plot method.}
 }
 \description{
-Plot maturity ogive
+Plot method for morphMat (morphometric size at sexual maturity)
 }
 \examples{
 \dontrun{
