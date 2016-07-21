@@ -88,6 +88,9 @@ print(classify_data)
 #> 
 #> Number of Fisher Scoring iterations: 2
 
+
+
+
 # plot(classify_data)
 
 my_ogive = morph_mature(classify_data, method = "fq")
@@ -98,6 +101,9 @@ print(my_ogive)
 #> A   -20.7530424        -20.7955022
 #> B     0.1748011          0.1751376
 #> L50 118.7237428        118.6414514
+
+
+
 
 # plot(my_ogive)
 ```
@@ -116,6 +122,9 @@ print(my_ogive)
 #> A   -8.6046612         -8.6167068
 #> B    0.3560150          0.3568128
 #> L50 24.1693811         24.1629202
+
+
+
 
 # plot(my_ogive)
 ```
