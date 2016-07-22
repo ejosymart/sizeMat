@@ -14,7 +14,13 @@ The estimation of gonadal maturity used one allometric variable and the stage of
 Installation
 ------------
 
-Get the development version from github:
+Get the released version from CRAN:
+
+``` r
+install.packages("sizeMat")
+```
+
+Or the development version from github:
 
 ``` r
 # install.packages("devtools")
