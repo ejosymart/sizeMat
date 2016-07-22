@@ -1,6 +1,8 @@
 sizeMat
 =======
 
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/sizeMat)](http://cran.r-project.org/package=sizeMat) [![](http://cranlogs.r-pkg.org/badges/sizeMat)](http://cran.rstudio.com/web/packages/sizeMat/index.html)
+
 **Estimate Size at Sexual Maturity**
 
 This package allows to estimate Morphometric and Gonadal Size at Sexual maturity for organisms, usually fish and invertebrates.
