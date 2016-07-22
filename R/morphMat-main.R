@@ -295,7 +295,7 @@ plot.classify <- function(x, xlab = "X", ylab = "Y", col = c(1, 2), pch = c(4, 5
 #' classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_heigth"), 
 #' varSex = "sex_category", selectSex = NULL, method = "ld")
 #' 
-#' my_mature = morph_mature(classify_data, method = "fq")
+#' my_mature = morph_mature(classify_data, method = "fq", niter = 50)
 #' 
 #' ## \eqn{niter} parameters:
 #' my_mature$A_boot
@@ -337,7 +337,7 @@ morph_mature <- function(data, method = "fq", niter = 999, seed = 70387){
 #' classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_heigth"), 
 #' varSex = "sex_category", selectSex = NULL, method = "ld")
 #' 
-#' my_mature = morph_mature(classify_data, method = "fq")
+#' my_mature = morph_mature(classify_data, method = "fq", niter = 50)
 #' 
 #' print(my_mature)
 #' @export
@@ -394,7 +394,7 @@ print.morphMat <- function(x, ...){
 #' classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_heigth"), 
 #' varSex = "sex_category", selectSex = NULL, method = "ld")
 #' 
-#' my_mature = morph_mature(classify_data, method = "fq")
+#' my_mature = morph_mature(classify_data, method = "fq", niter = 50)
 #' 
 #' plot(my_mature, xlab = "Carapace width (mm.)", ylab = "Proportion mature", col = c("blue", "red"))
 #' @export

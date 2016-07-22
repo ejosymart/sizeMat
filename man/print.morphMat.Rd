@@ -21,7 +21,7 @@ data(crabdata)
 classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_heigth"), 
 varSex = "sex_category", selectSex = NULL, method = "ld")
 
-my_mature = morph_mature(classify_data, method = "fq")
+my_mature = morph_mature(classify_data, method = "fq", niter = 50)
 
 print(my_mature)
 }

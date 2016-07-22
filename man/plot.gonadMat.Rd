@@ -38,7 +38,7 @@ Plot method for gonadMat (gonadal size at sexual maturity)
 data(matFish)
 
 gonad_mat = gonad_mature(matFish, varNames = c("total_length", "stage_mat"), inmName = "I", 
-matName = c("II", "III", "IV"), method = "fq", niter = 999)
+matName = c("II", "III", "IV"), method = "fq", niter = 50)
 
 plot(gonad_mat, xlab = "Total length (cm.)", ylab = "Proportion mature", col = c("blue", "red"))
 }

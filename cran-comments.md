@@ -12,7 +12,7 @@ There was 1 NOTE:
 
 
 
-## Resubmission
+## Resubmission (first round)
 
 > Thanks, we see:
 
@@ -30,4 +30,31 @@ It has been corrected.
 
 Thanks for the corrections
 
+Best regards.
+
+
+
+## Resubmission (second round)
+
+> Now we're seeing
+
+> ** running examples for arch 'i386' ... [43s] NOTE
+> Examples with CPU or elapsed time > 10s
+>                 user system elapsed
+> print.gonadMat 10.70   0.03   10.74
+> gonad_mature   10.50   0.05   10.54
+> plot.gonadMat  10.52   0.02   10.56
+> ** running examples for arch 'x64' ... [42s] NOTE
+> Examples with CPU or elapsed time > 10s
+>                 user system elapsed
+> gonad_mature   10.62   0.08   10.70
+> print.gonadMat 10.37   0.02   10.39
+
+> Could you please shorten those examples, so they run in about 5s each?
+> Duncan Murdoch
+
+
+It has been corrected.
+
+Thanks for the corrections.
 Best regards.
