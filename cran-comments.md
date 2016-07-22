@@ -73,3 +73,15 @@ It has been corrected.
 Thanks.
 
 Best regards.
+
+##LAST
+
+> Thanks, on CRAN now.
+
+> Best,
+> Uwe Ligges
+
+
+Thanks for the corrections.
+
+Best regards.
