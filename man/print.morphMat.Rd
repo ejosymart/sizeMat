@@ -2,18 +2,21 @@
 % Please edit documentation in R/morphMat-main.R
 \name{print.morphMat}
 \alias{print.morphMat}
-\title{Print method for morphMat (morphometric size at sexual maturity)}
+\title{Print method for morphMat class (morphometric size at sexual maturity)}
 \usage{
 \method{print}{morphMat}(x, ...)
 }
 \arguments{
-\item{x}{object of class 'morphMat' with the mature parameters and a data.frame with the allometric variables ("X", "Y") 
+\item{x}{object of class 'morphMat' with the parameters of the logistic regression and a data.frame with the allometric variables ("X", "Y") 
 and classification of maturity. Also the fitted values for the logistic regression and confidence intervals (95\%).}
 
 \item{\dots}{Additional arguments to the print method.}
 }
+\value{
+The median of the morphometric size at sexual maturity estimation and parameters.
+}
 \description{
-Print method for morphMat (morphometric size at sexual maturity)
+Print method for morphMat class (morphometric size at sexual maturity)
 }
 \examples{
 data(crabdata)

@@ -6,7 +6,7 @@
 #' and the stage of sexual maturity variables to be used for analysis.
 #' @param inmName a character string indicating the name or names of the inmaturity stage.
 #' @param matName a character string indicating the name or names of the maturity stage.
-#' @param method a character string indicating the method to be applied, \code{"fq"} frecuentist GLM, or \code{"bayes"} Bayesian GLM (MCMClogit function). 
+#' @param method a character string indicating the method to be applied, \code{"fq"} frecuentist GLM, or \code{"bayes"} Bayes GLM (MCMClogit function). 
 #' @param niter number of iterations (bootstrap resampling).
 #' @param seed a single value, interpreted as an integer.
 #' @return An object of class 'gonadMat'.
@@ -27,9 +27,9 @@
 #' The function requires a data.frame with the X (allometric variable) and 
 #' the stage of sexual maturity (gonad maturation stage).
 #' 
-#' The argument `varNames` requires a character string indicating the name of one allometric and the stage
+#' The argument \code{varNames} requires a character string indicating the name of one allometric and the stage
 #' of sexual maturity variable to be used for analysis (e.g \code{varNames = c("total_length", "stage_mat")}). 
-#' So the argument `varNames` must contain two character strings only, the first is the allometric variable 
+#' So the argument \code{varNames} must contain two character strings only, the first is the allometric variable 
 #' and the second is the stage of sexual maturity.
 #' 
 #' The arguments \code{inmName} and \code{matName} require a character string indicanting the name 
@@ -37,7 +37,7 @@
 #' or could be a vector (e.g \code{inmName = "I"}, \code{matName = c("II", "III", "IV")}).
 #' 
 #' The argument \code{method} requires a character string indicating which regression will be used for the test.
-#' If \code{method = "fq"} the regression is based on GLM (frequentist), if \code{method = "bayes"} a sample from 
+#' If \code{method = "fq"} the logistic regression is based on GLM (frequentist), if \code{method = "bayes"} a sample from 
 #' the posterior distribution of a logistic regression model using a random walk Metropolis algorithm is generated (see MCMClogit function).
 #' 
 #' The argument \code{niter} requires a number. For the GLM regression (\code{method = "fq"}), a non-parametric bootstrap method consists
@@ -91,11 +91,12 @@ gonad_mature <- function(data, varNames = c("allometric", "stage") , inmName = "
 }
 
 
-#' Print method for gonadMat (gonadal size at sexual maturity)
+#' Print method for gonadMat class (gonadal size at sexual maturity)
 #'
-#' @param x object of class 'gonadMat' with the mature parameters and a data.frame with the X and stage of sexual maturity.
+#' @param x object of class 'gonadMat' with the parameters of the logistic regression and a data.frame with the X and stage of sexual maturity.
 #' variables. Also the fitted values for the logistic regression and confidence intervals (95\%).
 #' @param \dots Additional arguments to the print method.
+#' @return The median of the gonadal size at sexual maturity estimation and parameters.
 #' @examples
 #' data(matFish)
 #' 
@@ -138,7 +139,7 @@ print.gonadMat <- function(x, ...){
 
 
 
-#' Plot method for gonadMat (gonadal size at sexual maturity)
+#' Plot method for gonadMat class (gonadal size at sexual maturity)
 #'
 #' @param x object of class 'gonadMat' with the mature parameters and a data.frame with the X and stage of sexual maturity.
 #' variables. Also the fitted values for the logistic regression and confidence intervals (95\%).

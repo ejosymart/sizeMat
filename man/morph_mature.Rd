@@ -2,14 +2,14 @@
 % Please edit documentation in R/morphMat-main.R
 \name{morph_mature}
 \alias{morph_mature}
-\title{Calculate morphometric mature}
+\title{Estimate morphometric mature}
 \usage{
 morph_mature(data, method = "fq", niter = 999, seed = 70387)
 }
 \arguments{
 \item{data}{an object of class 'classify' with the allometric variables (X", "Y") and classification of maturity (juvelines = 0, adults = 1).}
 
-\item{method}{a character string indicating the method to be applied, \code{"fq"} frecuentist GLM, or \code{"bayes"} Bayesian GLM (MCMClogit function).}
+\item{method}{a character string indicating the method to be applied, \code{"fq"} frecuentist GLM, or \code{"bayes"} Bayes GLM (MCMClogit function).}
 
 \item{niter}{number of iterations (bootstrap resampling).}
 
@@ -38,14 +38,14 @@ and maturity classification (two categories: juveniles and adults).
 
 The function requires an object of class "classify" with the X, Y (allometric variables) and classification of maturity (juvelines = 0, adults = 1).
 
-The argument `method` requires a character string indicanting which regression will be used for the test.
-If `method = "fq"` the regression is based on GLM (frequentist) and if `method = "bayes"` a sample from the posterior distribution 
+The argument \code{method} requires a character string indicanting which regression will be used for the test.
+If \code{method = "fq"} the logistic regression is based on GLM (frequentist) and if \code{method = "bayes"} a sample from the posterior distribution 
 of a logistic regression model using a random walk Metropolis algorithm is generated (see MCMClogit function).
 
-The argument `niter` requires a number. For the GLM regression (`method = "fq"`), a non-parametric bootstrap method consists
+The argument \code{niter} requires a number. For the GLM regression (\code{method = "fq"}), a non-parametric bootstrap method consists
 in generate B bootstrap samples, by resampling with replacement the original data. Then all statistics for each parameter 
 can be calculated from each bootstrap sample (median and confidence intervals). 
-For the `method = "bayes"`, the argument `niter` is related to the number of Metropolis iterations for the sampler.
+For the \code{method = "bayes"}, the argument `niter` is related to the number of Metropolis iterations for the sampler.
 }
 \examples{
 data(crabdata)

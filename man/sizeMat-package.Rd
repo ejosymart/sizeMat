@@ -6,7 +6,7 @@
 \alias{sizeMat-package}
 \title{Size at Sexual Maturity.}
 \description{
-This package allows to estimate morphometric and gonadal size at sexual maturity for organisms, usually fish and invertebrates. The size at sexual maturity is defined as the length at which a randomly chosen specimen has a 50% chance of being mature. The package includes methods for classification based on relative growth (PCA, hierarchical clustering, discriminant analysis), logistic regression (frequentist or Bayesian), parameters estimation and some basic plots.
+Contains functions to estimate morphometric and gonadal size at sexual maturity for organisms, usually fish and invertebrates. It includes methods for classification based on relative growth (principal components analysis, hierarchical clustering, discriminant analysis), logistic regression (frequentist or Bayes), parameters estimation and some basic plots. The size at sexual maturity is defined as the length at which a randomly chosen specimen has a 50% chance of being mature
 }
 \details{
 Package: sizeMat

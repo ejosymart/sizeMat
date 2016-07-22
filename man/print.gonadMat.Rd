@@ -2,18 +2,21 @@
 % Please edit documentation in R/gonadMat-main.R
 \name{print.gonadMat}
 \alias{print.gonadMat}
-\title{Print method for gonadMat (gonadal size at sexual maturity)}
+\title{Print method for gonadMat class (gonadal size at sexual maturity)}
 \usage{
 \method{print}{gonadMat}(x, ...)
 }
 \arguments{
-\item{x}{object of class 'gonadMat' with the mature parameters and a data.frame with the X and stage of sexual maturity.
+\item{x}{object of class 'gonadMat' with the parameters of the logistic regression and a data.frame with the X and stage of sexual maturity.
 variables. Also the fitted values for the logistic regression and confidence intervals (95\%).}
 
 \item{\dots}{Additional arguments to the print method.}
 }
+\value{
+The median of the gonadal size at sexual maturity estimation and parameters.
+}
 \description{
-Print method for gonadMat (gonadal size at sexual maturity)
+Print method for gonadMat class (gonadal size at sexual maturity)
 }
 \examples{
 data(matFish)

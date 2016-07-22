@@ -58,3 +58,18 @@ It has been corrected.
 
 Thanks for the corrections.
 Best regards.
+
+
+## Resubmission (third round)
+
+> "Bayes" is a proper name, so "bayesian" is a misspelling.  You were already asked to fix this.
+
+> Please also don't repeat your Title as part of your Description, and don't start the Description with "This package".
+
+> Duncan Murdoch
+
+It has been corrected.
+
+Thanks.
+
+Best regards.

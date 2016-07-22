@@ -2,7 +2,7 @@
 % Please edit documentation in R/gonadMat-main.R
 \name{plot.gonadMat}
 \alias{plot.gonadMat}
-\title{Plot method for gonadMat (gonadal size at sexual maturity)}
+\title{Plot method for gonadMat class (gonadal size at sexual maturity)}
 \usage{
 \method{plot}{gonadMat}(x, xlab = "X", ylab = "Proportion mature",
   col = c("blue", "red"), lwd = 2, lty = 2, vline_hist = "black",
@@ -32,7 +32,7 @@ the median and the confidece intervals.}
 \item{\dots}{Additional arguments to the plot method.}
 }
 \description{
-Plot method for gonadMat (gonadal size at sexual maturity)
+Plot method for gonadMat class (gonadal size at sexual maturity)
 }
 \examples{
 data(matFish)

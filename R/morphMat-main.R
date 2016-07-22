@@ -10,7 +10,7 @@
 #'
 #' @title Size at Sexual Maturity.
 #'
-#' @description This package allows to estimate morphometric and gonadal size at sexual maturity for organisms, usually fish and invertebrates. The size at sexual maturity is defined as the length at which a randomly chosen specimen has a 50% chance of being mature. The package includes methods for classification based on relative growth (PCA, hierarchical clustering, discriminant analysis), logistic regression (frequentist or Bayesian), parameters estimation and some basic plots.
+#' @description Contains functions to estimate morphometric and gonadal size at sexual maturity for organisms, usually fish and invertebrates. It includes methods for classification based on relative growth (principal components analysis, hierarchical clustering, discriminant analysis), logistic regression (frequentist or Bayes), parameters estimation and some basic plots. The size at sexual maturity is defined as the length at which a randomly chosen specimen has a 50% chance of being mature
 #' @name sizeMat-package
 #' @aliases sizeMat-package sizeMat
 #' @docType package
@@ -255,12 +255,12 @@ plot.classify <- function(x, xlab = "X", ylab = "Y", col = c(1, 2), pch = c(4, 5
 }
 
 
-#' Calculate morphometric mature
+#' Estimate morphometric mature
 #' 
 #' Estimate the morphometric size at sexual maturity (\eqn{L50}).
 #'
 #' @param data an object of class 'classify' with the allometric variables (X", "Y") and classification of maturity (juvelines = 0, adults = 1).
-#' @param method a character string indicating the method to be applied, \code{"fq"} frecuentist GLM, or \code{"bayes"} Bayesian GLM (MCMClogit function).
+#' @param method a character string indicating the method to be applied, \code{"fq"} frecuentist GLM, or \code{"bayes"} Bayes GLM (MCMClogit function).
 #' @param niter number of iterations (bootstrap resampling).
 #' @param seed a single value, interpreted as an integer.
 #' @return An object of class 'morphMat'.
@@ -280,14 +280,14 @@ plot.classify <- function(x, xlab = "X", ylab = "Y", col = c(1, 2), pch = c(4, 5
 #' 
 #' The function requires an object of class "classify" with the X, Y (allometric variables) and classification of maturity (juvelines = 0, adults = 1).
 #' 
-#' The argument `method` requires a character string indicanting which regression will be used for the test.
-#' If `method = "fq"` the regression is based on GLM (frequentist) and if `method = "bayes"` a sample from the posterior distribution 
+#' The argument \code{method} requires a character string indicanting which regression will be used for the test.
+#' If \code{method = "fq"} the logistic regression is based on GLM (frequentist) and if \code{method = "bayes"} a sample from the posterior distribution 
 #' of a logistic regression model using a random walk Metropolis algorithm is generated (see MCMClogit function).
 #' 
-#' The argument `niter` requires a number. For the GLM regression (`method = "fq"`), a non-parametric bootstrap method consists
+#' The argument \code{niter} requires a number. For the GLM regression (\code{method = "fq"}), a non-parametric bootstrap method consists
 #' in generate B bootstrap samples, by resampling with replacement the original data. Then all statistics for each parameter 
 #' can be calculated from each bootstrap sample (median and confidence intervals). 
-#' For the `method = "bayes"`, the argument `niter` is related to the number of Metropolis iterations for the sampler.
+#' For the \code{method = "bayes"}, the argument `niter` is related to the number of Metropolis iterations for the sampler.
 #' @exportClass morphMat
 #' @examples
 #' data(crabdata)
@@ -326,11 +326,12 @@ morph_mature <- function(data, method = "fq", niter = 999, seed = 70387){
 }
 
 
-#' Print method for morphMat (morphometric size at sexual maturity)
+#' Print method for morphMat class (morphometric size at sexual maturity)
 #'
-#' @param x object of class 'morphMat' with the mature parameters and a data.frame with the allometric variables ("X", "Y") 
+#' @param x object of class 'morphMat' with the parameters of the logistic regression and a data.frame with the allometric variables ("X", "Y") 
 #' and classification of maturity. Also the fitted values for the logistic regression and confidence intervals (95\%).
 #' @param \dots Additional arguments to the print method.
+#' @return The median of the morphometric size at sexual maturity estimation and parameters.
 #' @examples
 #' data(crabdata)
 #' 
@@ -374,7 +375,7 @@ print.morphMat <- function(x, ...){
 }
 
 
-#' Plot method for morphMat (morphometric size at sexual maturity)
+#' Plot method for morphMat class (morphometric size at sexual maturity)
 #'
 #' @param x object of class 'morphMat' with the mature parameters and a data.frame with the allometric variables ("X", "Y") 
 #' and classification of maturity. Also the fitted values for the logistic regression and confidence intervals (95\%).
