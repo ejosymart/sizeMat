@@ -7,7 +7,7 @@
 morph_mature(data, method = "fq", niter = 999, seed = 70387)
 }
 \arguments{
-\item{data}{an object of class 'classify' with the allometric variables (X", "Y") and classification of maturity (juvelines = 0, adults = 1).}
+\item{data}{an object of class 'classify' with the allometric variables (X", "Y") and classification of maturity (juveniles = 0, adults = 1).}
 
 \item{method}{a character string indicating the method to be applied, \code{"fq"} frecuentist GLM, or \code{"bayes"} Bayes GLM (MCMClogit function).}
 
@@ -24,19 +24,19 @@ An object of class 'morphMat'.
 
 \code{B_boot} the 'n iter' values of parameter B.
 
-\code{L50} the 'n iter' values of parameter L50 (morphometric size at sexual maturity).
+\code{L50} the 'n iter' values of parameter L50 (size at morphometric maturity).
 
 \code{out} a dataframe with the allometric variables "X" and "Y", classification of maturity, the fitted values for  
 logistic regression and confidence intervals (95\%). Also the summary statistics of the model is provided.
 }
 \description{
-Estimate the morphometric size at sexual maturity (\eqn{L50}).
+Estimate size at morphometric maturity (\eqn{L50}).
 }
 \details{
-Estimate the morphometric size at sexual maturity using a logistic regression with X variable 
+Estimate the size at morphometric maturity using a logistic regression with X variable 
 and maturity classification (two categories: juveniles and adults). 
 
-The function requires an object of class "classify" with the X, Y (allometric variables) and classification of maturity (juvelines = 0, adults = 1).
+The function requires an object of class "classify" with the X, Y (allometric variables) and classification of maturity (juveniles = 0, adults = 1).
 
 The argument \code{method} requires a character string indicanting which regression will be used for the test.
 If \code{method = "fq"} the logistic regression is based on GLM (frequentist) and if \code{method = "bayes"} a sample from the posterior distribution 

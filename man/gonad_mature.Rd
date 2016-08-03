@@ -32,16 +32,16 @@ An object of class 'gonadMat'.
 
 \code{B_boot} the 'n iter' values of parameter B.
 
-\code{L50} the 'n iter' values of parameter L50 (gonadal size at sexual maturity).
+\code{L50} the 'n iter' values of parameter L50 (size at gonad maturity).
 
 \code{out} a dataframe with the allometric variable "X", stage of sexual maturity, the fitted values for  
 logistic regression and confidence intervals (95\%). Also the summary statistics of the model is provided.
 }
 \description{
-Estimate gonadal size at sexual maturity.
+Estimate size at gonad maturity.
 }
 \details{
-Estimate the gonadal size at sexual maturity using a logistic regression with X variable and 
+Estimate the size at gonad maturity using a logistic regression with X variable and 
 stages of sexual maturity (two categories: inmature and mature). 
 
 The function requires a data.frame with the X (allometric variable) and 

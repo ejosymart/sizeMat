@@ -1,6 +1,6 @@
 #' Estimate gonadal maturity
 #' 
-#' Estimate gonadal size at sexual maturity.
+#' Estimate size at gonad maturity.
 #' @param data data.frame with allometric variables and stage of sexual maturity (gonad maturation stages).
 #' @param varNames a character string indicating the name of the allometric 
 #' and the stage of sexual maturity variables to be used for analysis.
@@ -17,11 +17,11 @@
 #' 
 #' \code{B_boot} the 'n iter' values of parameter B.
 #' 
-#' \code{L50} the 'n iter' values of parameter L50 (gonadal size at sexual maturity).
+#' \code{L50} the 'n iter' values of parameter L50 (size at gonad maturity).
 #' 
 #' \code{out} a dataframe with the allometric variable "X", stage of sexual maturity, the fitted values for  
 #' logistic regression and confidence intervals (95\%). Also the summary statistics of the model is provided.
-#' @details Estimate the gonadal size at sexual maturity using a logistic regression with X variable and 
+#' @details Estimate the size at gonad maturity using a logistic regression with X variable and 
 #' stages of sexual maturity (two categories: inmature and mature). 
 #' 
 #' The function requires a data.frame with the X (allometric variable) and 
@@ -91,12 +91,12 @@ gonad_mature <- function(data, varNames = c("allometric", "stage") , inmName = "
 }
 
 
-#' Print method for gonadMat class (gonadal size at sexual maturity)
+#' Print method for gonadMat class (size at gonad maturity)
 #'
 #' @param x object of class 'gonadMat' with the parameters of the logistic regression and a data.frame with the X and stage of sexual maturity.
 #' variables. Also the fitted values for the logistic regression and confidence intervals (95\%).
 #' @param \dots Additional arguments to the print method.
-#' @return The median of the gonadal size at sexual maturity estimation and parameters.
+#' @return The median of the size at gonad maturity estimation and parameters.
 #' @examples
 #' data(matFish)
 #' 
@@ -139,13 +139,13 @@ print.gonadMat <- function(x, ...){
 
 
 
-#' Plot method for gonadMat class (gonadal size at sexual maturity)
+#' Plot method for gonadMat class (size at gonad maturity)
 #'
 #' @param x object of class 'gonadMat' with the mature parameters and a data.frame with the X and stage of sexual maturity.
 #' variables. Also the fitted values for the logistic regression and confidence intervals (95\%).
 #' @param xlab a title for the x axis.
 #' @param ylab a title for the y axis.
-#' @param col color for the logistic curve and for the L50\% morphometric size at sexual maturity.
+#' @param col color for the logistic curve and for the L50\% size at gonad maturity.
 #' @param lwd line with for drawing fitted values and confidence intervals.
 #' @param lty line type line type for drawing fitted values and confidence intervals
 #' @param vline_hist color of the vertival lines in the histogram. The lines represent the 
@@ -209,7 +209,7 @@ plot.gonadMat <- function(x, xlab = "X", ylab = "Proportion mature", col = c("bl
   lines(c(-1, wide[2]), c(0.5, 0.5), col = col[2], lwd = lwd, lty = lty)
   points(wide[2], 0.5, pch = 19, col = col[2], cex = 1.25)
   legend("topleft", as.expression(bquote(bold(L[50] == .(round(wide[2], 1))))), bty = "n")
-  cat("Morphometric size at sexual maturity =", round(wide[2], 1), "\n")
+  cat("Size at gonad maturity =", round(wide[2], 1), "\n")
   cat("Confidence intervals =", round(wide[1], 1), "-",round(wide[3], 1) ,  "\n")
   
   return(invisible(NULL))

@@ -5,7 +5,7 @@ sizeMat
 
 **Estimate Size at Sexual Maturity**
 
-This package allows to estimate Morphometric and Gonadal Size at Sexual maturity for organisms, usually fish and invertebrates.
+This package allows to estimate Size at Morphometric and Gonadal Maturity for organisms, usually fish and invertebrates.
 
 The estimation of morphometric maturity used two allometric variables and is based on the relative growth.
 
@@ -30,9 +30,9 @@ devtools::install_github("ejosymart/sizeMat")
 Examples
 --------
 
-This is a basic example which shows you how to estimate Morphometric and Gonadal Size at Sexual Maturity:
+This is a basic example which shows you how to estimate Size at Morphometric and Gonad Maturity:
 
-1.  Morphometric Size at Sexual Maturity
+1.  Size at Morphometric Maturity
 
 ``` r
 data(crabdata)
@@ -116,7 +116,7 @@ print(my_ogive)
 # plot(my_ogive)
 ```
 
-1.  Gonadal Size at Sexual Maturity
+1.  Size at Gonad Maturity
 
 ``` r
 data(matFish)

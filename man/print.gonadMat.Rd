@@ -2,7 +2,7 @@
 % Please edit documentation in R/gonadMat-main.R
 \name{print.gonadMat}
 \alias{print.gonadMat}
-\title{Print method for gonadMat class (gonadal size at sexual maturity)}
+\title{Print method for gonadMat class (size at gonad maturity)}
 \usage{
 \method{print}{gonadMat}(x, ...)
 }
@@ -13,10 +13,10 @@ variables. Also the fitted values for the logistic regression and confidence int
 \item{\dots}{Additional arguments to the print method.}
 }
 \value{
-The median of the gonadal size at sexual maturity estimation and parameters.
+The median of the size at gonad maturity estimation and parameters.
 }
 \description{
-Print method for gonadMat class (gonadal size at sexual maturity)
+Print method for gonadMat class (size at gonad maturity)
 }
 \examples{
 data(matFish)

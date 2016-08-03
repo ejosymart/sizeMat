@@ -26,10 +26,10 @@ A data.frame of class 'classify', with x (independent), y (dependent) and classi
 (juveniles = 0, adult = 1) variables.
 }
 \description{
-Classify te individuals in two groups (0: juvelines, 1: adults) based on relative growth.
+Classify te individuals in two groups (0: juveniles, 1: adults) based on relative growth.
 }
 \details{
-Classify the individuals in two groups (juvelines = 0 and adult = 1).
+Classify the individuals in two groups (juveniles = 0 and adult = 1).
 
 A Principal Components Analisys was conducted with two allometric variables (x: independent variable, y: dependent variable) 
 in log base, allowing to distinguish two groups that would represent juveniles and adult.

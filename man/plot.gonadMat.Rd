@@ -2,7 +2,7 @@
 % Please edit documentation in R/gonadMat-main.R
 \name{plot.gonadMat}
 \alias{plot.gonadMat}
-\title{Plot method for gonadMat class (gonadal size at sexual maturity)}
+\title{Plot method for gonadMat class (size at gonad maturity)}
 \usage{
 \method{plot}{gonadMat}(x, xlab = "X", ylab = "Proportion mature",
   col = c("blue", "red"), lwd = 2, lty = 2, vline_hist = "black",
@@ -16,7 +16,7 @@ variables. Also the fitted values for the logistic regression and confidence int
 
 \item{ylab}{a title for the y axis.}
 
-\item{col}{color for the logistic curve and for the L50\% morphometric size at sexual maturity.}
+\item{col}{color for the logistic curve and for the L50\% size at gonad maturity.}
 
 \item{lwd}{line with for drawing fitted values and confidence intervals.}
 
@@ -32,7 +32,7 @@ the median and the confidece intervals.}
 \item{\dots}{Additional arguments to the plot method.}
 }
 \description{
-Plot method for gonadMat class (gonadal size at sexual maturity)
+Plot method for gonadMat class (size at gonad maturity)
 }
 \examples{
 data(matFish)

@@ -9,7 +9,7 @@
   1), ...)
 }
 \arguments{
-\item{x}{an object of class 'classify' with the allometric variables ("X", "Y") and classification of maturity (juvelines = 0, adults = 1).}
+\item{x}{an object of class 'classify' with the allometric variables ("X", "Y") and classification of maturity (juveniles = 0, adults = 1).}
 
 \item{xlab}{a title for the x axis.}
 
