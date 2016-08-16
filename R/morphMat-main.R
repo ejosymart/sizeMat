@@ -250,7 +250,7 @@ plot.classify <- function(x, xlab = "X", ylab = "Y", col = c(1, 2), pch = c(4, 5
   eq_juv <- paste0("Y = ", round(as.numeric(coef(fit_juv)[1]), 2), " + ", round(as.numeric(coef(fit_juv)[2]),2), " *X", sep = "")
   eq_adt <- paste0("Y = ", round(as.numeric(coef(fit_adt)[1]), 2), " + ", round(as.numeric(coef(fit_adt)[2]),2), " *X", sep = "")
   legend("topleft", c(paste("Juveniles: ", eq_juv), paste("Adults: ", eq_adt)), 
-         bty = "n", pch = PCH, col = COL, cex = 0.8)
+         bty = "n", pch = unique(PCH), col = unique(COL), cex = 0.8)
   return(invisible(NULL))
 }
 
