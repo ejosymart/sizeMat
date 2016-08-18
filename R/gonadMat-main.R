@@ -71,7 +71,7 @@ gonad_mature <- function(data, varNames = c("allometric", "stage") , inmName = "
   if(!all(c(inmName, matName) %in% levels(data$stage))) stop("'inmName' or 'matName' have not been found in data.")
   if(all(inmName %in% matName)) stop("'inmName' and 'matName' must have different stage names")
   
-  data$stage <- ifelse(data$stage == inmName, 0, 1)
+  data$stage <- ifelse(data$stage %in% inmName, 0, 1)
   estimate <- switch(method,
                      fq = .gonad_mature_fq(data = data, niter = niter, seed = seed),
                      bayes = .gonad_mature_bayes(data = data, niter = niter, seed = seed))
