@@ -71,7 +71,7 @@ data(matFish)
 gonad_mat = gonad_mature(matFish, varNames = c("total_length", "stage_mat"), inmName = "I", 
 matName = c("II", "III", "IV"), method = "fq", niter = 50)
 
-## \\eqn{niter} parameters:
+## 'niter' parameters:
 gonad_mat$A_boot
 gonad_mat$B_boot
 gonad_mat$L50_boot

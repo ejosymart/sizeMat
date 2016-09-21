@@ -51,7 +51,7 @@
 #' gonad_mat = gonad_mature(matFish, varNames = c("total_length", "stage_mat"), inmName = "I", 
 #' matName = c("II", "III", "IV"), method = "fq", niter = 50)
 #' 
-#' ## \eqn{niter} parameters:
+#' ## 'niter' parameters:
 #' gonad_mat$A_boot
 #' gonad_mat$B_boot
 #' gonad_mat$L50_boot
@@ -115,21 +115,28 @@ print.gonadMat <- function(x, ...){
   B_b   <- quantile(x$B_boot, probs = 0.5, na.rm = TRUE)
   L50_b <- quantile(x$L50_boot, probs = 0.5, na.rm = TRUE)
   
-  if(is.null(coef(x$model))){
-    tab <- matrix(as.numeric(c(A_b, B_b, L50_b)), 
-                  nrow = 3, ncol = 1, byrow = TRUE)
+  fit     <- x$out
+  x_input <- fit$x
+  y_input <- fit$mature
+
+  model1 <- glm(y_input ~ x_input, family = binomial(link = "logit"))
+  R2     <- nagelkerkeR2(model1)
+  
+    if(is.null(coef(x$model))){
+    tab <- matrix(c(round(as.numeric(c(A_b, B_b, L50_b)), 4), round(R2, 4)), 
+                  nrow = 4, ncol = 1, byrow = TRUE)
     colnames(tab) <- c("Bootstrap (Median)")
-    rownames(tab) <- c("A", "B", "L50")
+    rownames(tab) <- c("A", "B", "L50", "R2")
     tab <- as.table(tab)
     return(tab)
   }else{
     A_or   <- coef(x$model)[1]
     B_or   <- coef(x$model)[2]
     L50_or <- -A_or/B_or
-    tab <- matrix(as.numeric(c(A_or, A_b, B_or, B_b, L50_or, L50_b)), 
-                  nrow = 3, ncol = 2, byrow = TRUE)
+    tab <- matrix(c(round(as.numeric(c(A_or, A_b, B_or, B_b, L50_or, L50_b)), 4), "-", round(R2, 4)), 
+                  nrow = 4, ncol = 2, byrow = TRUE)
     colnames(tab) <- c("Original", "Bootstrap (Median)")
-    rownames(tab) <- c("A", "B", "L50")
+    rownames(tab) <- c("A", "B", "L50", "R2")
     tab <- as.table(tab)
     return(tab)
   }
@@ -174,6 +181,10 @@ plot.gonadMat <- function(x, xlab = "X", ylab = "Proportion mature", col = c("bl
   m_p     <- tapply(y_input, x_input, mean)
   wide    <- quantile(x$L50_boot, probs = c(0.025, 0.5, 0.975), na.rm = TRUE)
   
+  # R-square Nagelkerke method
+  model1 <- glm(y_input ~ x_input, family = binomial(link = "logit"))
+  R2     <- nagelkerkeR2(model1)
+  
   # figure 1
   hist(x$A_boot, main = "", xlab = "A", col = "grey90")
   abline(v = as.numeric(quantile(x$A_boot, probs = c(0.5), na.rm = TRUE)), 
@@ -208,7 +219,10 @@ plot.gonadMat <- function(x, xlab = "X", ylab = "Proportion mature", col = c("bl
   lines(c(wide[2], wide[2]), c(-1, 0.5), col = col[2], lwd = lwd, lty = lty)
   lines(c(-1, wide[2]), c(0.5, 0.5), col = col[2], lwd = lwd, lty = lty)
   points(wide[2], 0.5, pch = 19, col = col[2], cex = 1.25)
-  legend("topleft", as.expression(bquote(bold(L[50] == .(round(wide[2], 1))))), bty = "n")
+  # legend("topleft", as.expression(bquote(bold(L[50] == .(round(wide[2], 1))))), bty = "n")
+  legend("topleft", c(as.expression(bquote(bold(L[50] == .(round(wide[2], 1))))),
+                      as.expression(bquote(bold(R^2 == .(round(R2, 2)))))), 
+         bty = "n")
   cat("Size at gonad maturity =", round(wide[2], 1), "\n")
   cat("Confidence intervals =", round(wide[1], 1), "-",round(wide[3], 1) ,  "\n")
   

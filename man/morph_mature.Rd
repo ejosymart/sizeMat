@@ -55,7 +55,7 @@ varSex = "sex_category", selectSex = NULL, method = "ld")
 
 my_mature = morph_mature(classify_data, method = "fq", niter = 50)
 
-## \\eqn{niter} parameters:
+## 'niter' parameters:
 my_mature$A_boot
 my_mature$B_boot
 my_mature$L50_boot

@@ -5,7 +5,7 @@
 #' @importFrom MASS lda qda
 #' @importFrom grDevices colors
 #' @importFrom graphics axis box legend lines plot points hist par abline
-#' @importFrom stats binomial quantile coef complete.cases cutree dist glm hclust prcomp predict cov pchisq
+#' @importFrom stats binomial quantile coef complete.cases cutree dist glm hclust prcomp predict cov pchisq logLik update family
 #' @importFrom utils data read.csv installed.packages
 #'
 #' @title Size at Sexual Maturity.
@@ -174,13 +174,17 @@ print.classify <- function(x, ...){
   
   fit_juv <- glm(y ~ x, data = juv)
   fit_adt <- glm(y ~ x, data = adt)
+  slope   <- summary(glm(y ~ x + mature + x:mature, data = data)) 
   cat("--------------------------------------------------------", "\n")
   cat("1) Linear regression for juveniles", "\n")
   print(summary(fit_juv))
   cat("--------------------------------------------------------", "\n")
   cat("2) Linear regression for adults", "\n")
   print(summary(fit_adt))
-  
+  cat("--------------------------------------------------------", "\n")
+  cat("3) Difference between slopes (ANCOVA)", "\n")
+  print(slope$coefficients)
+  print(ifelse(rev(slope$coefficients)[1]<0.05, "slopes are different", "slopes are the same"))
   return(invisible())
 }
 
@@ -297,7 +301,7 @@ plot.classify <- function(x, xlab = "X", ylab = "Y", col = c(1, 2), pch = c(4, 5
 #' 
 #' my_mature = morph_mature(classify_data, method = "fq", niter = 50)
 #' 
-#' ## \eqn{niter} parameters:
+#' ## 'niter' parameters:
 #' my_mature$A_boot
 #' my_mature$B_boot
 #' my_mature$L50_boot
@@ -345,28 +349,35 @@ morph_mature <- function(data, method = "fq", niter = 999, seed = 70387){
 #' @method print morphMat
 print.morphMat <- function(x, ...){
   if (!inherits(x, "morphMat"))
-    stop("Use only with 'morphMat' objects")
+    stop("Use with 'morphMat' objects only")
   cat("formula: Y = 1/1+exp-(A + B*X)", "\n\n")
   
   A_b   <- quantile(x$A_boot, probs = 0.5, na.rm = TRUE)
   B_b   <- quantile(x$B_boot, probs = 0.5, na.rm = TRUE)
   L50_b <- quantile(x$L50_boot, probs = 0.5, na.rm = TRUE)
   
+  fit     <- x$out
+  x_input <- fit$x
+  y_input <- fit$mature
+  
+  model1 <- glm(y_input ~ x_input, family = binomial(link = "logit"))
+  R2     <- nagelkerkeR2(model1)
+  
   if(is.null(coef(x$model))){
-    tab <- matrix(as.numeric(c(A_b, B_b, L50_b)), 
-                  nrow = 3, ncol = 1, byrow = TRUE)
+    tab <- matrix(c(round(as.numeric(c(A_b, B_b, L50_b)), 4), round(R2, 4)), 
+                  nrow = 4, ncol = 1, byrow = TRUE)
     colnames(tab) <- c("Bootstrap (Median)")
-    rownames(tab) <- c("A", "B", "L50")
+    rownames(tab) <- c("A", "B", "L50", "R2")
     tab <- as.table(tab)
     return(tab)
   }else{
     A_or   <- coef(x$model)[1]
     B_or   <- coef(x$model)[2]
     L50_or <- -A_or/B_or
-    tab <- matrix(as.numeric(c(A_or, A_b, B_or, B_b, L50_or, L50_b)), 
-                  nrow = 3, ncol = 2, byrow = TRUE)
+    tab <- matrix(c(round(as.numeric(c(A_or, A_b, B_or, B_b, L50_or, L50_b)), 4), "-", round(R2, 4)), 
+                  nrow = 4, ncol = 2, byrow = TRUE)
     colnames(tab) <- c("Original", "Bootstrap (Median)")
-    rownames(tab) <- c("A", "B", "L50")
+    rownames(tab) <- c("A", "B", "L50", "R2")
     tab <- as.table(tab)
     return(tab)
   }
@@ -404,13 +415,17 @@ plot.morphMat <- function(x, xlab = "X", ylab = "Proportion mature", col = c("bl
                           lwd = 2, lty = 2, vline_hist = "black", lwd_hist = 2, lty_hist = 2, ...){
   
   if (!inherits(x, "morphMat"))
-    stop("Use only with 'morphMat' objects")
+    stop("Use with 'morphMat' objects only")
   
   fit     <- x$out
   x_input <- fit$x
   y_input <- fit$mature
   m_p     <- tapply(y_input, x_input, mean)
   wide    <- quantile(x$L50_boot, probs = c(0.025, 0.5, 0.975), na.rm = TRUE)
+  
+  # R-square Nagelkerke method
+  model1 <- glm(y_input ~ x_input, family = binomial(link = "logit"))
+  R2     <- nagelkerkeR2(model1)
   
   # figure 1
   hist(x$A_boot, main = "", xlab = "A", col = "grey90")
@@ -446,7 +461,10 @@ plot.morphMat <- function(x, xlab = "X", ylab = "Proportion mature", col = c("bl
   lines(c(wide[2], wide[2]), c(-1, 0.5), col = col[2], lwd = lwd, lty = lty)
   lines(c(-1, wide[2]), c(0.5, 0.5), col = col[2], lwd = lwd, lty = lty)
   points(wide[2], 0.5, pch = 19, col = col[2], cex = 1.25)
-  legend("topleft", as.expression(bquote(bold(L[50] == .(round(wide[2], 1))))), bty = "n")
+  # legend("topleft", as.expression(bquote(bold(L[50] == .(round(wide[2], 1))))), bty = "n")
+  legend("topleft", c(as.expression(bquote(bold(L[50] == .(round(wide[2], 1))))),
+                      as.expression(bquote(bold(R^2 == .(round(R2, 2)))))), 
+         bty = "n")
   cat("Size at morphometric maturity =", round(wide[2], 1), "\n")
   cat("Confidence intervals =", round(wide[1], 1), "-",round(wide[3], 1) ,  "\n")
   
