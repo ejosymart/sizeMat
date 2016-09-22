@@ -4,7 +4,7 @@
 \alias{morph_mature}
 \title{Estimate morphometric mature}
 \usage{
-morph_mature(data, method = "fq", niter = 999, seed = 70387)
+morph_mature(data, method = "fq", niter = 999, seed = 70388)
 }
 \arguments{
 \item{data}{an object of class 'classify' with the allometric variables (X", "Y") and classification of maturity (juveniles = 0, adults = 1).}
@@ -55,7 +55,7 @@ varSex = "sex_category", selectSex = NULL, method = "ld")
 
 my_mature = morph_mature(classify_data, method = "fq", niter = 50)
 
-## 'niter' parameters:
+# 'niter' parameters:
 my_mature$A_boot
 my_mature$B_boot
 my_mature$L50_boot

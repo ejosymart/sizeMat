@@ -12,7 +12,8 @@
 \item{\dots}{Additional arguments to the print method.}
 }
 \value{
-The number of juveniles and adults. Also shows the regression analysis for juveniles and adults.
+The number of juveniles and adults. Also shows the regression analysis for juveniles and adults 
+and an ANCOVA analisys to compare slopes.
 }
 \description{
 Print method for classify class

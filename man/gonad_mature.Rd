@@ -5,7 +5,7 @@
 \title{Estimate gonadal maturity}
 \usage{
 gonad_mature(data, varNames = c("allometric", "stage"), inmName = "inm",
-  matName = "mad", method = "fq", niter = 999, seed = 70387)
+  matName = "mad", method = "fq", niter = 999, seed = 70388)
 }
 \arguments{
 \item{data}{data.frame with allometric variables and stage of sexual maturity (gonad maturation stages).}
@@ -71,7 +71,7 @@ data(matFish)
 gonad_mat = gonad_mature(matFish, varNames = c("total_length", "stage_mat"), inmName = "I", 
 matName = c("II", "III", "IV"), method = "fq", niter = 50)
 
-## 'niter' parameters:
+# 'niter' parameters:
 gonad_mat$A_boot
 gonad_mat$B_boot
 gonad_mat$L50_boot

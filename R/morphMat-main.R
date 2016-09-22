@@ -5,8 +5,8 @@
 #' @importFrom MASS lda qda
 #' @importFrom grDevices colors
 #' @importFrom graphics axis box legend lines plot points hist par abline
-#' @importFrom stats binomial quantile coef complete.cases cutree dist glm hclust prcomp predict cov pchisq logLik update family
 #' @importFrom utils data read.csv installed.packages
+#' @import stats 
 #'
 #' @title Size at Sexual Maturity.
 #'
@@ -18,7 +18,6 @@
 #' @details Package: sizeMat
 #' @details Type: Package
 #' @details The Size at Morphometric and Gonad maturity are estimating using differents functions (process).
-#' 
 #' 1) The estimation of the Size at Morphometric Maturity involves two processes:
 #' 
 #' 1.1) A Principal Components Analisys is conducted with two allometric variables (x: independent variable, y: dependent variable) in log base, allowing to distinguish 
@@ -35,19 +34,19 @@
 #' 
 #' The variables are fitted to a logistic function with the form: 
 #' 
-#' \deqn{P_CS = 1 / [1+e^-(beta_0 + beta_1*X)]}
+#' \deqn{P_{CS} = 1 / [1+e^{-(beta_0 + beta_1*X)}]}
 #' 
 #' where:
 #' 
-#' \eqn{P_CL} is the probability of an individual of being mature at a determinate \eqn{X} length.
+#' \eqn{P_{CL}} is the probability of an individual of being mature at a determinate \eqn{X} length.
 #'  
 #' \eqn{beta_0} (intercept) and \eqn{beta_1} (slope) are parameters estimated. 
 #' 
-#' The (\eqn{L_50}) is calculated as: 
+#' The (\eqn{L_{50}}) is calculated as: 
 #' 
-#' \deqn{L_50 = -beta_0 / beta_1}
+#' \deqn{L_{50} = -beta_0 / beta_1}
 #' 
-#' Some basic plotting (classification, \eqn{beta_0}, \eqn{beta_1} and \eqn{L_50} histogram, and maturity ogive) 
+#' Some basic plotting (classification, \eqn{beta_0}, \eqn{beta_1} and \eqn{L_{50}} histogram, and maturity ogive) 
 #' are also provided.
 #' 
 #' 
@@ -152,7 +151,8 @@ classify_mature <- function(data, varNames = c("x", "y"), varSex = "sex",
 #'
 #' @param x an object of class 'classify' with the allometric variables ("X", "Y") and classification of maturity (juveniles = 0, adults = 1).
 #' @param \dots Additional arguments to the print method.
-#' @return The number of juveniles and adults. Also shows the regression analysis for juveniles and adults.
+#' @return The number of juveniles and adults. Also shows the regression analysis for juveniles and adults 
+#' and an ANCOVA analisys to compare slopes.
 #' @examples
 #' data(crabdata)
 #' 
@@ -301,13 +301,13 @@ plot.classify <- function(x, xlab = "X", ylab = "Y", col = c(1, 2), pch = c(4, 5
 #' 
 #' my_mature = morph_mature(classify_data, method = "fq", niter = 50)
 #' 
-#' ## 'niter' parameters:
+#' # 'niter' parameters:
 #' my_mature$A_boot
 #' my_mature$B_boot
 #' my_mature$L50_boot
 #' my_mature$out
 #' @export
-morph_mature <- function(data, method = "fq", niter = 999, seed = 70387){
+morph_mature <- function(data, method = "fq", niter = 999, seed = 070388){
   
   if (!inherits(data, "classify"))
     stop("Use only with 'classify' objects")
@@ -335,7 +335,7 @@ morph_mature <- function(data, method = "fq", niter = 999, seed = 70387){
 #' @param x object of class 'morphMat' with the parameters of the logistic regression and a data.frame with the allometric variables ("X", "Y") 
 #' and classification of maturity. Also the fitted values for the logistic regression and confidence intervals (95\%).
 #' @param \dots Additional arguments to the print method.
-#' @return The median of the size at morphometric maturity estimation and parameters.
+#' @return The median of the size at morphometric maturity estimation, parameters and the Nagelkerke's R square.
 #' @examples
 #' data(crabdata)
 #' 
@@ -461,7 +461,6 @@ plot.morphMat <- function(x, xlab = "X", ylab = "Proportion mature", col = c("bl
   lines(c(wide[2], wide[2]), c(-1, 0.5), col = col[2], lwd = lwd, lty = lty)
   lines(c(-1, wide[2]), c(0.5, 0.5), col = col[2], lwd = lwd, lty = lty)
   points(wide[2], 0.5, pch = 19, col = col[2], cex = 1.25)
-  # legend("topleft", as.expression(bquote(bold(L[50] == .(round(wide[2], 1))))), bty = "n")
   legend("topleft", c(as.expression(bquote(bold(L[50] == .(round(wide[2], 1))))),
                       as.expression(bquote(bold(R^2 == .(round(R2, 2)))))), 
          bty = "n")

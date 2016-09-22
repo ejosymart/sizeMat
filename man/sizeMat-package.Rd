@@ -14,7 +14,6 @@ Package: sizeMat
 Type: Package
 
 The Size at Morphometric and Gonad maturity are estimating using differents functions (process).
-
 1) The estimation of the Size at Morphometric Maturity involves two processes:
 
 1.1) A Principal Components Analisys is conducted with two allometric variables (x: independent variable, y: dependent variable) in log base, allowing to distinguish 
@@ -31,19 +30,19 @@ In the regression analysis, \eqn{X} (e.g: carapace width) is considered the expl
 
 The variables are fitted to a logistic function with the form: 
 
-\deqn{P_CS = 1 / [1+e^-(beta_0 + beta_1*X)]}
+\deqn{P_{CS} = 1 / [1+e^{-(beta_0 + beta_1*X)}]}
 
 where:
 
-\eqn{P_CL} is the probability of an individual of being mature at a determinate \eqn{X} length.
+\eqn{P_{CL}} is the probability of an individual of being mature at a determinate \eqn{X} length.
  
 \eqn{beta_0} (intercept) and \eqn{beta_1} (slope) are parameters estimated. 
 
-The (\eqn{L_50}) is calculated as: 
+The (\eqn{L_{50}}) is calculated as: 
 
-\deqn{L_50 = -beta_0 / beta_1}
+\deqn{L_{50} = -beta_0 / beta_1}
 
-Some basic plotting (classification, \eqn{beta_0}, \eqn{beta_1} and \eqn{L_50} histogram, and maturity ogive) 
+Some basic plotting (classification, \eqn{beta_0}, \eqn{beta_1} and \eqn{L_{50}} histogram, and maturity ogive) 
 are also provided.
 
 

@@ -13,7 +13,7 @@ and classification of maturity. Also the fitted values for the logistic regressi
 \item{\dots}{Additional arguments to the print method.}
 }
 \value{
-The median of the size at morphometric maturity estimation and parameters.
+The median of the size at morphometric maturity estimation, parameters and the Nagelkerke's R square.
 }
 \description{
 Print method for morphMat class (size at morphometric maturity)

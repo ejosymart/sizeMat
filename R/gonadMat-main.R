@@ -51,14 +51,14 @@
 #' gonad_mat = gonad_mature(matFish, varNames = c("total_length", "stage_mat"), inmName = "I", 
 #' matName = c("II", "III", "IV"), method = "fq", niter = 50)
 #' 
-#' ## 'niter' parameters:
+#' # 'niter' parameters:
 #' gonad_mat$A_boot
 #' gonad_mat$B_boot
 #' gonad_mat$L50_boot
 #' gonad_mat$out
 #' @export
 gonad_mature <- function(data, varNames = c("allometric", "stage") , inmName = "inm", matName = "mad", 
-                         method = "fq", niter = 999, seed = 70387){
+                         method = "fq", niter = 999, seed = 070388){
   
   if(length(varNames) != 2) stop("You must provide two variables.")
   if(!all(varNames %in% names(data))) stop("'varNames' have not been found in data.")
@@ -96,7 +96,7 @@ gonad_mature <- function(data, varNames = c("allometric", "stage") , inmName = "
 #' @param x object of class 'gonadMat' with the parameters of the logistic regression and a data.frame with the X and stage of sexual maturity.
 #' variables. Also the fitted values for the logistic regression and confidence intervals (95\%).
 #' @param \dots Additional arguments to the print method.
-#' @return The median of the size at gonad maturity estimation and parameters.
+#' @return The median of the size at gonad maturity estimation, parameters and the Nagelkerke's R squared.
 #' @examples
 #' data(matFish)
 #' 
@@ -219,7 +219,6 @@ plot.gonadMat <- function(x, xlab = "X", ylab = "Proportion mature", col = c("bl
   lines(c(wide[2], wide[2]), c(-1, 0.5), col = col[2], lwd = lwd, lty = lty)
   lines(c(-1, wide[2]), c(0.5, 0.5), col = col[2], lwd = lwd, lty = lty)
   points(wide[2], 0.5, pch = 19, col = col[2], cex = 1.25)
-  # legend("topleft", as.expression(bquote(bold(L[50] == .(round(wide[2], 1))))), bty = "n")
   legend("topleft", c(as.expression(bquote(bold(L[50] == .(round(wide[2], 1))))),
                       as.expression(bquote(bold(R^2 == .(round(R2, 2)))))), 
          bty = "n")
