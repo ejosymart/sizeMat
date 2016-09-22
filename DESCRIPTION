@@ -7,7 +7,7 @@ Authors@R: c(person("Josymar", "Torrejon-Magallanes", email = "ejosymart@gmail.c
 Maintainer: Josymar Torrejon-Magallanes <ejosymart@gmail.com>
 Description: Contains functions to estimate morphometric and gonadal size at sexual maturity for organisms, usually fish and invertebrates. It includes methods for classification based on relative growth (using principal components analysis, hierarchical clustering, discriminant analysis), logistic regression (Frequentist or Bayes), parameters estimation and some basic plots.
 Depends: R (>= 2.15)
-Imports: MCMCpack, matrixStats, MASS, grDevices, graphics, stats, utils
+Imports: MCMCpack, matrixStats, MASS, grDevices, graphics, stats, utils, mcmc
 Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
 License: GPL-2
