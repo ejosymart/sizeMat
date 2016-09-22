@@ -116,7 +116,7 @@ print(my_ogive)
 # plot(my_ogive)
 ```
 
-1.  Size at Gonad Maturity
+2.  Size at Gonad Maturity
 
 ``` r
 data(matFish)
