@@ -19,7 +19,7 @@
 
   create_x <- cbind(1, data$x)
   x_fq     <- as.matrix(create_x) %*% t(as.matrix(cbind(A,B)))
-  pred_fq  <- as.data.frame(1 / (1 + exp(-x_fq)))
+  pred_fq  <- 1 / (1 + exp(-x_fq))
   qtl      <- round(matrixStats::rowQuantiles(pred_fq, probs = c(0.025, 0.5, 0.975)), 3)
   fitted   <- qtl[, 2]
   lower    <- qtl[, 1]
@@ -48,7 +48,7 @@
   
   create_x   <- cbind(1, data$x)
   x_bayes    <- as.matrix(create_x) %*% t(model_bayes)
-  pred_bayes <- as.data.frame(1 / (1 + exp(-x_bayes)))
+  pred_bayes <- 1 / (1 + exp(-x_bayes))
   qtl        <- round(matrixStats::rowQuantiles(pred_bayes, probs = c(0.025, 0.5, 0.975)), 3)
   fitted     <- qtl[, 2]
   lower      <- qtl[, 1]
