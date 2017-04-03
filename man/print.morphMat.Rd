@@ -7,7 +7,7 @@
 \method{print}{morphMat}(x, ...)
 }
 \arguments{
-\item{x}{object of class 'morphMat' with the parameters of the logistic regression and a data.frame with the allometric variables ("X", "Y") 
+\item{x}{object of class 'morphMat' with the parameters of the logistic regression and a data.frame with the allometric variables ("X", "Y")
 and classification of maturity. Also the fitted values for the logistic regression and confidence intervals (95\%).}
 
 \item{\dots}{Additional arguments to the print method.}
@@ -21,7 +21,7 @@ Print method for morphMat class (size at morphometric maturity)
 \examples{
 data(crabdata)
 
-classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_heigth"), 
+classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_heigth"),
 varSex = "sex_category", selectSex = NULL, method = "ld")
 
 my_mature = morph_mature(classify_data, method = "fq", niter = 50)

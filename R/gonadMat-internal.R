@@ -4,11 +4,10 @@
   smry_model <- summary(model_glm)
   
   set.seed(seed)
-  new_data <- list()
   n_coef   <- list()
-  for(i in 1:niter){
-    new_data[[i]] <- data[sample(nrow(data), nrow(data), replace = T), ]
-    model_boot <- glm(stage ~ x, data = new_data[[i]], family = binomial(link = "logit"))
+  for(i in seq_len(niter)){
+    new_data   <- data[sample(nrow(data), replace = TRUE), ]
+    model_boot <- glm(stage ~ x, data = new_data, family = binomial(link = "logit"))
     glm_coef   <- coef(model_boot)
     n_coef     <- rbind(glm_coef, n_coef)
   }
@@ -19,7 +18,7 @@
   
   create_x <- cbind(1, data$x)
   x_fq     <- as.matrix(create_x) %*% t(as.matrix(cbind(A,B)))
-  pred_fq  <- as.data.frame(1 / (1 + exp(-x_fq)))
+  pred_fq  <- 1 / (1 + exp(-x_fq))
   qtl      <- round(matrixStats::rowQuantiles(pred_fq, probs = c(0.025, 0.5, 0.975)), 3)
   fitted   <- qtl[, 2]
   lower    <- qtl[, 1]
@@ -48,7 +47,7 @@
   
   create_x   <- cbind(1, data$x)
   x_bayes    <- as.matrix(create_x) %*% t(model_bayes)
-  pred_bayes <- as.data.frame(1 / (1 + exp(-x_bayes)))
+  pred_bayes <- 1 / (1 + exp(-x_bayes))
   qtl        <- round(matrixStats::rowQuantiles(pred_bayes, probs = c(0.025, 0.5, 0.975)), 3)
   fitted     <- qtl[, 2]
   lower      <- qtl[, 1]

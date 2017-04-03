@@ -26,31 +26,31 @@ An object of class 'morphMat'.
 
 \code{L50} the 'n iter' values of parameter L50 (size at morphometric maturity).
 
-\code{out} a dataframe with the allometric variables "X" and "Y", classification of maturity, the fitted values for  
+\code{out} a dataframe with the allometric variables "X" and "Y", classification of maturity, the fitted values for
 logistic regression and confidence intervals (95\%). Also the summary statistics of the model is provided.
 }
 \description{
 Estimate size at morphometric maturity (\eqn{L50}).
 }
 \details{
-Estimate the size at morphometric maturity using a logistic regression with X variable 
-and maturity classification (two categories: juveniles and adults). 
+Estimate the size at morphometric maturity using a logistic regression with X variable
+and maturity classification (two categories: juveniles and adults).
 
 The function requires an object of class "classify" with the X, Y (allometric variables) and classification of maturity (juveniles = 0, adults = 1).
 
 The argument \code{method} requires a character string indicanting which regression will be used for the test.
-If \code{method = "fq"} the logistic regression is based on GLM (frequentist) and if \code{method = "bayes"} a sample from the posterior distribution 
+If \code{method = "fq"} the logistic regression is based on GLM (frequentist) and if \code{method = "bayes"} a sample from the posterior distribution
 of a logistic regression model using a random walk Metropolis algorithm is generated (see MCMClogit function).
 
 The argument \code{niter} requires a number. For the GLM regression (\code{method = "fq"}), a non-parametric bootstrap method consists
-in generate B bootstrap samples, by resampling with replacement the original data. Then all statistics for each parameter 
-can be calculated from each bootstrap sample (median and confidence intervals). 
+in generate B bootstrap samples, by resampling with replacement the original data. Then all statistics for each parameter
+can be calculated from each bootstrap sample (median and confidence intervals).
 For the \code{method = "bayes"}, the argument `niter` is related to the number of Metropolis iterations for the sampler.
 }
 \examples{
 data(crabdata)
 
-classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_heigth"), 
+classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_heigth"),
 varSex = "sex_category", selectSex = NULL, method = "ld")
 
 my_mature = morph_mature(classify_data, method = "fq", niter = 50)

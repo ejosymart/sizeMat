@@ -1,7 +1,7 @@
 Package: sizeMat
 Type: Package
 Title: Estimate Size at Sexual Maturity
-Version: 0.2.0
+Version: 0.3.0
 Date: 2016-09-22
 Authors@R: c(person("Josymar", "Torrejon-Magallanes", email = "ejosymart@gmail.com", role = c("cre", "aut")))
 Maintainer: Josymar Torrejon-Magallanes <ejosymart@gmail.com>

@@ -6,7 +6,7 @@
 \alias{sizeMat-package}
 \title{Size at Sexual Maturity.}
 \description{
-Contains functions to estimate size at morphometric and gonad maturity for organisms, usually fish and invertebrates. It includes methods for classification based on relative growth (principal components analysis, hierarchical clustering, discriminant analysis), logistic regression (frequentist or Bayes), parameters estimation and some basic plots. The size at sexual maturity is defined as the length at which a randomly chosen specimen has a 50% chance of being mature
+Contains functions to estimate size at morphometric and gonad maturity for organisms, usually fish and invertebrates. It includes methods for classification based on relative growth (principal components analysis, hierarchical clustering, discriminant analysis), logistic regression (frequentist or Bayes), parameters estimation and some basic plots. The size at sexual maturity is defined as the length at which a randomly chosen specimen has a 50\% chance of being mature
 }
 \details{
 Package: sizeMat
@@ -16,45 +16,45 @@ Type: Package
 The Size at Morphometric and Gonad maturity are estimating using differents functions (process).
 1) The estimation of the Size at Morphometric Maturity involves two processes:
 
-1.1) A Principal Components Analisys is conducted with two allometric variables (x: independent variable, y: dependent variable) in log base, allowing to distinguish 
-two groups that would represent juveniles and adult. The individuals are assigned to each group using a hierarchical classification procedure (hierarchical cluster). 
-This method is based on establishing a predetermined number of groups (in this case, two) and assigning individuals to one of the groups according to 
-their loads on the two axes of the PCA (Corgos & Freire, 2006). Using the results of the classification (PCA + cluster), a discriminant analysis (linear or quadratic) 
-is carried out to obtain a discriminating function that permitted any individuals to be classified as a juvenile or an adult on the basis of the X and Y 
+1.1) A Principal Components Analisys is conducted with two allometric variables (x: independent variable, y: dependent variable) in log base, allowing to distinguish
+two groups that would represent juveniles and adult. The individuals are assigned to each group using a hierarchical classification procedure (hierarchical cluster).
+This method is based on establishing a predetermined number of groups (in this case, two) and assigning individuals to one of the groups according to
+their loads on the two axes of the PCA (Corgos & Freire, 2006). Using the results of the classification (PCA + cluster), a discriminant analysis (linear or quadratic)
+is carried out to obtain a discriminating function that permitted any individuals to be classified as a juvenile or an adult on the basis of the X and Y
 allometric variables.
 
 1.2) After classification, the logistic approach is used. The size at 50\% maturity (\eqn{L_50}) is estimated as the length at
-which a randomly chosen specimen has a 50\% chance of being mature (Somerton  1980, Roa  et al. 1999, Corgos & Freire 2006). 
-In the regression analysis, \eqn{X} (e.g: carapace width) is considered the explanatory variable and the classification \eqn{CS} 
-(juveniles: 0, adults: 1) is considered the response variable (binomial). 
+which a randomly chosen specimen has a 50\% chance of being mature (Somerton  1980, Roa  et al. 1999, Corgos & Freire 2006).
+In the regression analysis, \eqn{X} (e.g: carapace width) is considered the explanatory variable and the classification \eqn{CS}
+(juveniles: 0, adults: 1) is considered the response variable (binomial).
 
-The variables are fitted to a logistic function with the form: 
+The variables are fitted to a logistic function with the form:
 
 \deqn{P_{CS} = 1 / [1+e^{-(beta_0 + beta_1*X)}]}
 
 where:
 
 \eqn{P_{CL}} is the probability of an individual of being mature at a determinate \eqn{X} length.
- 
-\eqn{beta_0} (intercept) and \eqn{beta_1} (slope) are parameters estimated. 
 
-The (\eqn{L_{50}}) is calculated as: 
+\eqn{beta_0} (intercept) and \eqn{beta_1} (slope) are parameters estimated.
+
+The (\eqn{L_{50}}) is calculated as:
 
 \deqn{L_{50} = -beta_0 / beta_1}
 
-Some basic plotting (classification, \eqn{beta_0}, \eqn{beta_1} and \eqn{L_{50}} histogram, and maturity ogive) 
+Some basic plotting (classification, \eqn{beta_0}, \eqn{beta_1} and \eqn{L_{50}} histogram, and maturity ogive)
 are also provided.
 
 
-2) The estimation of Size at Gonad Maturity use the logistic approach only. 
+2) The estimation of Size at Gonad Maturity use the logistic approach only.
 
-To estimate size at gonadal maturity, the database must contains the stage of sexual 
+To estimate size at gonadal maturity, the database must contains the stage of sexual
 maturity and at least one allometric variable (e.g: total length, fork length, carapace width).
 The stage of sexual maturity is refered to the gonadal maturarion stages (e.g: I, II, III, IV or 0, 1, etc).
 
 So, in the regression analysis, the allometric variable (e.g: total length) is considered the
-explanatory variable and the stage of sexual maturity (inmature: 0, mature: 1) 
-is considered the response variable (binomial). The regression  analysis is performed 
+explanatory variable and the stage of sexual maturity (inmature: 0, mature: 1)
+is considered the response variable (binomial). The regression  analysis is performed
 in the same way as the size at morphometric maturity.
 }
 \examples{

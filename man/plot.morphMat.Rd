@@ -9,7 +9,7 @@
   lwd_hist = 2, lty_hist = 2, ...)
 }
 \arguments{
-\item{x}{object of class 'morphMat' with the mature parameters and a data.frame with the allometric variables ("X", "Y") 
+\item{x}{object of class 'morphMat' with the mature parameters and a data.frame with the allometric variables ("X", "Y")
 and classification of maturity. Also the fitted values for the logistic regression and confidence intervals (95\%).}
 
 \item{xlab}{a title for the x axis.}
@@ -22,7 +22,7 @@ and classification of maturity. Also the fitted values for the logistic regressi
 
 \item{lty}{line type line type for drawing fitted values and confidence intervals}
 
-\item{vline_hist}{color of the vertival lines in the histogram. The lines represent the 
+\item{vline_hist}{color of the vertival lines in the histogram. The lines represent the
 the median and the confidece intervals.}
 
 \item{lwd_hist}{line with for the vertical line in the histogram.}
@@ -37,7 +37,7 @@ Plot method for morphMat class (size at morphometric maturity)
 \examples{
 data(crabdata)
 
-classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_heigth"), 
+classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_heigth"),
 varSex = "sex_category", selectSex = NULL, method = "ld")
 
 my_mature = morph_mature(classify_data, method = "fq", niter = 50)

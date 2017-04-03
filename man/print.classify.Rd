@@ -12,7 +12,7 @@
 \item{\dots}{Additional arguments to the print method.}
 }
 \value{
-The number of juveniles and adults. Also shows the regression analysis for juveniles and adults 
+The number of juveniles and adults. Also shows the regression analysis for juveniles and adults
 and an ANCOVA analisys to compare slopes.
 }
 \description{
@@ -21,7 +21,7 @@ Print method for classify class
 \examples{
 data(crabdata)
 
-classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_heigth"), 
+classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_heigth"),
 varSex = "sex_category", selectSex = NULL, method = "ld")
 
 print(classify_data)

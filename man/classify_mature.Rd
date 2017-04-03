@@ -8,7 +8,7 @@ classify_mature(data, varNames = c("x", "y"), varSex = "sex",
   selectSex = NULL, method = "ld")
 }
 \arguments{
-\item{data}{data.frame with allometric variables and sex category (male, female). 
+\item{data}{data.frame with allometric variables and sex category (male, female).
 If sex category contains NA's, that row will be filtered.}
 
 \item{varNames}{the name of two allometric variables to be used for analysis.}
@@ -26,26 +26,26 @@ A data.frame of class 'classify', with x (independent), y (dependent) and classi
 (juveniles = 0, adult = 1) variables.
 }
 \description{
-Classify te individuals in two groups (0: juveniles, 1: adults) based on relative growth.
+Classify the individuals in two groups (0: juveniles, 1: adults) based on relative growth.
 }
 \details{
 Classify the individuals in two groups (juveniles = 0 and adult = 1).
 
-A Principal Components Analisys was conducted with two allometric variables (x: independent variable, y: dependent variable) 
+A Principal Components Analisys was conducted with two allometric variables (x: independent variable, y: dependent variable)
 in log base, allowing to distinguish two groups that would represent juveniles and adult.
-The individuals are assigned to each group using a hierarchical classification procedure 
-(hierarchical cluster with agglomeration method: "Ward.D" and the distance measure: "euclidean"). 
-This method is based on establishing a predetermined number of groups (in this case, two) and assigning individuals 
-to one of the groups according to their loads on the two axes of the PCA (Corgos & Freire, 2006). 
+The individuals are assigned to each group using a hierarchical classification procedure
+(hierarchical cluster with agglomeration method: "Ward.D" and the distance measure: "euclidean").
+This method is based on establishing a predetermined number of groups (in this case, two) and assigning individuals
+to one of the groups according to their loads on the two axes of the PCA (Corgos & Freire, 2006).
 
-Using the results of the classification (PCA + cluster), a discriminant analysis (linear or quadratic) is conducted 
-to obtain a discriminating function that permitted any individuals to be classified as a 
+Using the results of the classification (PCA + cluster), a discriminant analysis (linear or quadratic) is conducted
+to obtain a discriminating function that permitted any individuals to be classified as a
 juvenile or an adult on the basis of the X and Y allometric variables.
 }
 \examples{
 data(crabdata)
 
-classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_heigth"), 
+classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_heigth"),
 varSex = "sex_category", selectSex = NULL, method = "ld")
 
 classify_data
