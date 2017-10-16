@@ -6,7 +6,7 @@
 \usage{
 \method{plot}{gonadMat}(x, xlab = "X", ylab = "Proportion mature",
   col = c("blue", "red"), lwd = 2, lty = 2, vline_hist = "black",
-  lwd_hist = 2, lty_hist = 2, ...)
+  lwd_hist = 2, lty_hist = 2, onlyOgive = F, ...)
 }
 \arguments{
 \item{x}{object of class 'gonadMat' with the mature parameters and a data.frame with the X and stage of sexual maturity.
@@ -29,6 +29,8 @@ the median and the confidece intervals.}
 
 \item{lty_hist}{line type for the vertical line in the histogram.}
 
+\item{onlyOgive}{plot only the ogive.}
+
 \item{\dots}{Additional arguments to the plot method.}
 }
 \description{
@@ -42,4 +44,3 @@ matName = c("II", "III", "IV"), method = "fq", niter = 50)
 
 plot(gonad_mat, xlab = "Total length (cm.)", ylab = "Proportion mature", col = c("blue", "red"))
 }
-

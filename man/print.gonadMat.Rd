@@ -26,4 +26,3 @@ matName = c("II", "III", "IV"), method = "fq", niter = 50)
 
 print(gonad_mat)
 }
-

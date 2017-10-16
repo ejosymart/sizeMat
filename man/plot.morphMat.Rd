@@ -6,7 +6,7 @@
 \usage{
 \method{plot}{morphMat}(x, xlab = "X", ylab = "Proportion mature",
   col = c("blue", "red"), lwd = 2, lty = 2, vline_hist = "black",
-  lwd_hist = 2, lty_hist = 2, ...)
+  lwd_hist = 2, lty_hist = 2, onlyOgive = F, ...)
 }
 \arguments{
 \item{x}{object of class 'morphMat' with the mature parameters and a data.frame with the allometric variables ("X", "Y")
@@ -29,6 +29,8 @@ the median and the confidece intervals.}
 
 \item{lty_hist}{line type for the vertical line in the histogram.}
 
+\item{onlyOgive}{plot only the ogive.}
+
 \item{\dots}{Additional arguments to the plot method.}
 }
 \description{
@@ -44,4 +46,3 @@ my_mature = morph_mature(classify_data, method = "fq", niter = 50)
 
 plot(my_mature, xlab = "Carapace width (mm.)", ylab = "Proportion mature", col = c("blue", "red"))
 }
-

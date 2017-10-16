@@ -26,4 +26,3 @@ varSex = "sex_category", selectSex = NULL, method = "ld")
 
 print(classify_data)
 }
-

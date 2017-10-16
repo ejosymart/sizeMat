@@ -2,8 +2,8 @@
 % Please edit documentation in R/morphMat-main.R
 \docType{package}
 \name{sizeMat-package}
-\alias{sizeMat}
 \alias{sizeMat-package}
+\alias{sizeMat}
 \title{Size at Sexual Maturity.}
 \description{
 Contains functions to estimate size at morphometric and gonad maturity for organisms, usually fish and invertebrates. It includes methods for classification based on relative growth (principal components analysis, hierarchical clustering, discriminant analysis), logistic regression (frequentist or Bayes), parameters estimation and some basic plots. The size at sexual maturity is defined as the length at which a randomly chosen specimen has a 50\% chance of being mature
@@ -60,9 +60,6 @@ in the same way as the size at morphometric maturity.
 \examples{
 #See examples for functions morph_mature() and gonad_mature().
 }
-\author{
-Josymar Torrejon-Magallanes <ejosymart@gmail.com>
-}
 \references{
 Agostinho, C. S. (2000). Use of otoliths to estimate size at sexual maturity in fish. Brazilian Archives of Biology and Technology, 43(4).
 
@@ -72,9 +69,11 @@ Roa, R., Ernst, B. & Tapia, F. (1999). Estimation of size at sexual maturity: an
 
 Somerton, D. A. (1980). A computer technique for estimating the size of sexual maturity in crabs. Canadian Journal of Fisheries and Aquatic Sciences, 37(10), 1488-1494.
 }
+\author{
+Josymar Torrejon-Magallanes <ejosymart@gmail.com>
+}
 \keyword{alometric,}
 \keyword{morphometric,}
 \keyword{relative-growth.}
 \keyword{sexual-maturity,}
 \keyword{size,}
-

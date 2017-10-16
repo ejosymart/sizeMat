@@ -26,4 +26,3 @@ y <- factor(ifelse(runif(n) < p, 1, 0), levels = 0:1)
 mod1 <- glm(y ~ x, family=binomial)
 nagelkerkeR2(mod1)
 }
-

@@ -16,4 +16,3 @@ data(matFish)
 \description{
 A data set containing the total length and the stages of sexua maturity of 1733 fishes.
 }
-

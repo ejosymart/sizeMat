@@ -77,4 +77,3 @@ gonad_mat$B_boot
 gonad_mat$L50_boot
 gonad_mat$out
 }
-

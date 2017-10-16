@@ -50,4 +50,3 @@ varSex = "sex_category", selectSex = NULL, method = "ld")
 
 classify_data
 }
-
