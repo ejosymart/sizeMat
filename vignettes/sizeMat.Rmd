@@ -72,10 +72,11 @@ The example shows the arguments that can be used in the plot for "classify_data"
 par(mfrow = c(2,2))
 plot(classify_data)
 
-plot(classify_data, xlab = "Carapace width (mm.)", ylab = "Chela heigth (mm)")
+plot(classify_data, xlab = "Carapace width (mm.)", ylab = "Chela heigth (mm)", legendPlot = FALSE)
+legend("topleft", "Put your legend here", bty = "n")
 
 plot(classify_data, xlab = "Carapace width (mm.)", ylab = "Chela heigth (mm)", 
-     col = c(2, 3), pch = c(5, 6))
+     col = c(2, 3), pch = c(5, 6), legendPlot = TRUE)
 
 plot(classify_data, xlab = "Carapace width (mm.)", ylab = "Chela heigth (mm)", 
      col = c(2, 3), pch = c(5, 6), lty_lines = c(1, 2), lwd_lines = c(1, 3), 

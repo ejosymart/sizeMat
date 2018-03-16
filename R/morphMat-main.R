@@ -199,6 +199,7 @@ print.classify <- function(x, ...){
 #' @param lty_lines the line type in the regression.
 #' @param lwd_lines the line width in the regression.
 #' @param cex character expansion in the regression.
+#' @param legendPlot legend in the plot (FALSE or TRUE).
 #' @param \dots Additional arguments to the plot method.
 #' @examples
 #' data(crabdata)
@@ -219,7 +220,8 @@ print.classify <- function(x, ...){
 #' @export
 #' @method plot classify
 plot.classify <- function(x, xlab = "X", ylab = "Y", col = c(1, 2), pch = c(4, 5),
-                          cex = c(1, 1), lty_lines = c(1, 1), lwd_lines = c(1, 1), ...){
+                          cex = c(1, 1), lty_lines = c(1, 1), lwd_lines = c(1, 1), 
+                          legendPlot = TRUE, ...){
 
   if (!inherits(x, "classify"))
     stop("Use only with 'classify' objects")
@@ -253,8 +255,12 @@ plot.classify <- function(x, xlab = "X", ylab = "Y", col = c(1, 2), pch = c(4, 5
   lines(adt$x, predict(fit_adt), col = COL[2], lwd = LWD[2], lty = LTY[2])
   eq_juv <- paste0("Y = ", round(as.numeric(coef(fit_juv)[1]), 2), " + ", round(as.numeric(coef(fit_juv)[2]),2), " *X", sep = "")
   eq_adt <- paste0("Y = ", round(as.numeric(coef(fit_adt)[1]), 2), " + ", round(as.numeric(coef(fit_adt)[2]),2), " *X", sep = "")
-  legend("topleft", c(paste("Juveniles: ", eq_juv), paste("Adults: ", eq_adt)),
-         bty = "n", pch = unique(PCH), col = unique(COL), cex = 0.8)
+  
+  if(legendPlot == TRUE){
+    legend("topleft", c(paste("Juveniles: ", eq_juv), paste("Adults: ", eq_adt)),
+           bty = "n", pch = unique(PCH), col = unique(COL), cex = 0.8)
+  }
+  
   return(invisible(NULL))
 }
 
