@@ -200,6 +200,7 @@ print.classify <- function(x, ...){
 #' @param lwd_lines the line width in the regression.
 #' @param cex character expansion in the regression.
 #' @param legendPlot legend in the plot (FALSE or TRUE).
+#' @param cex_label size of the legendPlot
 #' @param \dots Additional arguments to the plot method.
 #' @examples
 #' data(crabdata)
@@ -221,7 +222,7 @@ print.classify <- function(x, ...){
 #' @method plot classify
 plot.classify <- function(x, xlab = "X", ylab = "Y", col = c(1, 2), pch = c(4, 5),
                           cex = c(1, 1), lty_lines = c(1, 1), lwd_lines = c(1, 1), 
-                          legendPlot = TRUE, ...){
+                          legendPlot = TRUE, cex_label = 0.8,  ...){
 
   if (!inherits(x, "classify"))
     stop("Use only with 'classify' objects")
@@ -258,7 +259,7 @@ plot.classify <- function(x, xlab = "X", ylab = "Y", col = c(1, 2), pch = c(4, 5
   
   if(legendPlot == TRUE){
     legend("topleft", c(paste("Juveniles: ", eq_juv), paste("Adults: ", eq_adt)),
-           bty = "n", pch = unique(PCH), col = unique(COL), cex = 0.8)
+           bty = "n", pch = unique(PCH), col = unique(COL), cex = cex_label)
   }
   
   return(invisible(NULL))
