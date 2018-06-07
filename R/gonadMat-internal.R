@@ -9,7 +9,7 @@
     new_data   <- data[sample(nrow(data), replace = TRUE), ]
     model_boot <- glm(stage ~ x, data = new_data, family = binomial(link = "logit"))
     glm_coef   <- coef(model_boot)
-    n_coef     <- rbind(glm_coef, n_coef)
+    n_coef     <- rbind(n_coef, glm_coef)
   }
   
   A    <- as.numeric(n_coef[,1])
