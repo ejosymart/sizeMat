@@ -4,8 +4,9 @@
 \alias{gonad_mature}
 \title{Estimate gonadal maturity}
 \usage{
-gonad_mature(data, varNames = c("allometric", "stage"), inmName = "inm",
-  matName = "mad", method = "fq", niter = 999, seed = 70388)
+gonad_mature(data, varNames = c("allometric", "stage"),
+  inmName = "inm", matName = "mad", method = "fq", niter = 999,
+  seed = 70388)
 }
 \arguments{
 \item{data}{data.frame with allometric variables and stage of sexual maturity (gonad maturation stages).}

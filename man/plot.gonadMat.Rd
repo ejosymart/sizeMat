@@ -6,7 +6,7 @@
 \usage{
 \method{plot}{gonadMat}(x, xlab = "X", ylab = "Proportion mature",
   col = c("blue", "red"), lwd = 2, lty = 2, vline_hist = "black",
-  lwd_hist = 2, lty_hist = 2, onlyOgive = F, ...)
+  lwd_hist = 2, lty_hist = 2, onlyOgive = FALSE, ...)
 }
 \arguments{
 \item{x}{object of class 'gonadMat' with the mature parameters and a data.frame with the X and stage of sexual maturity.
