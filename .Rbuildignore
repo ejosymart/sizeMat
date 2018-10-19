@@ -6,3 +6,5 @@
 ^README-.*\.png$
 ^README\.md$
 ^revdep$
+^doc$
+^Meta$
