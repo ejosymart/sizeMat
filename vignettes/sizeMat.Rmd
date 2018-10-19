@@ -67,7 +67,6 @@ print(classify_data)
 
 
 The example shows the arguments that can be used in the plot for "classify_data" object:
-
 ```{r, echo = TRUE, fig.width = 10, fig.height = 10, results='hide', warning=FALSE}
 par(mfrow = c(2,2))
 plot(classify_data)
@@ -89,7 +88,7 @@ The `morph_mature` function use the logit approach (frequentist or bayesian). Th
 
 In the regression analysis, $X$ (e.g: carapace width) is considered the explanatory variable and the classification of maturity $CS$ (juvelines: 0, adults: 1) is considered the response variable (binomial). The variables are fitted to a logit function with the form: 
 
-$$P_{CS} = 1/1+e^{-(\hat{\beta}_{0} + \hat{\beta}_{1}*X)}$$
+$$P_{CS} = \frac{1}{1+e^{-(\hat{\beta}_{0} + \hat{\beta}_{1}*X)}}$$
 
 where $P_{CL}$ is the probability of an individual of being mature at a determinate $X$ length. $\hat{\beta}_{0}$ (intercept) and $\hat{\beta}_{1}$ (slope) are parameters estimated. The $L_{50}$ is calculated as:
 
@@ -129,6 +128,14 @@ plot(my_ogive_fq, xlab = "Carapace width (mm.)", ylab = "Proportion mature", col
 par(mfrow = c(2,2))
 plot(my_ogive_bayes, xlab = "Carapace width (mm.)", ylab = "Proportion mature", col = c("blue", "red"))
 ```
+
+If you want the maturity ogive plot only, you have to add the param `onlyOgive = TRUE`. Besides you can modify the axis (size, rotation, etc) and add the legend.
+
+```{r echo = TRUE, fig.width = 10, fig.height = 10, warning=FALSE}
+plot(my_ogive_fq, xlab = "Carapace width (mm.)", ylab = "Proportion mature", col = c("blue", "red"), onlyOgive = TRUE)
+```
+
+
 
 This methodology has been used mainly in the estimation of morphological sexual maturity in crabs, but it can be extended to other taxas as Agostinho (2000) reported. 
 
@@ -190,6 +197,12 @@ par(mfrow = c(2,2))
 plot(my_ogive_bayes, xlab = "Total length (cm.)", ylab = "Proportion mature", col = c("blue", "red"))
 ```
 
+If you want the maturity ogive plot only, you have to add the param `onlyOgive = TRUE`. Besides you can modify the axis (size, rotation, etc) and add the legend.
+
+```{r echo = TRUE, fig.width = 10, fig.height = 10, warning=FALSE}
+par(mfrow = c(2,2))
+plot(my_ogive_fq, xlab = "Total length (cm.)", ylab = "Proportion mature", col = c("blue", "red"), onlyOgive = TRUE)
+```
 
 
 ##References

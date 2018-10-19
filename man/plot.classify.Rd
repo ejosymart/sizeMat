@@ -5,8 +5,8 @@
 \title{Plot method for classify class}
 \usage{
 \method{plot}{classify}(x, xlab = "X", ylab = "Y", col = c(1, 2),
-  pch = c(4, 5), cex = c(1, 1), lty_lines = c(1, 1), lwd_lines = c(1,
-  1), legendPlot = TRUE, cex_label = 0.8, ...)
+  pch = c(4, 5), cex = c(1, 1), lty_lines = c(1, 1),
+  lwd_lines = c(1, 1), legendPlot = TRUE, cex_label = 0.8, ...)
 }
 \arguments{
 \item{x}{an object of class 'classify' with the allometric variables ("X", "Y") and classification of maturity (juveniles = 0, adults = 1).}

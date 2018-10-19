@@ -421,7 +421,7 @@ print.morphMat <- function(x, ...){
 #' @method plot morphMat
 plot.morphMat <- function(x, xlab = "X", ylab = "Proportion mature", col = c("blue", "red"),
                           lwd = 2, lty = 2, vline_hist = "black", lwd_hist = 2, lty_hist = 2, 
-                          onlyOgive = F, ...){
+                          onlyOgive = FALSE, ...){
 
   if (!inherits(x, "morphMat"))
     stop("Use with 'morphMat' objects only")
@@ -446,9 +446,6 @@ plot.morphMat <- function(x, xlab = "X", ylab = "Proportion mature", col = c("bl
     lines(c(wide[2], wide[2]), c(-1, 0.5), col = col[2], lwd = lwd, lty = lty)
     lines(c(-1, wide[2]), c(0.5, 0.5), col = col[2], lwd = lwd, lty = lty)
     points(wide[2], 0.5, pch = 19, col = col[2], cex = 1.25)
-    legend("topleft", c(as.expression(bquote(bold(L[50] == .(round(wide[2], 1))))),
-                        as.expression(bquote(bold(R^2 == .(round(R2, 2)))))),
-           bty = "n")
   }else{
     # figure 1
     hist(x$A_boot, main = "", xlab = "A", col = "grey90")
@@ -491,6 +488,7 @@ plot.morphMat <- function(x, xlab = "X", ylab = "Proportion mature", col = c("bl
 
   cat("Size at morphometric maturity =", round(wide[2], 1), "\n")
   cat("Confidence intervals =", round(wide[1], 1), "-",round(wide[3], 1) ,  "\n")
+  cat("Rsquare =", round(R2, 2))
 
   return(invisible(NULL))
 }
