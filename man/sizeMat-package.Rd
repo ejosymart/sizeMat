@@ -4,9 +4,9 @@
 \name{sizeMat-package}
 \alias{sizeMat-package}
 \alias{sizeMat}
-\title{An R package to estimate Size at Sexual Maturity.}
+\title{Estimate Size at Sexual Maturity.}
 \description{
-Contains functions to estimate size at morphometric and gonad maturity for organisms, usually fish and invertebrates. It includes methods for classification based on relative growth (principal components analysis, hierarchical clustering, discriminant analysis), logistic regression (frequentist or Bayes), parameters estimation and some basic plots. The size at sexual maturity is defined as the length at which a randomly chosen specimen has a 50\% chance of being mature
+Estimate morphometric and gonadal size at sexual maturity for organisms, usually fish and invertebrates. It includes methods for classification based on relative growth (principal components analysis, hierarchical clustering, discriminant analysis), logistic regression (frequentist or Bayes), parameters estimation and some basic plots. The size at sexual maturity is defined as the length at which a randomly chosen specimen has a 50\% chance of being mature
 }
 \details{
 Package: sizeMat
@@ -61,19 +61,18 @@ in the same way as the size at morphometric maturity.
 #See examples for functions morph_mature() and gonad_mature().
 }
 \references{
-Agostinho, C. S. (2000). Use of otoliths to estimate size at sexual maturity in fish. Brazilian Archives of Biology and Technology, 43(4).
+Agostinho, C. S. (2000). Use of otoliths to estimate size at sexual maturity in fish. Brazilian Archives of Biology and Technology, 43(4):437-440, doi: 10.1590/s1516-89132000000400014
 
-Corgos, A. & Freire, J. (2006). Morphometric and gonad maturity in the spider crab Maja brachydactyla: a comparison of methods for estimating size at maturity in species with determinate growth. ICES Journal of Marine Science: Journal du Conseil, 63(5), 851-859.
+Corgos, A. & Freire, J. (2006). Morphometric and gonad maturity in the spider crab Maja brachydactyla: a comparison of methods for estimating size at maturity in species with determinate growth. ICES Journal of Marine Science, 63(5): 851-859, doi: 10.1016/j.icesjms.2006.03.003
 
-Roa, R., Ernst, B. & Tapia, F. (1999). Estimation of size at sexual maturity: an evaluation of analytical and resampling procedures. Fishery Bulletin, 97(3), 570-580.
+Roa, R., Ernst, B. & Tapia, F. (1999). Estimation of size at sexual maturity: an evaluation of analytical and resampling procedures. Fishery Bulletin, 97(3): 570-580.
 
-Somerton, D. A. (1980). A computer technique for estimating the size of sexual maturity in crabs. Canadian Journal of Fisheries and Aquatic Sciences, 37(10), 1488-1494.
+Somerton, D. A. (1980). A computer technique for estimating the size of sexual maturity in crabs. Canadian Journal of Fisheries and Aquatic Sciences, 37(10): 1488-1494. doi: 10.1139/f80-192
 }
 \author{
 Josymar Torrejon-Magallanes <ejosymart@gmail.com>
 }
-\keyword{alometric,}
-\keyword{morphometric,}
-\keyword{relative-growth.}
-\keyword{sexual-maturity,}
-\keyword{size,}
+\concept{alometric}
+\concept{maturity}
+\concept{morphometric}
+\concept{relative growth}
