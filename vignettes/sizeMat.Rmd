@@ -90,7 +90,7 @@ In the regression analysis, $X$ (e.g: carapace width) is considered the explanat
 
 $$P_{CS} = \frac{1}{1+e^{-(\hat{\beta}_{0} + \hat{\beta}_{1}*X)}}$$
 
-where $P_{CL}$ is the probability of an individual of being mature at a determinate $X$ length. $\hat{\beta}_{0}$ (intercept) and $\hat{\beta}_{1}$ (slope) are parameters estimated. The $L_{50}$ is calculated as:
+where $P_{CS}$ is the probability of an individual of being mature at a determinate $X$ length. $\hat{\beta}_{0}$ (intercept) and $\hat{\beta}_{1}$ (slope) are parameters estimated. The $L_{50}$ is calculated as:
 
 $$L_{50} = -\frac{\hat{\beta}_{0}}{\hat{\beta}_{1}}$$
 
