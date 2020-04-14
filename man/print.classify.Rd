@@ -13,7 +13,7 @@
 }
 \value{
 The number of juveniles and adults. Also shows the regression analysis for juveniles and adults
-and an ANCOVA analisys to compare slopes.
+and an ANCOVA analysis to compare slopes.
 }
 \description{
 Print method for classify class
@@ -21,7 +21,7 @@ Print method for classify class
 \examples{
 data(crabdata)
 
-classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_heigth"),
+classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_height"),
 varSex = "sex_category", selectSex = NULL, method = "ld")
 
 print(classify_data)

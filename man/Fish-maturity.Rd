@@ -5,14 +5,16 @@
 \alias{Fish maturity}
 \alias{matFish}
 \title{Fish gonadal maturity data}
-\format{A data frame with two variables:
+\format{
+A data frame with two variables:
 
-\code{total_length} the total lenght in cm.
+\code{total_length} the total length in cm.
 
-\code{stage_mat} the stages of sexual maturity (gonadal maturation stages, I: inmature, II-III-IV: mature)}
+\code{stage_mat} the stages of sexual maturity (gonadal maturation stages, I: immature, II-III-IV: mature)
+}
 \usage{
 data(matFish)
 }
 \description{
-A data set containing the total length and the stages of sexua maturity of 1733 fishes.
+A data set containing the total length and the stages of sexual maturity of 1733 fishes.
 }

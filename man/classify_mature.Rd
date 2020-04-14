@@ -4,8 +4,13 @@
 \alias{classify_mature}
 \title{Classify mature}
 \usage{
-classify_mature(data, varNames = c("x", "y"), varSex = "sex",
-  selectSex = NULL, method = "ld")
+classify_mature(
+  data,
+  varNames = c("x", "y"),
+  varSex = "sex",
+  selectSex = NULL,
+  method = "ld"
+)
 }
 \arguments{
 \item{data}{data.frame with allometric variables and sex category (male, female).
@@ -31,7 +36,7 @@ Classify the individuals in two groups (0: juveniles, 1: adults) based on relati
 \details{
 Classify the individuals in two groups (juveniles = 0 and adult = 1).
 
-A Principal Components Analisys was conducted with two allometric variables (x: independent variable, y: dependent variable)
+A Principal Components Analysis was conducted with two allometric variables (x: independent variable, y: dependent variable)
 in log base, allowing to distinguish two groups that would represent juveniles and adult.
 The individuals are assigned to each group using a hierarchical classification procedure
 (hierarchical cluster with agglomeration method: "Ward.D" and the distance measure: "euclidean").
@@ -45,7 +50,7 @@ juvenile or an adult on the basis of the X and Y allometric variables.
 \examples{
 data(crabdata)
 
-classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_heigth"),
+classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_height"),
 varSex = "sex_category", selectSex = NULL, method = "ld")
 
 classify_data

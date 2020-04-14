@@ -13,10 +13,10 @@ Package: sizeMat
 
 Type: Package
 
-The Size at Morphometric and Gonad maturity are estimating using differents functions (process).
+The Size at Morphometric and Gonad maturity are estimating using different functions (process).
 1) The estimation of the Size at Morphometric Maturity involves two processes:
 
-1.1) A Principal Components Analisys is conducted with two allometric variables (x: independent variable, y: dependent variable) in log base, allowing to distinguish
+1.1) A Principal Components Analysis is conducted with two allometric variables (x: independent variable, y: dependent variable) in log base, allowing to distinguish
 two groups that would represent juveniles and adult. The individuals are assigned to each group using a hierarchical classification procedure (hierarchical cluster).
 This method is based on establishing a predetermined number of groups (in this case, two) and assigning individuals to one of the groups according to
 their loads on the two axes of the PCA (Corgos & Freire, 2006). Using the results of the classification (PCA + cluster), a discriminant analysis (linear or quadratic)
@@ -50,10 +50,10 @@ are also provided.
 
 To estimate size at gonadal maturity, the database must contains the stage of sexual
 maturity and at least one allometric variable (i.e: total length, fork length, carapace width).
-The stage of sexual maturity is refered to the gonadal maturarion stages (i.e: I, II, III, IV or 0, 1, etc).
+The stage of sexual maturity is referred to the gonadal maturation stages (i.e: I, II, III, IV or 0, 1, etc).
 
 So, in the regression analysis, the allometric variable (i.e: total length) is considered the
-explanatory variable and the stage of sexual maturity (inmature: 0, mature: 1)
+explanatory variable and the stage of sexual maturity (immature: 0, mature: 1)
 is considered the response variable (binomial). The regression  analysis is performed
 in the same way as the size at morphometric maturity.
 }
@@ -72,7 +72,7 @@ Somerton, D. A. (1980). A computer technique for estimating the size of sexual m
 \author{
 Josymar Torrejon-Magallanes <ejosymart@gmail.com>
 }
-\concept{alometric}
+\concept{allometric}
 \concept{maturity}
 \concept{morphometric}
 \concept{relative growth}

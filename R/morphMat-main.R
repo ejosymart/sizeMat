@@ -17,10 +17,10 @@
 #' @author Josymar Torrejon-Magallanes <ejosymart@@gmail.com>
 #' @details Package: sizeMat
 #' @details Type: Package
-#' @details The Size at Morphometric and Gonad maturity are estimating using differents functions (process).
+#' @details The Size at Morphometric and Gonad maturity are estimating using different functions (process).
 #' 1) The estimation of the Size at Morphometric Maturity involves two processes:
 #'
-#' 1.1) A Principal Components Analisys is conducted with two allometric variables (x: independent variable, y: dependent variable) in log base, allowing to distinguish
+#' 1.1) A Principal Components Analysis is conducted with two allometric variables (x: independent variable, y: dependent variable) in log base, allowing to distinguish
 #' two groups that would represent juveniles and adult. The individuals are assigned to each group using a hierarchical classification procedure (hierarchical cluster).
 #' This method is based on establishing a predetermined number of groups (in this case, two) and assigning individuals to one of the groups according to
 #' their loads on the two axes of the PCA (Corgos & Freire, 2006). Using the results of the classification (PCA + cluster), a discriminant analysis (linear or quadratic)
@@ -54,10 +54,10 @@
 #'
 #' To estimate size at gonadal maturity, the database must contains the stage of sexual
 #' maturity and at least one allometric variable (i.e: total length, fork length, carapace width).
-#' The stage of sexual maturity is refered to the gonadal maturarion stages (i.e: I, II, III, IV or 0, 1, etc).
+#' The stage of sexual maturity is referred to the gonadal maturation stages (i.e: I, II, III, IV or 0, 1, etc).
 #'
 #' So, in the regression analysis, the allometric variable (i.e: total length) is considered the
-#' explanatory variable and the stage of sexual maturity (inmature: 0, mature: 1)
+#' explanatory variable and the stage of sexual maturity (immature: 0, mature: 1)
 #' is considered the response variable (binomial). The regression  analysis is performed
 #' in the same way as the size at morphometric maturity.
 #'
@@ -67,7 +67,7 @@
 #' @references Somerton, D. A. (1980). A computer technique for estimating the size of sexual maturity in crabs. Canadian Journal of Fisheries and Aquatic Sciences, 37(10): 1488-1494. doi: 10.1139/f80-192
 #' @concept morphometric 
 #' @concept maturity
-#' @concept alometric
+#' @concept allometric
 #' @concept relative growth
 #' @examples
 #' #See examples for functions morph_mature() and gonad_mature().
@@ -88,7 +88,7 @@ NULL
 #' (juveniles = 0, adult = 1) variables.
 #' @details Classify the individuals in two groups (juveniles = 0 and adult = 1).
 #'
-#' A Principal Components Analisys was conducted with two allometric variables (x: independent variable, y: dependent variable)
+#' A Principal Components Analysis was conducted with two allometric variables (x: independent variable, y: dependent variable)
 #' in log base, allowing to distinguish two groups that would represent juveniles and adult.
 #' The individuals are assigned to each group using a hierarchical classification procedure
 #' (hierarchical cluster with agglomeration method: "Ward.D" and the distance measure: "euclidean").
@@ -102,7 +102,7 @@ NULL
 #' @examples
 #' data(crabdata)
 #'
-#' classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_heigth"),
+#' classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_height"),
 #' varSex = "sex_category", selectSex = NULL, method = "ld")
 #'
 #' classify_data
@@ -155,11 +155,11 @@ classify_mature <- function(data, varNames = c("x", "y"), varSex = "sex",
 #' @param x an object of class 'classify' with the allometric variables ("X", "Y") and classification of maturity (juveniles = 0, adults = 1).
 #' @param \dots Additional arguments to the print method.
 #' @return The number of juveniles and adults. Also shows the regression analysis for juveniles and adults
-#' and an ANCOVA analisys to compare slopes.
+#' and an ANCOVA analysis to compare slopes.
 #' @examples
 #' data(crabdata)
 #'
-#' classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_heigth"),
+#' classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_height"),
 #' varSex = "sex_category", selectSex = NULL, method = "ld")
 #'
 #' print(classify_data)
@@ -169,7 +169,7 @@ print.classify <- function(x, ...){
   if (!inherits(x, "classify"))
     stop("Use only with 'classify' objects")
   data <- x
-  cat("Number in juveline group =", as.numeric(table(data$mature)[1]), "\n\n")
+  cat("Number in juvenile group =", as.numeric(table(data$mature)[1]), "\n\n")
   cat("Number in adult group =", as.numeric(table(data$mature)[2]), "\n\n")
 
   juv  <- data[data$mature == 0, ]
@@ -208,7 +208,7 @@ print.classify <- function(x, ...){
 #' @examples
 #' data(crabdata)
 #'
-#' classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_heigth"),
+#' classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_height"),
 #' varSex = "sex_category", selectSex = NULL, method = "ld")
 #'
 #' ## Showing different plots
@@ -274,7 +274,7 @@ plot.classify <- function(x, xlab = "X", ylab = "Y", col = c(1, 2), pch = c(4, 5
 #' Estimate size at morphometric maturity (\eqn{L50}).
 #'
 #' @param data an object of class 'classify' with the allometric variables (X", "Y") and classification of maturity (juveniles = 0, adults = 1).
-#' @param method a character string indicating the method to be applied, \code{"fq"} frecuentist GLM, or \code{"bayes"} Bayes GLM (MCMClogit function).
+#' @param method a character string indicating the method to be applied, \code{"fq"} frequentist GLM, or \code{"bayes"} Bayes GLM (MCMClogit function).
 #' @param niter number of iterations (bootstrap resampling).
 #' @param seed a single value, interpreted as an integer.
 #' @return An object of class 'morphMat'.
@@ -294,7 +294,7 @@ plot.classify <- function(x, xlab = "X", ylab = "Y", col = c(1, 2), pch = c(4, 5
 #'
 #' The function requires an object of class "classify" with the X, Y (allometric variables) and classification of maturity (juveniles = 0, adults = 1).
 #'
-#' The argument \code{method} requires a character string indicanting which regression will be used for the test.
+#' The argument \code{method} requires a character string indicating which regression will be used for the test.
 #' If \code{method = "fq"} the logistic regression is based on GLM (frequentist) and if \code{method = "bayes"} a sample from the posterior distribution
 #' of a logistic regression model using a random walk Metropolis algorithm is generated (see MCMClogit function).
 #'
@@ -306,7 +306,7 @@ plot.classify <- function(x, xlab = "X", ylab = "Y", col = c(1, 2), pch = c(4, 5
 #' @examples
 #' data(crabdata)
 #'
-#' classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_heigth"),
+#' classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_height"),
 #' varSex = "sex_category", selectSex = NULL, method = "ld")
 #'
 #' my_mature = morph_mature(classify_data, method = "fq", niter = 50)
@@ -349,7 +349,7 @@ morph_mature <- function(data, method = "fq", niter = 999, seed = 070388){
 #' @examples
 #' data(crabdata)
 #'
-#' classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_heigth"),
+#' classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_height"),
 #' varSex = "sex_category", selectSex = NULL, method = "ld")
 #'
 #' my_mature = morph_mature(classify_data, method = "fq", niter = 50)
@@ -405,8 +405,8 @@ print.morphMat <- function(x, ...){
 #' @param col color for the logistic curve and for the L50\% size at morphometric maturity.
 #' @param lwd line with for drawing fitted values and confidence intervals.
 #' @param lty line type line type for drawing fitted values and confidence intervals
-#' @param vline_hist color of the vertival lines in the histogram. The lines represent the
-#' the median and the confidece intervals.
+#' @param vline_hist color of the vertical lines in the histogram. The lines represent the
+#' the median and the confidence intervals.
 #' @param lwd_hist line with for the vertical line in the histogram.
 #' @param lty_hist line type for the vertical line in the histogram.
 #' @param onlyOgive plot only the ogive.
@@ -414,7 +414,7 @@ print.morphMat <- function(x, ...){
 #' @examples
 #' data(crabdata)
 #'
-#' classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_heigth"),
+#' classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_height"),
 #' varSex = "sex_category", selectSex = NULL, method = "ld")
 #'
 #' my_mature = morph_mature(classify_data, method = "fq", niter = 50)
