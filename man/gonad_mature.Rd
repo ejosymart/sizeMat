@@ -4,9 +4,15 @@
 \alias{gonad_mature}
 \title{Estimate gonadal maturity}
 \usage{
-gonad_mature(data, varNames = c("allometric", "stage"),
-  inmName = "inm", matName = "mad", method = "fq", niter = 999,
-  seed = 70388)
+gonad_mature(
+  data,
+  varNames = c("allometric", "stage"),
+  inmName = "inm",
+  matName = "mad",
+  method = "fq",
+  niter = 999,
+  seed = 70388
+)
 }
 \arguments{
 \item{data}{data.frame with allometric variables and stage of sexual maturity (gonad maturation stages).}
@@ -14,11 +20,11 @@ gonad_mature(data, varNames = c("allometric", "stage"),
 \item{varNames}{a character string indicating the name of the allometric 
 and the stage of sexual maturity variables to be used for analysis.}
 
-\item{inmName}{a character string indicating the name or names of the inmaturity stage.}
+\item{inmName}{a character string indicating the name or names of the immaturity stage.}
 
 \item{matName}{a character string indicating the name or names of the maturity stage.}
 
-\item{method}{a character string indicating the method to be applied, \code{"fq"} frecuentist GLM, or \code{"bayes"} Bayes GLM (MCMClogit function).}
+\item{method}{a character string indicating the method to be applied, \code{"fq"} frequentist GLM, or \code{"bayes"} Bayes GLM (MCMClogit function).}
 
 \item{niter}{number of iterations (bootstrap resampling).}
 
@@ -43,7 +49,7 @@ Estimate size at gonad maturity.
 }
 \details{
 Estimate the size at gonad maturity using a logistic regression with X variable and 
-stages of sexual maturity (two categories: inmature and mature). 
+stages of sexual maturity (two categories: immature and mature). 
 
 The function requires a data.frame with the X (allometric variable) and 
 the stage of sexual maturity (gonad maturation stage).
@@ -53,7 +59,7 @@ of sexual maturity variable to be used for analysis (i.e \code{varNames = c("tot
 So the argument \code{varNames} must contain two character strings only, the first is the allometric variable 
 and the second is the stage of sexual maturity.
 
-The arguments \code{inmName} and \code{matName} require a character string indicanting the name 
+The arguments \code{inmName} and \code{matName} require a character string indicating the name 
 of the stages of sexual maturity in the data.frame. The argument could contain one character string 
 or could be a vector (i.e \code{inmName = "I"}, \code{matName = c("II", "III", "IV")}).
 

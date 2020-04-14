@@ -9,7 +9,7 @@ morph_mature(data, method = "fq", niter = 999, seed = 70388)
 \arguments{
 \item{data}{an object of class 'classify' with the allometric variables (X", "Y") and classification of maturity (juveniles = 0, adults = 1).}
 
-\item{method}{a character string indicating the method to be applied, \code{"fq"} frecuentist GLM, or \code{"bayes"} Bayes GLM (MCMClogit function).}
+\item{method}{a character string indicating the method to be applied, \code{"fq"} frequentist GLM, or \code{"bayes"} Bayes GLM (MCMClogit function).}
 
 \item{niter}{number of iterations (bootstrap resampling).}
 
@@ -38,7 +38,7 @@ and maturity classification (two categories: juveniles and adults).
 
 The function requires an object of class "classify" with the X, Y (allometric variables) and classification of maturity (juveniles = 0, adults = 1).
 
-The argument \code{method} requires a character string indicanting which regression will be used for the test.
+The argument \code{method} requires a character string indicating which regression will be used for the test.
 If \code{method = "fq"} the logistic regression is based on GLM (frequentist) and if \code{method = "bayes"} a sample from the posterior distribution
 of a logistic regression model using a random walk Metropolis algorithm is generated (see MCMClogit function).
 
@@ -50,7 +50,7 @@ For the \code{method = "bayes"}, the argument `niter` is related to the number o
 \examples{
 data(crabdata)
 
-classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_heigth"),
+classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_height"),
 varSex = "sex_category", selectSex = NULL, method = "ld")
 
 my_mature = morph_mature(classify_data, method = "fq", niter = 50)

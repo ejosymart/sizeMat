@@ -1,16 +1,16 @@
 Package: sizeMat
 Type: Package
 Title: Estimate Size at Sexual Maturity
-Version: 1.1.0
-Date: 2019-07-30
+Version: 1.1.1
+Date: 2020-04-14
 Authors@R: c(person("Josymar", "Torrejon-Magallanes", email = "ejosymart@gmail.com", role = c("cre", "aut")))
 Maintainer: Josymar Torrejon-Magallanes <ejosymart@gmail.com>
 Description: Estimate morphometric and gonadal size at sexual maturity for organisms, usually fish and invertebrates. It includes methods for classification based on relative growth (using principal components analysis, hierarchical clustering, discriminant analysis), logistic regression (Frequentist or Bayes), parameters estimation and some basic plots.
-Depends: R (>= 3.0)
+Depends: R (>= 3.5.0)
 Imports: MCMCpack, matrixStats, MASS, grDevices, graphics, stats, utils
 Suggests: rmarkdown, knitr
 VignetteBuilder: knitr
 License: GPL-2
 LazyData: TRUE
 Encoding: UTF-8
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.0

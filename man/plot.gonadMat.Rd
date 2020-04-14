@@ -4,9 +4,19 @@
 \alias{plot.gonadMat}
 \title{Plot method for gonadMat class (size at gonad maturity)}
 \usage{
-\method{plot}{gonadMat}(x, xlab = "X", ylab = "Proportion mature",
-  col = c("blue", "red"), lwd = 2, lty = 2, vline_hist = "black",
-  lwd_hist = 2, lty_hist = 2, onlyOgive = FALSE, ...)
+\method{plot}{gonadMat}(
+  x,
+  xlab = "X",
+  ylab = "Proportion mature",
+  col = c("blue", "red"),
+  lwd = 2,
+  lty = 2,
+  vline_hist = "black",
+  lwd_hist = 2,
+  lty_hist = 2,
+  onlyOgive = FALSE,
+  ...
+)
 }
 \arguments{
 \item{x}{object of class 'gonadMat' with the mature parameters and a data.frame with the X and stage of sexual maturity.
@@ -22,8 +32,8 @@ variables. Also the fitted values for the logistic regression and confidence int
 
 \item{lty}{line type line type for drawing fitted values and confidence intervals}
 
-\item{vline_hist}{color of the vertival lines in the histogram. The lines represent the 
-the median and the confidece intervals.}
+\item{vline_hist}{color of the vertical lines in the histogram. The lines represent the 
+the median and the confidence intervals.}
 
 \item{lwd_hist}{line with for the vertical line in the histogram.}
 

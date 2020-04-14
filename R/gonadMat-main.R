@@ -4,9 +4,9 @@
 #' @param data data.frame with allometric variables and stage of sexual maturity (gonad maturation stages).
 #' @param varNames a character string indicating the name of the allometric 
 #' and the stage of sexual maturity variables to be used for analysis.
-#' @param inmName a character string indicating the name or names of the inmaturity stage.
+#' @param inmName a character string indicating the name or names of the immaturity stage.
 #' @param matName a character string indicating the name or names of the maturity stage.
-#' @param method a character string indicating the method to be applied, \code{"fq"} frecuentist GLM, or \code{"bayes"} Bayes GLM (MCMClogit function). 
+#' @param method a character string indicating the method to be applied, \code{"fq"} frequentist GLM, or \code{"bayes"} Bayes GLM (MCMClogit function). 
 #' @param niter number of iterations (bootstrap resampling).
 #' @param seed a single value, interpreted as an integer.
 #' @return An object of class 'gonadMat'.
@@ -22,7 +22,7 @@
 #' \code{out} a dataframe with the allometric variable "X", stage of sexual maturity, the fitted values for  
 #' logistic regression and confidence intervals (95\%). Also the summary statistics of the model is provided.
 #' @details Estimate the size at gonad maturity using a logistic regression with X variable and 
-#' stages of sexual maturity (two categories: inmature and mature). 
+#' stages of sexual maturity (two categories: immature and mature). 
 #' 
 #' The function requires a data.frame with the X (allometric variable) and 
 #' the stage of sexual maturity (gonad maturation stage).
@@ -32,7 +32,7 @@
 #' So the argument \code{varNames} must contain two character strings only, the first is the allometric variable 
 #' and the second is the stage of sexual maturity.
 #' 
-#' The arguments \code{inmName} and \code{matName} require a character string indicanting the name 
+#' The arguments \code{inmName} and \code{matName} require a character string indicating the name 
 #' of the stages of sexual maturity in the data.frame. The argument could contain one character string 
 #' or could be a vector (i.e \code{inmName = "I"}, \code{matName = c("II", "III", "IV")}).
 #' 
@@ -155,8 +155,8 @@ print.gonadMat <- function(x, ...){
 #' @param col color for the logistic curve and for the L50\% size at gonad maturity.
 #' @param lwd line with for drawing fitted values and confidence intervals.
 #' @param lty line type line type for drawing fitted values and confidence intervals
-#' @param vline_hist color of the vertival lines in the histogram. The lines represent the 
-#' the median and the confidece intervals.
+#' @param vline_hist color of the vertical lines in the histogram. The lines represent the 
+#' the median and the confidence intervals.
 #' @param lwd_hist line with for the vertical line in the histogram.
 #' @param lty_hist line type for the vertical line in the histogram.
 #' @param onlyOgive plot only the ogive.

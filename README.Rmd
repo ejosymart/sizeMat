@@ -56,7 +56,7 @@ This is a basic example which shows you how to estimate Size at Morphometric and
 ```{r}
 data(crabdata)
 
-classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_heigth"), 
+classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_height"), 
                                 varSex = "sex_category", selectSex = NULL, method = "ld")
 
 print(classify_data)

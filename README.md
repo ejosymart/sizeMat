@@ -1,15 +1,19 @@
 sizeMat
 =======
 
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/sizeMat)](http://cran.r-project.org/package=sizeMat) [![](http://cranlogs.r-pkg.org/badges/sizeMat)](http://cran.rstudio.com/web/packages/sizeMat/index.html)
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/sizeMat)](http://cran.r-project.org/package=sizeMat)
+[![](http://cranlogs.r-pkg.org/badges/sizeMat)](http://cran.rstudio.com/web/packages/sizeMat/index.html)
 
 **Estimate Size at Sexual Maturity**
 
-This package allows to estimate Size at Morphometric and Gonadal Maturity for organisms, usually fish and invertebrates.
+This package allows to estimate Size at Morphometric and Gonadal
+Maturity for organisms, usually fish and invertebrates.
 
-The estimation of morphometric maturity used two allometric variables and is based on the relative growth.
+The estimation of morphometric maturity used two allometric variables
+and is based on the relative growth.
 
-The estimation of gonadal maturity used one allometric variable and the stage of sexual maturity (gonad maturation stage).
+The estimation of gonadal maturity used one allometric variable and the
+stage of sexual maturity (gonad maturation stage).
 
 Installation
 ------------
@@ -30,19 +34,20 @@ devtools::install_github("ejosymart/sizeMat")
 Examples
 --------
 
-This is a basic example which shows you how to estimate Size at Morphometric and Gonad Maturity:
+This is a basic example which shows you how to estimate Size at
+Morphometric and Gonad Maturity:
 
 1.  Size at Morphometric Maturity
 
 ``` r
 data(crabdata)
 
-classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_heigth"), 
+classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_height"), 
                                 varSex = "sex_category", selectSex = NULL, method = "ld")
 #> all individuals were used in the analysis
 
 print(classify_data)
-#> Number in juveline group = 83 
+#> Number in juvenile group = 83 
 #> 
 #> Number in adult group = 140 
 #> 
@@ -95,6 +100,15 @@ print(classify_data)
 #> AIC: 515.79
 #> 
 #> Number of Fisher Scoring iterations: 2
+#> 
+#> -------------------------------------------------------- 
+#> 3) Difference between slopes (ANCOVA) 
+#>               Estimate  Std. Error   t value     Pr(>|t|)
+#> (Intercept) -3.7946869 0.757105677 -5.012097 1.109526e-06
+#> x            0.1613275 0.007161179 22.528064 6.035478e-59
+#> mature      -7.4520389 1.285219562 -5.798261 2.320729e-08
+#> x:mature     0.1125093 0.010361046 10.858878 2.956242e-22
+#> [1] "slopes are different"
 
 
 
@@ -105,10 +119,11 @@ my_ogive = morph_mature(classify_data, method = "fq")
 
 print(my_ogive)
 #> formula: Y = 1/1+exp-(A + B*X)
-#>        Original Bootstrap (Median)
-#> A   -20.7530424        -20.7955022
-#> B     0.1748011          0.1751376
-#> L50 118.7237428        118.6414514
+#>     Original Bootstrap (Median)
+#> A   -20.753  -20.9747          
+#> B   0.1748   0.1767            
+#> L50 118.7237 118.6362          
+#> R2  -        0.7111
 
 
 
@@ -116,7 +131,7 @@ print(my_ogive)
 # plot(my_ogive)
 ```
 
-2.  Size at Gonad Maturity
+1.  Size at Gonad Maturity
 
 ``` r
 data(matFish)
@@ -126,10 +141,11 @@ my_ogive = gonad_mature(matFish, varNames = c("total_length", "stage_mat"),
 
 print(my_ogive)
 #> formula: Y = 1/1+exp-(A + B*X)
-#>       Original Bootstrap (Median)
-#> A   -8.6046612         -8.6167068
-#> B    0.3560150          0.3568128
-#> L50 24.1693811         24.1629202
+#>     Original Bootstrap (Median)
+#> A   -8.6047  -8.6407           
+#> B   0.356    0.3576            
+#> L50 24.1694  24.1714           
+#> R2  0.5595   -
 
 
 
