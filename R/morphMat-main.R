@@ -27,7 +27,7 @@
 #' is carried out to obtain a discriminating function that permitted any individuals to be classified as a juvenile or an adult on the basis of the X and Y
 #' allometric variables.
 #'
-#' 1.2) After classification, the logistic approach is used. The size at 50\% maturity (\eqn{L_50}) is estimated as the length at
+#' 1.2) After classification, the logistic approach is used. The size at 50\% maturity (\eqn{L_{50}}) is estimated as the length at
 #' which a randomly chosen specimen has a 50\% chance of being mature (Somerton  1980, Roa  et al. 1999, Corgos & Freire 2006).
 #' In the regression analysis, \eqn{X} (i.e: carapace width) is considered the explanatory variable and the classification \eqn{CS}
 #' (juveniles: 0, adults: 1) is considered the response variable (binomial).
