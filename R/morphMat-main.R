@@ -29,12 +29,12 @@
 #'
 #' 1.2) After classification, the logistic approach is used. The size at 50\% maturity (\eqn{L_{50}}) is estimated as the length at
 #' which a randomly chosen specimen has a 50\% chance of being mature (Somerton  1980, Roa  et al. 1999, Corgos & Freire 2006).
-#' In the regression analysis, \eqn{X} (i.e: carapace width) is considered the explanatory variable and the classification \eqn{CS}
+#' In the regression analysis, \eqn{X} (i.e: carapace width) is considered the explanatory variable and the classification \eqn{CL}
 #' (juveniles: 0, adults: 1) is considered the response variable (binomial).
 #'
 #' The variables are fitted to a logistic function with the form:
 #'
-#' \deqn{P_{CS} = 1 / [1+e^{-(beta_0 + beta_1*X)}]}
+#' \deqn{P_{CL} = \frac{1 / [1+e^{-(beta_0 + beta_1*X)}]}}
 #'
 #' where:
 #'
@@ -44,7 +44,7 @@
 #'
 #' The (\eqn{L_{50}}) is calculated as:
 #'
-#' \deqn{L_{50} = -beta_0 / beta_1}
+#' \deqn{L_{50} = \frac{-beta_0 / beta_1}}
 #'
 #' Some basic plotting (classification, \eqn{beta_0}, \eqn{beta_1} and \eqn{L_{50}} histogram, and maturity ogive)
 #' are also provided.
