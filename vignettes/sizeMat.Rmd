@@ -18,7 +18,7 @@ library(sizeMat)
 
 This vignette introduces you to `sizeMat` package and provide a way to estimate **Size at Morphometric and Gonad Maturity**.
 
-##Install package
+### Install package
 ```{r, eval=FALSE}
 install.packages("sizeMat")
 ```
@@ -26,7 +26,7 @@ install.packages("sizeMat")
 ### 1. Size at morphometric maturity
 For estimating morphometric maturity use the *crabdata* base. The data set containing allometric measures and other attributes (year, month, sex category) of 223 crabs of the specie *Chionectes tanneri*.
 
-## Load data
+### Load data
 ```{r echo=TRUE}
 data(crabdata)
 
@@ -119,7 +119,7 @@ print(my_ogive_bayes)
 
 
 ## Plot maturity ogive
-For plotting the maturity ogive, an object of class "morphMat"is required. The function `plot` generates 4 graphics: 1), 2) and 3) are histograms for the A, B parameters and the size at morphometric maturity ($L_{50}$), the last is the maturity ogive.
+For plotting the maturity ogive, an object of class "morphMat" is required. The function `plot` generates 4 graphics: 1), 2) and 3) are histograms for the A, B parameters and the size at morphometric maturity ($L_{50}$), the last is the maturity ogive.
 
 ```{r echo = TRUE, fig.width = 10, fig.height = 10, warning=FALSE}
 par(mfrow = c(2,2))

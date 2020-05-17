@@ -62,18 +62,11 @@ classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_
 print(classify_data)
 
 
-
-
-# plot(classify_data)
-
 my_ogive = morph_mature(classify_data, method = "fq")
 
 print(my_ogive)
 
 
-
-
-# plot(my_ogive)
 ```
 
 
@@ -87,8 +80,4 @@ my_ogive = gonad_mature(matFish, varNames = c("total_length", "stage_mat"),
 
 print(my_ogive)
 
-
-
-
-# plot(my_ogive)
 ```
