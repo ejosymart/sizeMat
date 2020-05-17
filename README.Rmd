@@ -51,7 +51,7 @@ devtools::install_github("ejosymart/sizeMat")
 
 This is a basic example which shows you how to estimate Size at Morphometric and Gonad Maturity:
 
-1. Size at Morphometric Maturity
+## 1. Size at Morphometric Maturity
 
 ```{r}
 data(crabdata)
@@ -70,7 +70,7 @@ print(my_ogive)
 ```
 
 
-2. Size at Gonad Maturity
+## 2. Size at Gonad Maturity
 
 ```{r}
 data(matFish)
