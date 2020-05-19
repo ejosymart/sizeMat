@@ -204,7 +204,7 @@ plot(my_ogive_fq, xlab = "Total length (cm.)", ylab = "Proportion mature", col =
 ```
 
 
-##References
+## References
 
 Agostinho, C. S. (2000). Use of otoliths to estimate size at sexual maturity in fish. Brazilian Archives of Biology and Technology, 43(4).
 
