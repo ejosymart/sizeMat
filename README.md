@@ -1,5 +1,4 @@
-sizeMat
-=======
+# sizeMat
 
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/sizeMat)](http://cran.r-project.org/package=sizeMat)
 [![](http://cranlogs.r-pkg.org/badges/sizeMat)](http://cran.rstudio.com/web/packages/sizeMat/index.html)
@@ -15,8 +14,7 @@ and is based on the relative growth.
 The estimation of gonadal maturity used one allometric variable and the
 stage of sexual maturity (gonad maturation stage).
 
-Installation
-------------
+## Install
 
 Get the released version from CRAN:
 
@@ -31,13 +29,12 @@ Or the development version from github:
 devtools::install_github("ejosymart/sizeMat")
 ```
 
-Examples
---------
+## Examples
 
 This is a basic example which shows you how to estimate Size at
 Morphometric and Gonad Maturity:
 
-1.  Size at Morphometric Maturity
+## Size at Morphometric Maturity
 
 ``` r
 data(crabdata)
@@ -111,27 +108,18 @@ print(classify_data)
 #> [1] "slopes are different"
 
 
-
-
-# plot(classify_data)
-
 my_ogive = morph_mature(classify_data, method = "fq")
 
 print(my_ogive)
 #> formula: Y = 1/1+exp-(A + B*X)
 #>     Original Bootstrap (Median)
-#> A   -20.753  -20.9747          
-#> B   0.1748   0.1767            
-#> L50 118.7237 118.6362          
+#> A   -20.753  -20.8576          
+#> B   0.1748   0.1757            
+#> L50 118.7237 118.6591          
 #> R2  -        0.7111
-
-
-
-
-# plot(my_ogive)
 ```
 
-1.  Size at Gonad Maturity
+## Size at Gonad Maturity
 
 ``` r
 data(matFish)
@@ -146,9 +134,4 @@ print(my_ogive)
 #> B   0.356    0.3576            
 #> L50 24.1694  24.1714           
 #> R2  0.5595   -
-
-
-
-
-# plot(my_ogive)
 ```
