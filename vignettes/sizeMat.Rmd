@@ -23,6 +23,14 @@ This vignette introduces you to `sizeMat` package and provide a way to estimate 
 install.packages("sizeMat")
 ```
 
+Or the development version from github:
+
+```{r, eval=FALSE}
+# install.packages("devtools")
+devtools::install_github("ejosymart/sizeMat")
+```
+
+
 ### 1. Size at morphometric maturity
 For estimating morphometric maturity use the *crabdata* base. The data set containing allometric measures and other attributes (year, month, sex category) of 223 crabs of the specie *Chionectes tanneri*.
 
