@@ -61,7 +61,7 @@ and the second is the stage of sexual maturity.
 
 The arguments \code{inmName} and \code{matName} require a character string indicating the name 
 of the stages of sexual maturity in the data.frame. The argument could contain one character string 
-or should be a vector (i.e \code{inmName = "I"}, \code{matName = c("II", "III", "IV")}).
+or should be a vector (i.e. \code{inmName = "I"}, \code{matName = c("II", "III", "IV")}).
 
 The argument \code{method} requires a character string indicating which regression will be used for the test.
 If \code{method = "fq"} the logistic regression is based on GLM (frequentist), if \code{method = "bayes"} a sample from 

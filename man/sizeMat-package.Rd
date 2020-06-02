@@ -25,7 +25,7 @@ allometric variables.
 
 1.2) After classification, the logistic approach is used. The size at 50\% maturity (\eqn{L_{50}}) is estimated as the length at
 which a randomly chosen specimen has a 50\% chance of being mature (Somerton  1980, Roa  et al. 1999, Corgos & Freire 2006).
-In the regression analysis, \eqn{X} (i.e: carapace width) is considered the explanatory variable and the classification \eqn{CL}
+In the regression analysis, \eqn{X} (i.e. carapace width) is considered the explanatory variable and the classification \eqn{CL}
 (juveniles: 0, adults: 1) is considered the response variable (binomial).
 
 The variables are fitted to a logistic function with the form:
@@ -49,10 +49,10 @@ are also provided.
 2) The estimation of Size at Gonad Maturity use the logistic approach.
 
 To estimate size at gonadal maturity, the database must contains the stage of sexual
-maturity and at least one allometric variable (i.e: total length, fork length, carapace width).
-The stage of sexual maturity is referred to the gonadal maturation stages (i.e: I, II, III, IV or 0, 1, etc).
+maturity and at least one allometric variable (i.e. total length, fork length, carapace width).
+The stage of sexual maturity is referred to the gonadal maturation stages (i.e. I, II, III, IV or 0, 1, etc).
 
-So, in the regression analysis, the allometric variable (i.e: total length) is considered the
+So, in the regression analysis, the allometric variable (i.e. total length) is considered the
 explanatory variable and the stage of sexual maturity (immature: 0, mature: 1)
 is considered the response variable (binomial). The regression  analysis is performed
 in the same way as the size at morphometric maturity.
