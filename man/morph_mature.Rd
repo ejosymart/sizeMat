@@ -30,7 +30,7 @@ An object of class 'morphMat'.
 logistic regression and confidence intervals (95\%). Also the summary statistics of the model is provided.
 }
 \description{
-Estimate size at morphometric maturity (\eqn{L_{50}}).
+Estimate size at morphometric maturity.
 }
 \details{
 Estimate the size at morphometric maturity using a logistic regression with X variable
