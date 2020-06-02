@@ -120,8 +120,8 @@ classify_mature <- function(data, varNames = c("x", "y"), varSex = "sex",
   input <- input[order(input$x), ]
 
   if(is.null(selectSex)) {
-     input <- input[, c("x", "y")]
-     cat("all individuals were used in the analysis", "\n\n")
+    input <- input[, c("x", "y")]
+    cat("all individuals were used in the analysis", "\n\n")
   } else {
     input <-input[which(input$sex == selectSex),]
     cat("only", paste0(unique(input$sex), "-sex", sep =""), "were used in the analysis", "\n\n")
@@ -248,11 +248,11 @@ plot.classify <- function(x, xlab = "X", ylab = "Y", col = c(1, 2), pch = c(4, 5
   if(length(lwd_lines) < 2) stop('lwd argument must have 2 values. The line width could be the same')
   if(length(lwd_lines) > 2) warning('lwd: only the first two line width will be used in the plot')
 
-  PCH <- ifelse (data$mature == 0, pch[1], pch[2])
-  COL <- ifelse (data$mature == 0, col[1], col[2])
-  CEX <- ifelse (data$mature == 0, cex[1], cex[2])
-  LTY <- ifelse (data$mature == 0, lty_lines[1], lty_lines[2])
-  LWD <- ifelse (data$mature == 0, lwd_lines[1], lwd_lines[2])
+  PCH <- ifelse(data$mature == 0, pch[1], pch[2])
+  COL <- ifelse(data$mature == 0, col[1], col[2])
+  CEX <- ifelse(data$mature == 0, cex[1], cex[2])
+  LTY <- ifelse(data$mature == 0, lty_lines[1], lty_lines[2])
+  LWD <- ifelse(data$mature == 0, lwd_lines[1], lwd_lines[2])
 
   plot(data$x, data$y, type = "p", col = COL, xlab = xlab, ylab = ylab, pch = PCH, cex = CEX, ...)
   lines(juv$x, predict(fit_juv), col = COL[1], lwd = LWD[1], lty = LTY[1])
