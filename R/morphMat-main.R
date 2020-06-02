@@ -4,7 +4,7 @@
 #' @importFrom matrixStats rowQuantiles
 #' @importFrom MASS lda qda
 #' @importFrom grDevices colors
-#' @importFrom graphics axis box legend lines plot points hist par abline
+#' @importFrom graphics axis box legend lines points hist par abline
 #' @importFrom utils data read.csv installed.packages
 #' @import stats
 #'
