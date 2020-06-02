@@ -44,7 +44,7 @@
 #' in generate B bootstrap samples, by resampling with replacement the original data. Then all statistics for each parameter 
 #' can be calculated from each bootstrap sample (median and confidence intervals). 
 #' For the \code{method = "bayes"}, the argument \code{niter} is related to the number of Metropolis iterations for the sampler.
-#' @exportClass gonad_mature
+#' @exportClass gonadMat
 #' @examples
 #' data(matFish)
 #' 
