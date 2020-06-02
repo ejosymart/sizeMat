@@ -65,7 +65,7 @@ gonad_mature <- function(data, varNames = c("allometric", "stage") , inmName = "
   data <- data[, varNames]
   names(data) <- c("x", "stage")
   data$stage <- as.factor(data$stage)
-  data <- data[complete.cases(data), ] 
+  data <- data[complete.cases(data), ]
   
   if(!all(c(inmName, matName) %in% levels(data$stage))) stop("'inmName' or 'matName' have not been found in data.")
   if(all(inmName %in% matName)) stop("'inmName' and 'matName' must have different stage names")
