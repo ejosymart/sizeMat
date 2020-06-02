@@ -18,3 +18,7 @@
 * Plots for gonad and morphometric maturity have been improved.
 * You can select the ogive maturity.
 * The vignettes have been improved adding examples.
+
+#sexMat 1.1.2
+* Cleaning S4 methods
+* Test on R 4.0.0
