@@ -41,7 +41,7 @@ in log base, allowing to distinguish two groups that would represent juveniles a
 The individuals are assigned to each group using a hierarchical classification procedure
 (hierarchical cluster with agglomeration method: "Ward.D" and the distance measure: "euclidean").
 This method is based on establishing a predetermined number of groups (in this case, two) and assigning individuals
-to one of the groups according to their loads on the two axes of the PCA (Corgos & Freire, 2006).
+to one of the groups according to their loads on the two axes of the PCA (Corgos and Freire, 2006).
 
 Using the results of the classification (PCA + cluster), a discriminant analysis (linear or quadratic) is conducted
 to obtain a discriminating function that permitted any individuals to be classified as a

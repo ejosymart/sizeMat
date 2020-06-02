@@ -7,7 +7,7 @@
 morph_mature(data, method = "fq", niter = 999, seed = 70388)
 }
 \arguments{
-\item{data}{an object of class 'classify' with the allometric variables (X", "Y") and classification of maturity (juveniles = 0, adults = 1).}
+\item{data}{an object of class 'classify' with the allometric variables ("X", "Y") and classification of maturity (juveniles = 0, adults = 1).}
 
 \item{method}{a character string indicating the method to be applied, \code{"fq"} frequentist GLM, or \code{"bayes"} Bayes GLM (MCMClogit function).}
 
