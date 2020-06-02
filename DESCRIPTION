@@ -2,7 +2,7 @@ Package: sizeMat
 Type: Package
 Title: Estimate Size at Sexual Maturity
 Version: 1.1.2
-Date: 2020-04-14
+Date: 2020-06-02
 Authors@R: c(person("Josymar", "Torrejon-Magallanes", email = "ejosymart@gmail.com", role = c("cre", "aut")))
 Maintainer: Josymar Torrejon-Magallanes <ejosymart@gmail.com>
 Description: Estimate morphometric and gonadal size at sexual maturity for organisms, usually fish and invertebrates. It includes methods for classification based on relative growth (using principal components analysis, hierarchical clustering, discriminant analysis), logistic regression (Frequentist or Bayes), parameters estimation and some basic plots.
