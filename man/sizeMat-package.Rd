@@ -30,7 +30,7 @@ In the regression analysis, \eqn{X} (i.e. carapace width) is considered the expl
 
 The variables are fitted to a logistic function with the form:
 
-\deqn{P_{CL} = \frac{1 / [1+e^{-(beta_0 + beta_1*X)}]}}
+\deqn{P_{CL} = \frac{1 / (1+e^{-(beta_0 + beta_1*X)})}}
 
 where:
 

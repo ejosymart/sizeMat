@@ -34,7 +34,7 @@
 #'
 #' The variables are fitted to a logistic function with the form:
 #'
-#' \deqn{P_{CL} = \frac{1 / [1+e^{-(beta_0 + beta_1*X)}]}}
+#' \deqn{P_{CL} = \frac{1 / (1+e^{-(beta_0 + beta_1*X)})}}
 #'
 #' where:
 #'
@@ -272,7 +272,7 @@ plot.classify <- function(x, xlab = "X", ylab = "Y", col = c(1, 2), pch = c(4, 5
 
 #' Estimate morphometric mature
 #'
-#' Estimate size at morphometric maturity (\eqn{L_{50}}).
+#' Estimate size at morphometric maturity.
 #'
 #' @param data an object of class 'classify' with the allometric variables (X", "Y") and classification of maturity (juveniles = 0, adults = 1).
 #' @param method a character string indicating the method to be applied, \code{"fq"} frequentist GLM, or \code{"bayes"} Bayes GLM (MCMClogit function).
