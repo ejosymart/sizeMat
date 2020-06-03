@@ -34,19 +34,19 @@
 #'
 #' The variables are fitted to a logistic function with the form:
 #'
-#' \deqn{P_{CL} = \frac{1 / (1+e^{-(beta_{0} + beta_{1}*X)})}}
+#' \deqn{P_{CL} = \frac{{1}{(1 + e^{-(beta_{0} + beta_{1}*X)})}}}
 #'
 #' where:
 #'
 #' \eqn{P_{CL}} is the probability of an individual of being mature at a determinate \eqn{X} length.
 #'
-#' \eqn{beta_{0}} (intercept) and \eqn{beta_1} (slope) are parameters estimated.
+#' \eqn{beta_{0}} (intercept) and \eqn{beta_{1}} (slope) are parameters estimated.
 #'
 #' The \eqn{L_{50}} is calculated as:
 #'
-#' \deqn{L_{50} = \frac{-beta_0 / beta_1}}
+#' \deqn{L_{50} = \frac{{-beta_{0}}{beta_{1}}}}
 #'
-#' Some basic plotting (classification, \eqn{beta_0}, \eqn{beta_1} and \eqn{L_{50}} histogram, and maturity ogive)
+#' Some basic plotting (classification, \eqn{beta_{0}}, \eqn{beta_{1}} and \eqn{L_{50}} histogram, and maturity ogive)
 #' are also provided.
 #'
 #'

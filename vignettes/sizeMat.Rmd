@@ -96,11 +96,11 @@ The `morph_mature` function use the logit approach (frequentist or bayesian). Th
 
 In the regression analysis, $X$ (e.g: carapace width) is considered the explanatory variable and the classification of maturity $CS$ (juveniles: 0, adults: 1) is considered the response variable (binomial). The variables are fitted to a logit function with the form: 
 
-$P_{CS} = \frac{1}{1+e^{-(\hat{\beta}_{0} + \hat{\beta}_{1}*X)}}$
+$$P_{CS} = \frac{1}{1+e^{-(\hat{\beta}_{0} + \hat{\beta}_{1}*X)}}$$
 
 where $P_{CS}$ is the probability of an individual of being mature at a determinate $X$ length. $\hat{\beta}_{0}$ (intercept) and $\hat{\beta}_{1}$ (slope) are parameters estimated. The $L_{50}$ is calculated as:
 
-$L_{50} = -\frac{\hat{\beta}_{0}}{\hat{\beta}_{1}}$
+$$L_{50} = -\frac{\hat{\beta}_{0}}{\hat{\beta}_{1}}$$
 
 
 The `morph_mature` function requires an object of class "classify" with the X, Y (allometric variables) and classification of maturity (juveniles = 0, adults = 1).
