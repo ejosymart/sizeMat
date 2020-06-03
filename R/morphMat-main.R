@@ -34,7 +34,7 @@
 #'
 #' The variables are fitted to a logistic function with the form:
 #'
-#' \deqn{P_{CL} = \frac{{1}{(1 + e^{-(beta_{0} + beta_{1}*X)})}}}
+#' \deqn{P_{CL} = \frac{1}{(1 + e^{-(beta_{0} + beta_{1}*X)})}}
 #'
 #' where:
 #'
@@ -44,7 +44,7 @@
 #'
 #' The \eqn{L_{50}} is calculated as:
 #'
-#' \deqn{L_{50} = \frac{{-beta_{0}}{beta_{1}}}}
+#' \deqn{L_{50} = \frac{-beta_{0}}{beta_{1}}}
 #'
 #' Some basic plotting (classification, \eqn{beta_{0}}, \eqn{beta_{1}} and \eqn{L_{50}} histogram, and maturity ogive)
 #' are also provided.
