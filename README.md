@@ -1,5 +1,4 @@
 # sizeMat <img src="man/figures/sizeMat.png" width="120" align="right" />
-
 ===================================================
 
 <!-- badges: start -->
