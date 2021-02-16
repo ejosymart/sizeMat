@@ -11,6 +11,8 @@ downloads](http://cranlogs.r-pkg.org/badges/sizeMat)](http://cran.rstudio.com/we
 [![minimal R
 version](https://img.shields.io/badge/R%3E%3D-3.6-6666ff.svg)](https://cran.r-project.org/)
 
+<!-- badges: end -->
+
 **Estimate Size at Sexual Maturity**
 
 This package allows to estimate Size at Morphometric and Gonadal
