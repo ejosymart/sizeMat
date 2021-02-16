@@ -13,7 +13,7 @@ version](https://img.shields.io/badge/R%3E%3D-3.6-6666ff.svg)](https://cran.r-pr
 
 <!-- badges: end -->
 
-<img src='README_files/rangemap100dpi.png' align="right" height="140" /></a>
+<img src='man/figures/sizeMat.png' align="right" height="140" /></a>
 
 <hr>
 
