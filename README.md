@@ -1,4 +1,6 @@
-# sizeMat <img src="man/figures/sizeMat.png" width="120" align="right" />
+# sizeMat
+
+<br>
 
 <!-- badges: start -->
 
@@ -8,7 +10,12 @@
 downloads](http://cranlogs.r-pkg.org/badges/sizeMat)](http://cran.rstudio.com/web/packages/sizeMat/index.html)
 [![minimal R
 version](https://img.shields.io/badge/R%3E%3D-3.6-6666ff.svg)](https://cran.r-project.org/)
+
 <!-- badges: end -->
+
+<img src='README_files/rangemap100dpi.png' align="right" height="140" /></a>
+
+<hr>
 
 **Estimate Size at Sexual Maturity**
 
