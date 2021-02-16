@@ -1,4 +1,8 @@
-# sizeMat
+# sizeMat <img src="man/figures/sizeMat.png" width="120" align="right" />
+
+===================================================
+
+<!-- badges: start -->
 
 [![packageversion](https://img.shields.io/badge/Package%20version-1.1.2-orange.svg?style=flat-square)](commits/master)
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/sizeMat)](http://cran.r-project.org/package=sizeMat)
