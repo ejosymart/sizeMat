@@ -8,6 +8,7 @@
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/sizeMat)](https://cran.r-project.org/package=sizeMat)
 [![metacran
 downloads](https://cranlogs.r-pkg.org/badges/sizeMat)](https://cran.rstudio.com/web/packages/sizeMat/index.html)
+[![total](http://cranlogs.r-pkg.org/badges/grand-total/sizeMat)](https://www.rpackages.io/package/sizeMat)
 [![minimal R
 version](https://img.shields.io/badge/R%3E%3D-3.6-6666ff.svg)](https://cran.r-project.org/)
 
