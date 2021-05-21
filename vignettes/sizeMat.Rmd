@@ -211,6 +211,19 @@ If you want the maturity ogive plot only, you have to add the param `onlyOgive =
 plot(my_ogive_fq, xlab = "Total length (cm.)", ylab = "Proportion mature", col = c("blue", "red"), onlyOgive = TRUE)
 ```
 
+If you do not want to modify the position of the, write `legendPosition = "bottomright"` or another position.
+
+```{r echo = TRUE, fig.width = 10, fig.height = 10, warning=FALSE}
+plot(my_ogive_fq, xlab = "Total length (cm.)", ylab = "Proportion mature", col = c("blue", "red"), onlyOgive = TRUE, legendPosition = "bottomright")
+```
+
+
+If do not want to show the legend, write `showLegend = FALSE`. Besides you can modify the axis (size, rotation, etc) and add the legend.
+
+```{r echo = TRUE, fig.width = 10, fig.height = 10, warning=FALSE}
+plot(my_ogive_fq, xlab = "Total length (cm.)", ylab = "Proportion mature", col = c("blue", "red"), onlyOgive = TRUE, showLegend = FALSE)
+```
+
 
 ## References
 
