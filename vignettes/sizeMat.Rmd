@@ -218,7 +218,7 @@ plot(my_ogive_fq, xlab = "Total length (cm.)", ylab = "Proportion mature", col =
 ```
 
 
-If do not want to show the legend, write `showLegend = FALSE`. Besides you can modify the axis (size, rotation, etc) and add the legend.
+If you do not want to show the legend, write `showLegend = FALSE`. Besides you can modify the axis (size, rotation, etc) and add the legend.
 
 ```{r echo = TRUE, fig.width = 10, fig.height = 10, warning=FALSE}
 plot(my_ogive_fq, xlab = "Total length (cm.)", ylab = "Proportion mature", col = c("blue", "red"), onlyOgive = TRUE, showLegend = FALSE)
