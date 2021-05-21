@@ -171,7 +171,7 @@ print.gonadMat <- function(x, ...){
 #' @method plot gonadMat
 plot.gonadMat <- function(x, xlab = "X", ylab = "Proportion mature", col = c("blue", "red"), 
                         lwd = 2, lty = 2, vline_hist = "black", lwd_hist = 2, lty_hist = 2, 
-                        onlyOgive = FALSE, ...){
+                        onlyOgive = FALSE, showLegend = TRUE, legendPosition = "topleft", ...){
   
   if (!inherits(x, "gonadMat"))
     stop("Use only with 'gonadMat' objects")
@@ -234,9 +234,11 @@ plot.gonadMat <- function(x, xlab = "X", ylab = "Proportion mature", col = c("bl
     lines(c(wide[2], wide[2]), c(-1, 0.5), col = col[2], lwd = lwd, lty = lty)
     lines(c(-1, wide[2]), c(0.5, 0.5), col = col[2], lwd = lwd, lty = lty)
     points(wide[2], 0.5, pch = 19, col = col[2], cex = 1.25)
-    legend("topleft", c(as.expression(bquote(bold(L[50] == .(round(wide[2], 1))))),
-                        as.expression(bquote(bold(R^2 == .(round(R2, 2)))))), 
-           bty = "n")
+    if(showLegend = TRUE){
+      legend(legendPosition, c(as.expression(bquote(bold(L[50] == .(round(wide[2], 1))))),
+                               as.expression(bquote(bold(R^2 == .(round(R2, 2)))))), 
+             bty = "n")
+    }
   }
   
   cat("Size at gonad maturity =", round(wide[2], 1), "\n")
