@@ -205,7 +205,7 @@ par(mfrow = c(2,2))
 plot(my_ogive_bayes, xlab = "Total length (cm.)", ylab = "Proportion mature", col = c("blue", "red"))
 ```
 
-If you want the maturity ogive plot only, you have to add the param `onlyOgive = TRUE`. Besides you can modify the axis (size, rotation, etc) and add the legend.
+If you want the maturity ogive plot only, you have to add the param `onlyOgive = TRUE`.
 
 ```{r echo = TRUE, fig.width = 10, fig.height = 10, warning=FALSE}
 plot(my_ogive_fq, xlab = "Total length (cm.)", ylab = "Proportion mature", col = c("blue", "red"), onlyOgive = TRUE)
