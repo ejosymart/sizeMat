@@ -159,6 +159,8 @@ print.gonadMat <- function(x, ...){
 #' @param lwd_hist line with for the vertical line in the histogram.
 #' @param lty_hist line type for the vertical line in the histogram.
 #' @param onlyOgive plot only the ogive.
+#' @param showLegend to show or not the legend
+#' @param legendPosition a character string indicating the position of the legend.
 #' @param \dots Additional arguments to the plot method.
 #' @examples
 #' data(matFish)

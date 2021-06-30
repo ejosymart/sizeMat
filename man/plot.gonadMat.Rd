@@ -15,6 +15,8 @@
   lwd_hist = 2,
   lty_hist = 2,
   onlyOgive = FALSE,
+  showLegend = TRUE,
+  legendPosition = "topleft",
   ...
 )
 }
@@ -40,6 +42,10 @@ the median and the confidence intervals.}
 \item{lty_hist}{line type for the vertical line in the histogram.}
 
 \item{onlyOgive}{plot only the ogive.}
+
+\item{showLegend}{to show or not the legend}
+
+\item{legendPosition}{a character string indicating the position of the legend.}
 
 \item{\dots}{Additional arguments to the plot method.}
 }
