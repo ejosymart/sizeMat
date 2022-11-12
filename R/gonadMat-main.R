@@ -79,6 +79,7 @@ gonad_mature <- function(data, varNames = c("allometric", "stage") , inmName = "
                       fitted = estimate$fitted, CIupper = estimate$upper)
   
   output <- list(model    = estimate$model,
+                 modelglm = estimate$modelglm,
                  A_boot   = estimate$parameters_A, 
                  B_boot   = estimate$parameters_B,
                  L50_boot = estimate$L50,
@@ -108,7 +109,7 @@ gonad_mature <- function(data, varNames = c("allometric", "stage") , inmName = "
 print.gonadMat <- function(x, ...){
   if (!inherits(x, "gonadMat"))
     stop("Use only with 'gonadMat' objects")
-  cat("formula: Y = 1/1+exp-(A + B*X)", "\n\n")
+  cat("formula: Y = 1/[1+exp-(A + B*X)]", "\n\n")
   
   A_b   <- quantile(x$A_boot, probs = 0.5, na.rm = TRUE)
   B_b   <- quantile(x$B_boot, probs = 0.5, na.rm = TRUE)

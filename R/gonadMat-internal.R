@@ -15,7 +15,7 @@
   A    <- as.numeric(n_coef[,1])
   B    <- as.numeric(n_coef[,2])
   L50  <- -A/B
-  
+
   create_x <- cbind(1, data$x)
   x_fq     <- as.matrix(create_x) %*% t(as.matrix(cbind(A,B)))
   pred_fq  <- 1 / (1 + exp(-x_fq))
@@ -24,7 +24,8 @@
   lower    <- qtl[, 1]
   upper    <- qtl[, 3]
   
-  estimate <- list(model = smry_model,
+  estimate <- list(modelglm = model_glm,
+                   model = smry_model,
                    parameters_A = A, 
                    parameters_B = B, 
                    L50 = L50,
