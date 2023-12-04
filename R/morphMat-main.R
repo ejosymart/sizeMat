@@ -383,7 +383,7 @@ print.morphMat <- function(x, ...){
     A_or   <- coef(x$model)[1]
     B_or   <- coef(x$model)[2]
     L50_or <- -A_or/B_or
-    tab <- matrix(c(round(as.numeric(c(A_or, A_b, B_or, B_b, L50_or, L50_b)), 4), "-", round(R2, 4)),
+    tab <- matrix(c(round(as.numeric(c(A_or, A_b, B_or, B_b, L50_or, L50_b)), 4), round(R2, 4), "-"),
                   nrow = 4, ncol = 2, byrow = TRUE)
     colnames(tab) <- c("Original", "Bootstrap (Median)")
     rownames(tab) <- c("A", "B", "L50", "R2")
