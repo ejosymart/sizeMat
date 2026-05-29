@@ -22,3 +22,10 @@
 #sexMat 1.1.2
 * Cleaning S4 methods
 * Test on R 4.0.0
+
+# sizeMat 1.2.0
+* Added optional ggplot2-style graphics using `gg_style = TRUE`.
+* Updated `plot.classify()`, `plot.morphMat()`, and `plot.gonadMat()`.
+* Updated vignette with examples for ggplot2-style plots.
+* Added package citation file.
+* Added Luis Angeles Gonzales as author.
