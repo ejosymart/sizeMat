@@ -4,86 +4,303 @@ output:
     variant: gfm
 ---
 
-```{r, echo = FALSE}
+```{r setup, echo = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "README-"
+  fig.path = "README-",
+  fig.align = "center",
+  fig.width = 7,
+  fig.height = 5,
+  warning = FALSE,
+  message = FALSE
 )
+
 library(sizeMat)
 ```
 
-
 # sizeMat
 
-<br>
-
 <!-- badges: start -->
-[![packageversion](https://img.shields.io/badge/Package%20version-1.2.0-orange.svg?style=flat-square)](commits/master) [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/sizeMat)](https://cran.r-project.org/package=sizeMat) [![metacran downloads](https://cranlogs.r-pkg.org/badges/sizeMat)](https://cran.rstudio.com/web/packages/sizeMat/index.html) [![total](http://cranlogs.r-pkg.org/badges/grand-total/sizeMat)](https://www.rpackages.io/package/sizeMat) [![minimal R version](https://img.shields.io/badge/R%3E%3D-3.6-6666ff.svg)](https://cran.r-project.org/)
-
+[![packageversion](https://img.shields.io/badge/Package%20version-1.2.0-orange.svg?style=flat-square)](https://github.com/ejosymart/sizeMat)
+[![CRAN status](https://www.r-pkg.org/badges/version/sizeMat)](https://cran.r-project.org/package=sizeMat)
+[![CRAN downloads](https://cranlogs.r-pkg.org/badges/sizeMat)](https://cran.r-project.org/package=sizeMat)
+[![Total downloads](https://cranlogs.r-pkg.org/badges/grand-total/sizeMat)](https://cran.r-project.org/package=sizeMat)
+[![R version](https://img.shields.io/badge/R%3E%3D-4.0.0-6666ff.svg)](https://cran.r-project.org/)
 <!-- badges: end -->
-<img src='man/figures/sizeMat.png' align="right" height="140" /></a>
 
-<hr>
+<img src="man/figures/sizeMat.png" align="right" height="140" />
 
 **Estimate Size at Sexual Maturity**
 
-This package allows to estimate Size at Morphometric and Gonadal Maturity for organisms, usually fish and invertebrates.
+`sizeMat` is an R package for estimating size at morphometric and gonadal maturity in organisms, especially fish and invertebrates.
 
-The estimation of morphometric maturity used two allometric variables and is based on the relative growth.
+The package includes tools for:
 
-The estimation of gonadal maturity used one allometric variable and the stage of sexual maturity (gonad maturation stage).
+- classifying individuals into juvenile and adult groups using relative growth;
+- estimating size at morphometric maturity;
+- estimating size at gonadal maturity;
+- fitting maturity ogives using frequentist or Bayesian logistic regression;
+- visualizing results using base R graphics or optional `ggplot2`-style plots.
 
+The size at sexual maturity is commonly expressed as $L_{50}$, the size at which an individual has a 50% probability of being mature.
 
-## Install
+## Installation
 
+Install the released version from CRAN:
 
-Get the released version from CRAN:
-
-```R
+```{r install-cran, eval = FALSE}
 install.packages("sizeMat")
 ```
 
-Or the development version from github:
+Install the development version from GitHub:
 
-```R
+```{r install-github, eval = FALSE}
 # install.packages("devtools")
 devtools::install_github("ejosymart/sizeMat")
 ```
 
+## Example 1: Size at morphometric maturity
 
+The morphometric maturity workflow has two main steps:
 
-## Examples
+1. classify individuals as juveniles or adults using two allometric variables;
+2. estimate the maturity ogive and $L_{50}$.
 
-This is a basic example which shows you how to estimate Size at Morphometric and Gonad Maturity:
-
-## Size at Morphometric Maturity
-
-```{r}
+```{r morph-classify}
 data(crabdata)
 
-classify_data = classify_mature(crabdata, varNames = c("carapace_width", "chela_height"), 
-                                varSex = "sex_category", selectSex = NULL, method = "ld")
+classify_data <- classify_mature(
+  crabdata,
+  varNames = c("carapace_width", "chela_height"),
+  varSex = "sex_category",
+  selectSex = NULL,
+  method = "ld"
+)
 
 print(classify_data)
-
-
-my_ogive = morph_mature(classify_data, method = "fq")
-
-print(my_ogive)
-
-
 ```
 
+### Base R plot
 
-## Size at Gonad Maturity
+By default, `plot.classify()` uses base R graphics.
 
-```{r}
+```{r morph-classify-base}
+plot(
+  classify_data,
+  xlab = "Carapace width (mm)",
+  ylab = "Chela height (mm)"
+)
+```
+
+### ggplot2-style plot
+
+Use `gg_style = TRUE` to return a `ggplot` object.
+
+```{r morph-classify-gg}
+plot(
+  classify_data,
+  xlab = "Carapace width (mm)",
+  ylab = "Chela height (mm)",
+  col = c("steelblue", "firebrick"),
+  pch = c(16, 17),
+  gg_style = TRUE
+)
+```
+
+Because the output is a `ggplot` object, it can be modified using `ggplot2`.
+
+```{r morph-classify-gg-custom}
+p_classify <- plot(
+  classify_data,
+  xlab = "Carapace width (mm)",
+  ylab = "Chela height (mm)",
+  col = c("steelblue", "firebrick"),
+  pch = c(16, 17),
+  gg_style = TRUE
+)
+
+p_classify +
+  ggplot2::theme_bw()
+```
+
+### Estimate morphometric maturity
+
+```{r morph-estimate}
+set.seed(123)
+
+my_morph <- morph_mature(
+  classify_data,
+  method = "fq",
+  niter = 200
+)
+
+print(my_morph)
+```
+
+### Base R maturity ogive
+
+```{r morph-ogive-base}
+plot(
+  my_morph,
+  xlab = "Carapace width (mm)",
+  ylab = "Proportion mature",
+  col = c("blue", "red"),
+  onlyOgive = TRUE
+)
+```
+
+### ggplot2-style maturity ogive
+
+```{r morph-ogive-gg}
+plot(
+  my_morph,
+  xlab = "Carapace width (mm)",
+  ylab = "Proportion mature",
+  col = c("steelblue", "firebrick"),
+  onlyOgive = TRUE,
+  gg_style = TRUE
+)
+```
+
+When `gg_style = TRUE` and `onlyOgive = FALSE`, the plot method returns a list of independent `ggplot` objects.
+
+```{r morph-gg-list}
+p_morph <- plot(
+  my_morph,
+  xlab = "Carapace width (mm)",
+  ylab = "Proportion mature",
+  col = c("steelblue", "firebrick"),
+  gg_style = TRUE
+)
+
+names(p_morph)
+```
+
+Each plot can be displayed separately.
+
+```{r morph-gg-l50}
+p_morph$L50
+```
+
+```{r morph-gg-ogive-custom}
+p_morph$ogive +
+  ggplot2::theme_bw() +
+  ggplot2::ggtitle("Morphometric maturity ogive")
+```
+
+## Example 2: Size at gonadal maturity
+
+The gonadal maturity workflow uses one allometric variable and a maturity stage variable.
+
+```{r gonad-estimate}
 data(matFish)
 
-my_ogive = gonad_mature(matFish, varNames = c("total_length", "stage_mat"), 
-                        immName = "I", matName = c("II", "III", "IV"), method = "fq", niter = 999)
+set.seed(123)
 
-print(my_ogive)
+my_gonad <- gonad_mature(
+  matFish,
+  varNames = c("total_length", "stage_mat"),
+  immName = "I",
+  matName = c("II", "III", "IV"),
+  method = "fq",
+  niter = 200
+)
 
+print(my_gonad)
+```
+
+### Base R maturity ogive
+
+```{r gonad-ogive-base}
+plot(
+  my_gonad,
+  xlab = "Total length (cm)",
+  ylab = "Proportion mature",
+  col = c("blue", "red"),
+  onlyOgive = TRUE
+)
+```
+
+The legend position can be modified.
+
+```{r gonad-ogive-base-legend}
+plot(
+  my_gonad,
+  xlab = "Total length (cm)",
+  ylab = "Proportion mature",
+  col = c("blue", "red"),
+  onlyOgive = TRUE,
+  legendPosition = "bottomright"
+)
+```
+
+### ggplot2-style maturity ogive
+
+```{r gonad-ogive-gg}
+plot(
+  my_gonad,
+  xlab = "Total length (cm)",
+  ylab = "Proportion mature",
+  col = c("steelblue", "firebrick"),
+  onlyOgive = TRUE,
+  gg_style = TRUE
+)
+```
+
+When `gg_style = TRUE` and `onlyOgive = FALSE`, the function returns a list of independent `ggplot` objects.
+
+```{r gonad-gg-list}
+p_gonad <- plot(
+  my_gonad,
+  xlab = "Total length (cm)",
+  ylab = "Proportion mature",
+  col = c("steelblue", "firebrick"),
+  gg_style = TRUE
+)
+
+names(p_gonad)
+```
+
+```{r gonad-gg-l50}
+p_gonad$L50
+```
+
+```{r gonad-gg-ogive-custom}
+p_gonad$ogive +
+  ggplot2::theme_bw() +
+  ggplot2::ggtitle("Gonadal maturity ogive")
+```
+
+## Combining ggplot2-style outputs
+
+The elements returned by `plot(..., gg_style = TRUE)` are standard `ggplot` objects. They can be combined using external packages such as `ggpubr` or `cowplot`.
+
+```{r combine-ggpubr, eval = requireNamespace("ggpubr", quietly = TRUE), fig.width = 9, fig.height = 7}
+ggpubr::ggarrange(
+  p_gonad$A,
+  p_gonad$B,
+  p_gonad$L50,
+  p_gonad$ogive,
+  ncol = 2,
+  nrow = 2
+)
+```
+
+```{r combine-cowplot, eval = requireNamespace("cowplot", quietly = TRUE), fig.width = 9, fig.height = 7}
+cowplot::plot_grid(
+  p_gonad$A,
+  p_gonad$B,
+  p_gonad$L50,
+  p_gonad$ogive,
+  ncol = 2
+)
+```
+
+## Citation
+
+To cite `sizeMat`, use:
+
+```{r citation}
+citation("sizeMat")
 ```
