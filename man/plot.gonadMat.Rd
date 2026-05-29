@@ -2,7 +2,7 @@
 % Please edit documentation in R/gonadMat-main.R
 \name{plot.gonadMat}
 \alias{plot.gonadMat}
-\title{Plot method for gonadMat class (size at gonad maturity)}
+\title{Plot method for gonadMat class (size at gonadal maturity)}
 \usage{
 \method{plot}{gonadMat}(
   x,
@@ -17,45 +17,62 @@
   onlyOgive = FALSE,
   showLegend = TRUE,
   legendPosition = "topleft",
+  gg_style = FALSE,
+  pch = 19,
+  cex = 2.5,
+  point_alpha = 0.8,
+  base_size = 13,
+  label_size = 5,
   ...
 )
 }
 \arguments{
-\item{x}{object of class 'gonadMat' with the mature parameters and a data.frame with the X and stage of sexual maturity.
-variables. Also the fitted values for the logistic regression and confidence intervals (95\%).}
+\item{x}{object of class 'gonadMat' with mature parameters and fitted values
+from the logistic regression.}
 
-\item{xlab}{a title for the x axis.}
+\item{xlab}{title for the x axis.}
 
-\item{ylab}{a title for the y axis.}
+\item{ylab}{title for the y axis.}
 
-\item{col}{color for the logistic curve and for the L50\% size at gonad maturity.}
+\item{col}{colors for the logistic curve and the L50 reference lines.}
 
-\item{lwd}{line with for drawing fitted values and confidence intervals.}
+\item{lwd}{line width for fitted values and confidence intervals.}
 
-\item{lty}{line type line type for drawing fitted values and confidence intervals}
+\item{lty}{line type for fitted values and confidence intervals.}
 
-\item{vline_hist}{color of the vertical lines in the histogram. The lines represent the 
-the median and the confidence intervals.}
+\item{vline_hist}{color of the vertical lines in the histograms.}
 
-\item{lwd_hist}{line with for the vertical line in the histogram.}
+\item{lwd_hist}{line width for vertical lines in the histograms.}
 
-\item{lty_hist}{line type for the vertical line in the histogram.}
+\item{lty_hist}{line type for vertical lines in the histograms.}
 
-\item{onlyOgive}{plot only the ogive.}
+\item{onlyOgive}{logical. If TRUE, plot only the maturity ogive.}
 
-\item{showLegend}{to show or not the legend}
+\item{showLegend}{logical. If TRUE, show L50 and R2 labels.}
 
-\item{legendPosition}{a character string indicating the position of the legend.}
+\item{legendPosition}{position of the legend in base graphics and ggplot2 style. Options are "topleft", "topright", "bottomleft", and "bottomright".}
 
-\item{\dots}{Additional arguments to the plot method.}
+\item{gg_style}{logical. If TRUE, return ggplot2-style plots.}
+
+\item{pch}{plotting character for observed maturity proportions.}
+
+\item{cex}{point size in base graphics and ggplot2 style.}
+
+\item{point_alpha}{transparency level for points, used only when gg_style = TRUE.}
+
+\item{base_size}{base font size, used only when gg_style = TRUE.}
+
+\item{label_size}{size of L50 and R2 labels, used only when gg_style = TRUE.}
+
+\item{\dots}{additional arguments passed to base graphics.}
 }
 \description{
-Plot method for gonadMat class (size at gonad maturity)
+Plot method for gonadMat class (size at gonadal maturity)
 }
 \examples{
 data(matFish)
 
-gonad_mat = gonad_mature(matFish, varNames = c("total_length", "stage_mat"), inmName = "I", 
+gonad_mat = gonad_mature(matFish, varNames = c("total_length", "stage_mat"), immName = "I", 
 matName = c("II", "III", "IV"), method = "fq", niter = 50)
 
 plot(gonad_mat, xlab = "Total length (cm.)", ylab = "Proportion mature", col = c("blue", "red"))

@@ -1,0 +1,11 @@
+bibentry(
+  bibtype = "Manual",
+  title = "sizeMat: Estimate Size at Sexual Maturity",
+  author = c(
+    person("Josymar", "Torrejon-Magallanes"),
+    person("Luis", "Angeles-Gonzalez")
+  ),
+  year = "2026",
+  note = "R package version 1.1.3",
+  url = "https://cran.r-project.org/package=sizeMat"
+)

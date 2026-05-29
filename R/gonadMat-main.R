@@ -4,7 +4,7 @@
 #' @param data data.frame with allometric variables and stage of sexual maturity (gonad maturation stages).
 #' @param varNames a character string indicating the name of the allometric 
 #' and the stage of sexual maturity variables to be used for analysis.
-#' @param inmName a character string indicating the name or names of the immaturity stage.
+#' @param immName a character string indicating the name or names of the immaturity stage.
 #' @param matName a character string indicating the name or names of the maturity stage.
 #' @param method a character string indicating the method to be applied, \code{"fq"} frequentist GLM, or \code{"bayes"} Bayes GLM (MCMClogit function). 
 #' @param niter number of iterations (bootstrap resampling).
@@ -32,9 +32,9 @@
 #' So the argument \code{varNames} must contain two character strings only, the first is the allometric variable 
 #' and the second is the stage of sexual maturity.
 #' 
-#' The arguments \code{inmName} and \code{matName} require a character string indicating the name 
+#' The arguments \code{immName} and \code{matName} require a character string indicating the name 
 #' of the stages of sexual maturity in the data.frame. The argument could contain one character string 
-#' or should be a vector (i.e. \code{inmName = "I"}, \code{matName = c("II", "III", "IV")}).
+#' or should be a vector (i.e. \code{immName = "I"}, \code{matName = c("II", "III", "IV")}).
 #' 
 #' The argument \code{method} requires a character string indicating which regression will be used for the test.
 #' If \code{method = "fq"} the logistic regression is based on GLM (frequentist), if \code{method = "bayes"} a sample from 
@@ -47,7 +47,7 @@
 #' @examples
 #' data(matFish)
 #' 
-#' gonad_mat = gonad_mature(matFish, varNames = c("total_length", "stage_mat"), inmName = "I", 
+#' gonad_mat = gonad_mature(matFish, varNames = c("total_length", "stage_mat"), immName = "I", 
 #' matName = c("II", "III", "IV"), method = "fq", niter = 50)
 #' 
 #' # 'niter' parameters:
@@ -56,7 +56,7 @@
 #' gonad_mat$L50_boot
 #' gonad_mat$out
 #' @export
-gonad_mature <- function(data, varNames = c("allometric", "stage") , inmName = "inm", matName = "mad", 
+gonad_mature <- function(data, varNames = c("allometric", "stage") , immName = "imm", matName = "mad", 
                          method = "fq", niter = 999, seed = 070388){
   
   if(length(varNames) != 2) stop("You must provide two variables.")
@@ -67,10 +67,10 @@ gonad_mature <- function(data, varNames = c("allometric", "stage") , inmName = "
   data$stage <- as.factor(data$stage)
   data <- data[complete.cases(data), ]
   
-  if(!all(c(inmName, matName) %in% levels(data$stage))) stop("'inmName' or 'matName' have not been found in data.")
-  if(all(inmName %in% matName)) stop("'inmName' and 'matName' must have different stage names")
+  if(!all(c(immName, matName) %in% levels(data$stage))) stop("'immName' or 'matName' have not been found in data.")
+  if(all(immName %in% matName)) stop("'immName' and 'matName' must have different stage names")
   
-  data$stage <- ifelse(data$stage %in% inmName, 0, 1)
+  data$stage <- ifelse(data$stage %in% immName, 0, 1)
   estimate <- switch(method,
                      fq = .gonad_mature_fq(data = data, niter = niter, seed = seed),
                      bayes = .gonad_mature_bayes(data = data, niter = niter, seed = seed))
@@ -100,7 +100,7 @@ gonad_mature <- function(data, varNames = c("allometric", "stage") , inmName = "
 #' @examples
 #' data(matFish)
 #' 
-#' gonad_mat = gonad_mature(matFish, varNames = c("total_length", "stage_mat"), inmName = "I", 
+#' gonad_mat = gonad_mature(matFish, varNames = c("total_length", "stage_mat"), immName = "I", 
 #' matName = c("II", "III", "IV"), method = "fq", niter = 50)
 #' 
 #' print(gonad_mat)
@@ -146,109 +146,300 @@ print.gonadMat <- function(x, ...){
 
 
 
-#' Plot method for gonadMat class (size at gonad maturity)
+#' Plot method for gonadMat class (size at gonadal maturity)
 #'
-#' @param x object of class 'gonadMat' with the mature parameters and a data.frame with the X and stage of sexual maturity.
-#' variables. Also the fitted values for the logistic regression and confidence intervals (95\%).
-#' @param xlab a title for the x axis.
-#' @param ylab a title for the y axis.
-#' @param col color for the logistic curve and for the L50\% size at gonad maturity.
-#' @param lwd line with for drawing fitted values and confidence intervals.
-#' @param lty line type line type for drawing fitted values and confidence intervals
-#' @param vline_hist color of the vertical lines in the histogram. The lines represent the 
-#' the median and the confidence intervals.
-#' @param lwd_hist line with for the vertical line in the histogram.
-#' @param lty_hist line type for the vertical line in the histogram.
-#' @param onlyOgive plot only the ogive.
-#' @param showLegend to show or not the legend
-#' @param legendPosition a character string indicating the position of the legend.
-#' @param \dots Additional arguments to the plot method.
+#' @param x object of class 'gonadMat' with mature parameters and fitted values
+#'   from the logistic regression.
+#' @param xlab title for the x axis.
+#' @param ylab title for the y axis.
+#' @param col colors for the logistic curve and the L50 reference lines.
+#' @param lwd line width for fitted values and confidence intervals.
+#' @param lty line type for fitted values and confidence intervals.
+#' @param vline_hist color of the vertical lines in the histograms.
+#' @param lwd_hist line width for vertical lines in the histograms.
+#' @param lty_hist line type for vertical lines in the histograms.
+#' @param onlyOgive logical. If TRUE, plot only the maturity ogive.
+#' @param showLegend logical. If TRUE, show L50 and R2 labels.
+#' @param legendPosition position of the legend in base graphics and ggplot2 style. Options are "topleft", "topright", "bottomleft", and "bottomright".
+#' @param gg_style logical. If TRUE, return ggplot2-style plots.
+#' @param pch plotting character for observed maturity proportions.
+#' @param cex point size in base graphics and ggplot2 style.
+#' @param point_alpha transparency level for points, used only when gg_style = TRUE.
+#' @param base_size base font size, used only when gg_style = TRUE.
+#' @param label_size size of L50 and R2 labels, used only when gg_style = TRUE.
+#' @param \dots additional arguments passed to base graphics.
 #' @examples
 #' data(matFish)
 #' 
-#' gonad_mat = gonad_mature(matFish, varNames = c("total_length", "stage_mat"), inmName = "I", 
+#' gonad_mat = gonad_mature(matFish, varNames = c("total_length", "stage_mat"), immName = "I", 
 #' matName = c("II", "III", "IV"), method = "fq", niter = 50)
 #' 
 #' plot(gonad_mat, xlab = "Total length (cm.)", ylab = "Proportion mature", col = c("blue", "red"))
 #' @export
 #' @method plot gonadMat
-plot.gonadMat <- function(x, xlab = "X", ylab = "Proportion mature", col = c("blue", "red"), 
-                        lwd = 2, lty = 2, vline_hist = "black", lwd_hist = 2, lty_hist = 2, 
-                        onlyOgive = FALSE, showLegend = TRUE, legendPosition = "topleft", ...){
+plot.gonadMat <- function(x, xlab = "X", ylab = "Proportion mature",
+                          col = c("blue", "red"),
+                          lwd = 2, lty = 2,
+                          vline_hist = "black",
+                          lwd_hist = 2, lty_hist = 2,
+                          onlyOgive = FALSE, showLegend = TRUE,
+                          legendPosition = "topleft",
+                          gg_style = FALSE,
+                          pch = 19, cex = 2.5,
+                          point_alpha = 0.8, base_size = 13,
+                          label_size = 5, ...) {
   
-  if (!inherits(x, "gonadMat"))
+  if (!inherits(x, "gonadMat")) {
     stop("Use only with 'gonadMat' objects")
-  
-  fit     <- x$out
-  x_input <- fit$x
-  y_input <- fit$mature
-  m_p     <- tapply(y_input, x_input, mean)
-  wide    <- quantile(x$L50_boot, probs = c(0.025, 0.5, 0.975), na.rm = TRUE)
-  
-  # R-square Nagelkerke method
-  model1 <- glm(y_input ~ x_input, family = binomial(link = "logit"))
-  R2     <- nagelkerkeR2(model1)
-  
-  if(onlyOgive == TRUE){
-    if(length(col) < 2) stop('col argument must have 2 values. The colors could be the same')
-    if(length(col) > 2) warning('col: only the first two colors will be used in the plot')
-    plot(sort(unique(x_input)), m_p, xlab = xlab, ylab = ylab, pch = 19, col = "darkgrey", ...)
-    lines(sort(x_input), sort(fit$fitted), col = col[1], lwd = lwd)
-    lines(sort(x_input), sort(fit$CIlower), col = col[1], lwd = lwd, lty = lty)
-    lines(sort(x_input), sort(fit$CIupper), col = col[1], lwd = lwd, lty = lty)
-    lines(c(wide[2], wide[2]), c(-1, 0.5), col = col[2], lwd = lwd, lty = lty)
-    lines(c(-1, wide[2]), c(0.5, 0.5), col = col[2], lwd = lwd, lty = lty)
-    points(wide[2], 0.5, pch = 19, col = col[2], cex = 1.25)
-    if(showLegend == TRUE){
-      legend(legendPosition, c(as.expression(bquote(bold(L[50] == .(round(wide[2], 1))))),
-                               as.expression(bquote(bold(R^2 == .(round(R2, 2)))))), 
-             bty = "n")
-    }
-  }else{
-    # figure 1
-    hist(x$A_boot, main = "", xlab = "A", col = "grey90")
-    abline(v = as.numeric(quantile(x$A_boot, probs = c(0.5), na.rm = TRUE)), 
-           lwd = lwd_hist, col = vline_hist)
-    abline(v = c(as.numeric(quantile(x$A_boot, probs = c(0.025, 0.975), na.rm = TRUE))), 
-           lty = lty_hist, col = vline_hist)
-    box()
-    
-    # figure 2
-    hist(x$B_boot, main = "", xlab = "B", col = "grey90")
-    abline(v = as.numeric(quantile(x$B_boot, probs = c(0.5), na.rm = TRUE)), 
-           lwd = lwd_hist, col = vline_hist)
-    abline(v = c(as.numeric(quantile(x$B_boot, probs = c(0.025, 0.975), na.rm = TRUE))), 
-           lty = lty_hist, col = vline_hist)
-    box()
-    
-    # figure 3
-    hist(x$L50_boot, main = "", xlab = "Size at sexual maturity values", col = "grey90")
-    abline(v = as.numeric(quantile(x$L50_boot, probs = c(0.5), na.rm = TRUE)), 
-           lwd = lwd_hist, col = vline_hist)
-    abline(v = c(as.numeric(quantile(x$L50_boot, probs = c(0.025, 0.975), na.rm = TRUE))), 
-           lty = lty_hist, col = vline_hist)
-    box()
-    
-    # figure 4
-    if(length(col) < 2) stop('col argument must have 2 values. The colors could be the same')
-    if(length(col) > 2) warning('col: only the first two colors will be used in the plot')
-    plot(sort(unique(x_input)), m_p, xlab = xlab, ylab = ylab, pch = 19, col = "darkgrey", ...)
-    lines(sort(x_input), sort(fit$fitted), col = col[1], lwd = lwd)
-    lines(sort(x_input), sort(fit$CIlower), col = col[1], lwd = lwd, lty = lty)
-    lines(sort(x_input), sort(fit$CIupper), col = col[1], lwd = lwd, lty = lty)
-    lines(c(wide[2], wide[2]), c(-1, 0.5), col = col[2], lwd = lwd, lty = lty)
-    lines(c(-1, wide[2]), c(0.5, 0.5), col = col[2], lwd = lwd, lty = lty)
-    points(wide[2], 0.5, pch = 19, col = col[2], cex = 1.25)
-    if(showLegend == TRUE){
-      legend(legendPosition, c(as.expression(bquote(bold(L[50] == .(round(wide[2], 1))))),
-                               as.expression(bquote(bold(R^2 == .(round(R2, 2)))))), 
-             bty = "n")
-    }
   }
   
-  cat("Size at gonad maturity =", round(wide[2], 1), "\n")
-  cat("Confidence intervals =", round(wide[1], 1), "-",round(wide[3], 1) ,  "\n")
-  cat("Rsquare =", round(R2, 2))
+  if (length(col) < 2) {
+    stop("'col' argument must have 2 values. The colors could be the same.")
+  }
   
-  return(invisible(NULL))
+  if (length(col) > 2) {
+    warning("'col': only the first two colors will be used in the plot.")
+  }
+  
+  col <- col[1:2]
+  
+  if (!legendPosition %in% c("topleft", "topright", "bottomleft", "bottomright")) {
+    stop("'legendPosition' must be one of: 'topleft', 'topright', 'bottomleft', 'bottomright'.")
+  }
+  
+  fit <- x$out
+  
+  if (!all(c("x", "mature", "fitted", "CIlower", "CIupper") %in% names(fit))) {
+    stop("The 'out' object must contain 'x', 'mature', 'fitted', 'CIlower', and 'CIupper'.")
+  }
+  
+  x_input <- fit$x
+  y_input <- fit$mature
+  
+  m_p <- tapply(y_input, x_input, mean)
+  
+  wide <- stats::quantile(x$L50_boot, probs = c(0.025, 0.5, 0.975), na.rm = TRUE)
+  
+  model1 <- stats::glm(y_input ~ x_input, family = stats::binomial(link = "logit"))
+  
+  R2 <- nagelkerkeR2(model1)
+  
+  ogive_points <- data.frame(x = as.numeric(names(m_p)), proportion = as.numeric(m_p))
+  
+  ogive_points <- ogive_points[order(ogive_points$x), ]
+  
+  ogive_fit <- data.frame(x = fit$x, fitted = fit$fitted, 
+                          CIlower = fit$CIlower, CIupper = fit$CIupper)
+  
+  ogive_fit <- ogive_fit[order(ogive_fit$x), ]
+  
+  L50_text <- paste0("L[50] == ", round(wide[2], 1))
+  R2_text  <- paste0("R^2 == ", round(R2, 2))
+  
+  print_summary <- function(){
+    cat("Size at gonadal maturity =", round(wide[2], 1), "\n")
+    cat("Confidence intervals =", round(wide[1], 1), "-", round(wide[3], 1), "\n")
+    cat("Rsquare =", round(R2, 2), "\n")
+  }
+  
+  if(isTRUE(gg_style)){
+    
+    if(!requireNamespace("ggplot2", quietly = TRUE)){
+      stop("Package 'ggplot2' is required when gg_style = TRUE.")
+    }
+    
+    label_x <- switch(legendPosition, 
+                      "topleft" = min(ogive_fit$x, na.rm = TRUE), 
+                      "topright" = max(ogive_fit$x, na.rm = TRUE), 
+                      "bottomleft" = min(ogive_fit$x, na.rm = TRUE), 
+                      "bottomright" = max(ogive_fit$x, na.rm = TRUE))
+    
+    label_y1 <- switch(legendPosition, "topleft" = 0.96, 
+                       "topright" = 0.96, "bottomleft" = 0.16, 
+                       "bottomright" = 0.16)
+    
+    label_y2 <- switch(legendPosition, "topleft" = 0.86, 
+                       "topright" = 0.86, "bottomleft" = 0.06, 
+                       "bottomright" = 0.06)
+    
+    label_hjust <- switch(legendPosition, "topleft" = 0, 
+                          "topright" = 1, "bottomleft" = 0, 
+                          "bottomright" = 1)
+    
+    p_ogive <- ggplot2::ggplot() + 
+      ggplot2::geom_point(data = ogive_points, 
+                          ggplot2::aes(x = x, y = proportion), 
+                          colour = "darkgrey", shape = pch, 
+                          size = cex, alpha = point_alpha) +
+      ggplot2::geom_line(data = ogive_fit, 
+                         ggplot2::aes(x = x, y = fitted), 
+                         colour = col[1], 
+                         linewidth = lwd) +
+      ggplot2::geom_line(data = ogive_fit, 
+                         ggplot2::aes(x = x, y = CIlower),
+                         colour = col[1], 
+                         linewidth = lwd, linetype = lty) +
+      ggplot2::geom_line(data = ogive_fit, 
+                         ggplot2::aes(x = x, y = CIupper), 
+                         colour = col[1], 
+                         linewidth = lwd, linetype = lty) +
+      ggplot2::geom_segment(ggplot2::aes(x = wide[2], xend = wide[2], 
+                                         y = 0, yend = 0.5), 
+                            colour = col[2], 
+                            linewidth = lwd, linetype = lty) +
+      ggplot2::geom_segment(ggplot2::aes(x = min(ogive_fit$x, na.rm = TRUE), 
+                                         xend = wide[2], y = 0.5, yend = 0.5), 
+                            colour = col[2], 
+                            linewidth = lwd, linetype = lty) +
+      ggplot2::geom_point(ggplot2::aes(x = wide[2], y = 0.5), 
+                          colour = col[2], shape = pch, size = cex * 0.8) +
+      ggplot2::labs(x = xlab, y = ylab) +
+      ggplot2::coord_cartesian(ylim = c(0, 1)) +
+      ggplot2::theme_classic(base_size = base_size) +
+      ggplot2::theme(axis.title = ggplot2::element_text(face = "bold"), 
+                     axis.text = ggplot2::element_text(colour = "black"), 
+                     plot.margin = ggplot2::margin(8, 8, 8, 8))
+    
+    if(isTRUE(showLegend)){
+      p_ogive <- p_ogive +
+        ggplot2::annotate("text", x = label_x, y = label_y1, 
+                          label = L50_text, parse = TRUE, 
+                          hjust = label_hjust, fontface = "bold", 
+                          size = label_size) +
+        ggplot2::annotate("text", x = label_x, y = label_y2, 
+                          label = R2_text, parse = TRUE, 
+                          hjust = label_hjust, 
+                          fontface = "bold", 
+                          size = label_size)
+    }
+    
+    if(isTRUE(onlyOgive)){
+      print_summary()
+      return(p_ogive)
+    }
+    
+    make_hist_plot <- function(values, label_x){
+      
+      values <- values[is.finite(values)]
+      
+      q <- stats::quantile(values, probs = c(0.025, 0.5, 0.975), na.rm = TRUE)
+      
+      ggplot2::ggplot(data.frame(value = values), ggplot2::aes(x = value)) +
+        ggplot2::geom_histogram(bins = 30, fill = "grey90", colour = "grey40") +
+        ggplot2::geom_vline(xintercept = q[2], colour = vline_hist, linewidth = lwd_hist) +
+        ggplot2::geom_vline(xintercept = c(q[1], q[3]), colour = vline_hist, 
+                            linewidth = lwd_hist, linetype = lty_hist) +
+        ggplot2::labs(x = label_x, y = "Frequency") +
+        ggplot2::theme_classic(base_size = base_size) +
+        ggplot2::theme(axis.title = ggplot2::element_text(face = "bold"), 
+                       axis.text = ggplot2::element_text(colour = "black"), 
+                       plot.margin = ggplot2::margin(8, 8, 8, 8))
+    }
+    
+    p_A <- make_hist_plot(x$A_boot, "A")
+    p_B <- make_hist_plot(x$B_boot, "B")
+    p_L50 <- make_hist_plot(x$L50_boot, "Size at sexual maturity values")
+    
+    out <- list(A = p_A, B = p_B, L50 = p_L50, ogive = p_ogive)
+    
+    print_summary()
+    
+    return(out)
+  }
+  
+  if(isTRUE(onlyOgive)){
+    
+    graphics::plot(ogive_points$x, ogive_points$proportion, 
+                   xlab = xlab, ylab = ylab, 
+                   pch = pch,col = "darkgrey", ...)
+    
+    graphics::lines(ogive_fit$x, ogive_fit$fitted, col = col[1], lwd = lwd)
+    
+    graphics::lines(ogive_fit$x, ogive_fit$CIlower, col = col[1], 
+                    lwd = lwd, lty = lty)
+    
+    graphics::lines(ogive_fit$x, ogive_fit$CIupper, col = col[1], 
+                    lwd = lwd, lty = lty)
+    
+    graphics::lines(c(wide[2], wide[2]), c(0, 0.5), 
+                    col = col[2], lwd = lwd, lty = lty)
+    
+    graphics::lines(c(min(ogive_fit$x, na.rm = TRUE), wide[2]), 
+                    c(0.5, 0.5), col = col[2], lwd = lwd, lty = lty)
+    
+    graphics::points(wide[2], 0.5, pch = pch, col = col[2], cex = 1.25)
+    
+    if (isTRUE(showLegend)){
+      graphics::legend(legendPosition, c(as.expression(bquote(bold(L[50] == .(round(wide[2], 1))))),
+                                         as.expression(bquote(bold(R^2 == .(round(R2, 2)))))), 
+                       bty = "n")
+    }
+    
+    print_summary()
+    
+    return(invisible(NULL))
+  }
+  
+  graphics::hist(x$A_boot, main = "", xlab = "A", col = "grey90")
+  
+  graphics::abline(v = as.numeric(stats::quantile(x$A_boot, probs = 0.5, na.rm = TRUE)), 
+                   lwd = lwd_hist, col = vline_hist)
+  
+  graphics::abline(v = as.numeric(stats::quantile(x$A_boot, probs = c(0.025, 0.975), na.rm = TRUE)), 
+                   lty = lty_hist, col = vline_hist)
+  
+  graphics::box()
+  
+  graphics::hist(x$B_boot, main = "", xlab = "B", col = "grey90")
+  
+  graphics::abline(v = as.numeric(stats::quantile(x$B_boot, probs = 0.5, na.rm = TRUE)), 
+                   lwd = lwd_hist, col = vline_hist)
+  
+  graphics::abline(v = as.numeric(stats::quantile(x$B_boot, probs = c(0.025, 0.975), na.rm = TRUE)), 
+                   lty = lty_hist, col = vline_hist)
+  
+  graphics::box()
+  
+  graphics::hist(x$L50_boot, main = "", 
+                 xlab = "Size at sexual maturity values", 
+                 col = "grey90")
+  
+  graphics::abline(v = as.numeric(stats::quantile(x$L50_boot, probs = 0.5, na.rm = TRUE)), 
+                   lwd = lwd_hist, col = vline_hist)
+  
+  graphics::abline(v = as.numeric(stats::quantile(x$L50_boot, probs = c(0.025, 0.975), na.rm = TRUE)),
+                   lty = lty_hist, col = vline_hist)
+  
+  graphics::box()
+  
+  graphics::plot(ogive_points$x, ogive_points$proportion, 
+                 xlab = xlab, ylab = ylab, pch = pch, col = "darkgrey", ...)
+  
+  graphics::lines(ogive_fit$x, ogive_fit$fitted, col = col[1], 
+                  lwd = lwd)
+  
+  graphics::lines(ogive_fit$x, ogive_fit$CIlower, col = col[1], 
+                  lwd = lwd, lty = lty)
+  
+  graphics::lines(ogive_fit$x, ogive_fit$CIupper, col = col[1], 
+                  lwd = lwd, lty = lty)
+  
+  graphics::lines(c(wide[2], wide[2]), c(0, 0.5), col = col[2], 
+                  lwd = lwd, lty = lty)
+  
+  graphics::lines(c(min(ogive_fit$x, na.rm = TRUE), wide[2]), c(0.5, 0.5), 
+                  col = col[2], lwd = lwd, lty = lty)
+  
+  graphics::points(wide[2], 0.5, pch = pch, col = col[2], cex = 1.25)
+  
+  if (isTRUE(showLegend)){
+    graphics::legend(legendPosition,
+                     c(as.expression(bquote(bold(L[50] == .(round(wide[2], 1))))), 
+                       as.expression(bquote(bold(R^2 == .(round(R2, 2)))))), 
+                     bty = "n")
+  }
+  
+  print_summary()
+  
+  invisible(NULL)
 }

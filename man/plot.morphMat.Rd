@@ -15,6 +15,10 @@
   lwd_hist = 2,
   lty_hist = 2,
   onlyOgive = FALSE,
+  gg_style = FALSE,
+  point_alpha = 0.8,
+  base_size = 13,
+  label_size = 5,
   ...
 )
 }
@@ -28,18 +32,26 @@ and classification of maturity. Also the fitted values for the logistic regressi
 
 \item{col}{color for the logistic curve and for the L50\% size at morphometric maturity.}
 
-\item{lwd}{line with for drawing fitted values and confidence intervals.}
+\item{lwd}{line width for drawing fitted values and confidence intervals.}
 
-\item{lty}{line type line type for drawing fitted values and confidence intervals}
+\item{lty}{line type for drawing fitted values and confidence intervals.}
 
 \item{vline_hist}{color of the vertical lines in the histogram. The lines represent the
-the median and the confidence intervals.}
+median and the confidence intervals.}
 
-\item{lwd_hist}{line with for the vertical line in the histogram.}
+\item{lwd_hist}{line width for the vertical line in the histogram.}
 
 \item{lty_hist}{line type for the vertical line in the histogram.}
 
 \item{onlyOgive}{plot only the ogive.}
+
+\item{gg_style}{ggplot style (FALSE or TRUE).}
+
+\item{point_alpha}{transparency level of points, used only when gg_style = TRUE.}
+
+\item{base_size}{base font size, used only when gg_style = TRUE.}
+
+\item{label_size}{size of L50 and R2 labels, used only when gg_style = TRUE.}
 
 \item{\dots}{Additional arguments to the plot method.}
 }

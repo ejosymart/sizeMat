@@ -15,31 +15,40 @@
   lwd_lines = c(1, 1),
   legendPlot = TRUE,
   cex_label = 0.8,
+  gg_style = FALSE,
+  point_alpha = 0.8,
+  base_size = 13,
   ...
 )
 }
 \arguments{
 \item{x}{an object of class 'classify' with the allometric variables ("X", "Y") and classification of maturity (juveniles = 0, adults = 1).}
 
-\item{xlab}{a title for the x axis.}
+\item{xlab}{title for the x axis.}
 
-\item{ylab}{a title for the y axis.}
+\item{ylab}{title for the y axis.}
 
-\item{col}{the colors for juveniles and adults group.}
+\item{col}{colors for juveniles and adults group.}
 
-\item{pch}{the character indicating the type of plotting.}
+\item{pch}{plotting characters for juveniles and adults.}
 
-\item{cex}{character expansion in the regression.}
+\item{cex}{character expansion for points.}
 
-\item{lty_lines}{the line type in the regression.}
+\item{lty_lines}{line types for the regression lines.}
 
-\item{lwd_lines}{the line width in the regression.}
+\item{lwd_lines}{line widths for the regression lines.}
 
 \item{legendPlot}{legend in the plot (FALSE or TRUE).}
 
-\item{cex_label}{size of the legendPlot}
+\item{cex_label}{size of the legend text in base graphics.}
 
-\item{\dots}{Additional arguments to the plot method.}
+\item{gg_style}{logical. If TRUE, return a ggplot2 object.}
+
+\item{point_alpha}{transparency level of points, used only when gg_style = TRUE.}
+
+\item{base_size}{base font size, used only when gg_style = TRUE.}
+
+\item{\dots}{additional arguments passed to the base plot method.}
 }
 \description{
 Plot method for classify class

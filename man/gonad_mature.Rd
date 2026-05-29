@@ -7,7 +7,7 @@
 gonad_mature(
   data,
   varNames = c("allometric", "stage"),
-  inmName = "inm",
+  immName = "imm",
   matName = "mad",
   method = "fq",
   niter = 999,
@@ -20,7 +20,7 @@ gonad_mature(
 \item{varNames}{a character string indicating the name of the allometric 
 and the stage of sexual maturity variables to be used for analysis.}
 
-\item{inmName}{a character string indicating the name or names of the immaturity stage.}
+\item{immName}{a character string indicating the name or names of the immaturity stage.}
 
 \item{matName}{a character string indicating the name or names of the maturity stage.}
 
@@ -59,9 +59,9 @@ of sexual maturity variable to be used for analysis (i.e. \code{varNames = c("to
 So the argument \code{varNames} must contain two character strings only, the first is the allometric variable 
 and the second is the stage of sexual maturity.
 
-The arguments \code{inmName} and \code{matName} require a character string indicating the name 
+The arguments \code{immName} and \code{matName} require a character string indicating the name 
 of the stages of sexual maturity in the data.frame. The argument could contain one character string 
-or should be a vector (i.e. \code{inmName = "I"}, \code{matName = c("II", "III", "IV")}).
+or should be a vector (i.e. \code{immName = "I"}, \code{matName = c("II", "III", "IV")}).
 
 The argument \code{method} requires a character string indicating which regression will be used for the test.
 If \code{method = "fq"} the logistic regression is based on GLM (frequentist), if \code{method = "bayes"} a sample from 
@@ -75,7 +75,7 @@ For the \code{method = "bayes"}, the argument \code{niter} is related to the num
 \examples{
 data(matFish)
 
-gonad_mat = gonad_mature(matFish, varNames = c("total_length", "stage_mat"), inmName = "I", 
+gonad_mat = gonad_mature(matFish, varNames = c("total_length", "stage_mat"), immName = "I", 
 matName = c("II", "III", "IV"), method = "fq", niter = 50)
 
 # 'niter' parameters:

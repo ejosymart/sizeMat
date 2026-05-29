@@ -37,3 +37,5 @@ inst/doc
 /*.png
 doc
 Meta
+/doc/
+/Meta/

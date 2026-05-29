@@ -11,10 +11,8 @@
 #' @title Estimate Size at Sexual Maturity.
 #'
 #' @description Estimate morphometric and gonadal size at sexual maturity for organisms, usually fish and invertebrates. It includes methods for classification based on relative growth (principal components analysis, hierarchical clustering, discriminant analysis), logistic regression (frequentist or Bayes), parameters estimation and some basic plots. The size at sexual maturity is defined as the length at which a randomly chosen specimen has a 50\% chance of being mature.
-#' @name sizeMat-package
-#' @aliases sizeMat-package sizeMat
-#' @docType package
 #' @author Josymar Torrejon-Magallanes <ejosymart@@gmail.com>
+#' @author Luis Angeles Gonzales <luis.angeles0612@@gmail.com>
 #' @details Package: sizeMat
 #' @details Type: Package
 #' @details The Size at Morphometric and Gonad maturity are estimating using different functions (process).
@@ -71,6 +69,16 @@
 #' @concept relative growth
 #' @examples
 #' #See examples for functions morph_mature() and gonad_mature().
+#' 
+#' @keywords internal
+"_PACKAGE"
+
+if(getRversion() >= "2.15.1"){
+  utils::globalVariables(
+    c("x", "y", "group", "proportion", 
+      "fitted", "CIlower", "CIupper", "value"))
+}
+
 
 NULL
 #' Classify mature
@@ -195,16 +203,19 @@ print.classify <- function(x, ...){
 #' Plot method for classify class
 #'
 #' @param x an object of class 'classify' with the allometric variables ("X", "Y") and classification of maturity (juveniles = 0, adults = 1).
-#' @param xlab a title for the x axis.
-#' @param ylab a title for the y axis.
-#' @param col the colors for juveniles and adults group.
-#' @param pch the character indicating the type of plotting.
-#' @param lty_lines the line type in the regression.
-#' @param lwd_lines the line width in the regression.
-#' @param cex character expansion in the regression.
+#' @param xlab title for the x axis.
+#' @param ylab title for the y axis.
+#' @param col colors for juveniles and adults group.
+#' @param pch plotting characters for juveniles and adults.
+#' @param lty_lines line types for the regression lines.
+#' @param lwd_lines line widths for the regression lines.
+#' @param cex character expansion for points.
 #' @param legendPlot legend in the plot (FALSE or TRUE).
-#' @param cex_label size of the legendPlot
-#' @param \dots Additional arguments to the plot method.
+#' @param cex_label size of the legend text in base graphics.
+#' @param gg_style logical. If TRUE, return a ggplot2 object.
+#' @param point_alpha transparency level of points, used only when gg_style = TRUE.
+#' @param base_size base font size, used only when gg_style = TRUE.
+#' @param \dots additional arguments passed to the base plot method.
 #' @examples
 #' data(crabdata)
 #'
@@ -223,49 +234,164 @@ print.classify <- function(x, ...){
 #' pch = c(4, 5), cex = c(1, 3), lwd_lines = c(1, 3), main = "Classification")
 #' @export
 #' @method plot classify
-plot.classify <- function(x, xlab = "X", ylab = "Y", col = c(1, 2), pch = c(4, 5),
-                          cex = c(1, 1), lty_lines = c(1, 1), lwd_lines = c(1, 1), 
-                          legendPlot = TRUE, cex_label = 0.8,  ...){
+plot.classify <- function(x, xlab = "X", ylab = "Y", 
+                          col = c(1, 2), pch = c(4, 5),
+                          cex = c(1, 1), 
+                          lty_lines = c(1, 1), lwd_lines = c(1, 1), 
+                          legendPlot = TRUE, 
+                          cex_label = 0.8,  
+                          gg_style = FALSE, 
+                          point_alpha = 0.8, 
+                          base_size = 13, ...){
 
   if (!inherits(x, "classify"))
     stop("Use only with 'classify' objects")
 
   data <- x
+  
+  if (!all(c("x", "y", "mature") %in% names(data))) {
+    stop("The classify object must contain the columns 'x', 'y', and 'mature'.")
+  }
+  
+  if (!all(data$mature %in% c(0, 1))) {
+    stop("The 'mature' column must contain only 0 = juveniles and 1 = adults.")
+  }
+  
+  if (length(col) < 2) {
+    stop("'col' argument must have 2 values. The colors could be the same.")
+  }
+  if (length(col) > 2) {
+    warning("'col': only the first two colors will be used in the plot.")
+  }
+  
+  if (length(pch) < 2) {
+    stop("'pch' argument must have 2 values. The plotting characters could be the same.")
+  }
+  if (length(pch) > 2) {
+    warning("'pch': only the first two plotting characters will be used in the plot.")
+  }
+  
+  if (length(cex) < 2) {
+    stop("'cex' argument must have 2 values. The character expansion values could be the same.")
+  }
+  if (length(cex) > 2) {
+    warning("'cex': only the first two character expansion values will be used in the plot.")
+  }
+  
+  if (length(lty_lines) < 2) {
+    stop("'lty_lines' argument must have 2 values. The line types could be the same.")
+  }
+  if (length(lty_lines) > 2) {
+    warning("'lty_lines': only the first two line types will be used in the plot.")
+  }
+  
+  if (length(lwd_lines) < 2) {
+    stop("'lwd_lines' argument must have 2 values. The line widths could be the same.")
+  }
+  if (length(lwd_lines) > 2) {
+    warning("'lwd_lines': only the first two line widths will be used in the plot.")
+  }
+  
+  col <- col[1:2]
+  pch <- pch[1:2]
+  cex <- cex[1:2]
+  lty_lines <- lty_lines[1:2]
+  lwd_lines <- lwd_lines[1:2]
+  
+  data$group <- factor(data$mature, 
+                       levels = c(0, 1), 
+                       labels = c("Juveniles", "Adults"))
+  
   juv  <- data[data$mature == 0, ]
   adt  <- data[data$mature == 1, ]
 
-  fit_juv <- glm(y ~ x, data = juv)
-  fit_adt <- glm(y ~ x, data = adt)
+  fit_juv <- stats::lm(y ~ x, data = juv)
+  fit_adt <- stats::lm(y ~ x, data = adt)
 
-  if(length(col) < 2) stop('col argument must have 2 values. The colors could be the same')
-  if(length(col) > 2) warning('col: only the first two colors will be used in the plot')
-  if(length(pch) < 2) stop('pch argument must have 2 values. The plotting character could be the same')
-  if(length(pch) > 2) warning('pch: only the first two plotting character will be used in the plot')
-  if(length(cex) < 2) stop('cex argument must have 2 values. The character expansion could be the same')
-  if(length(cex) > 2) warning('cex: only the first two character expansion will be used in the plot')
-  if(length(lty_lines) < 2) stop('lty argument must have 2 values. The line type could be the same')
-  if(length(lty_lines) > 2) warning('lty: only the first two line type  will be used in the plot')
-  if(length(lwd_lines) < 2) stop('lwd argument must have 2 values. The line width could be the same')
-  if(length(lwd_lines) > 2) warning('lwd: only the first two line width will be used in the plot')
+  new_juv <- data.frame(x = seq(min(juv$x, na.rm = TRUE), 
+                                max(juv$x, na.rm = TRUE), 
+                                length.out = 100))
+  
+  new_adt <- data.frame(x = seq(min(adt$x, na.rm = TRUE), 
+                                max(adt$x, na.rm = TRUE), 
+                                length.out = 100))
+  
+  new_juv$y <- stats::predict(fit_juv, newdata = new_juv)
+  new_adt$y <- stats::predict(fit_adt, newdata = new_adt)
+  
+  format_eq <- function(fit){
+    b0 <- round(stats::coef(fit)[1], 2)
+    b1 <- round(stats::coef(fit)[2], 2)
+    
+    if(b1 >= 0) {
+      paste0("Y = ", b0, " + ", b1, " * X")
+    }else{
+      paste0("Y = ", b0, " - ", abs(b1), " * X")
+    }
+  }
+  
+  eq_juv <- format_eq(fit_juv)
+  eq_adt <- format_eq(fit_adt)
+  
+  if(isTRUE(gg_style)){
+    
+    if(!requireNamespace("ggplot2", quietly = TRUE)){
+      stop("Package 'ggplot2' is required when gg_style = TRUE.")
+    }
+    
+    p <- ggplot2::ggplot(data, ggplot2::aes(x = x, y = y, colour = group, shape = group)) +
+      ggplot2::geom_point(ggplot2::aes(size = group), alpha = point_alpha) +
+      ggplot2::geom_line(data = new_juv, ggplot2::aes(x = x, y = y), 
+                         inherit.aes = FALSE, colour = col[1], linetype = lty_lines[1], 
+                         linewidth = lwd_lines[1]) +
+      ggplot2::geom_line(data = new_adt, ggplot2::aes(x = x, y = y),
+                         inherit.aes = FALSE, colour = col[2], linetype = lty_lines[2],
+                         linewidth = lwd_lines[2]) +
+      ggplot2::scale_colour_manual(values = c("Juveniles" = col[1], "Adults" = col[2])) +
+      ggplot2::scale_shape_manual(values = c("Juveniles" = pch[1], "Adults" = pch[2])) +
+      ggplot2::scale_size_manual(values = c("Juveniles" = cex[1], "Adults" = cex[2])) +
+      ggplot2::labs(x = xlab, y = ylab, colour = NULL, shape = NULL, size = NULL) +
+      ggplot2::theme_classic(base_size = base_size) +
+      ggplot2::theme(legend.position = if (isTRUE(legendPlot)) "top" else "none", 
+                     legend.title = ggplot2::element_blank(), 
+                     axis.title = ggplot2::element_text(face = "bold"), 
+                     axis.text = ggplot2::element_text(colour = "black"), 
+                     plot.margin = ggplot2::margin(8, 8, 8, 8))
+    
+    if(isTRUE(legendPlot)){
+      y_range <- diff(range(data$y, na.rm = TRUE))
 
+      p <- p +
+        ggplot2::annotate("text", x = min(data$x, na.rm = TRUE), 
+                          y = max(data$y, na.rm = TRUE), 
+                          label = eq_juv, hjust = 0, vjust = 1, size = 3.5) +
+        ggplot2::annotate("text", x = min(data$x, na.rm = TRUE), 
+                          y = max(data$y, na.rm = TRUE) - 0.07 * y_range, 
+                          label = eq_adt, hjust = 0, vjust = 1, size = 3.5)
+    }
+    
+    return(p)
+  }
+  
   PCH <- ifelse(data$mature == 0, pch[1], pch[2])
   COL <- ifelse(data$mature == 0, col[1], col[2])
   CEX <- ifelse(data$mature == 0, cex[1], cex[2])
-  LTY <- ifelse(data$mature == 0, lty_lines[1], lty_lines[2])
-  LWD <- ifelse(data$mature == 0, lwd_lines[1], lwd_lines[2])
-
-  plot(data$x, data$y, type = "p", col = COL, xlab = xlab, ylab = ylab, pch = PCH, cex = CEX, ...)
-  lines(juv$x, predict(fit_juv), col = COL[1], lwd = LWD[1], lty = LTY[1])
-  lines(adt$x, predict(fit_adt), col = COL[2], lwd = LWD[2], lty = LTY[2])
-  eq_juv <- paste0("Y = ", round(as.numeric(coef(fit_juv)[1]), 2), " + ", round(as.numeric(coef(fit_juv)[2]),2), " *X", sep = "")
-  eq_adt <- paste0("Y = ", round(as.numeric(coef(fit_adt)[1]), 2), " + ", round(as.numeric(coef(fit_adt)[2]),2), " *X", sep = "")
   
-  if(legendPlot == TRUE){
-    legend("topleft", c(paste("Juveniles: ", eq_juv), paste("Adults: ", eq_adt)),
-           bty = "n", pch = unique(PCH), col = unique(COL), cex = cex_label)
+  graphics::plot(data$x, data$y, type = "p", col = COL, 
+                 xlab = xlab, ylab = ylab, pch = PCH, cex = CEX, ...)
+  graphics::lines(new_juv$x, new_juv$y, col = col[1], 
+                  lwd = lwd_lines[1], lty = lty_lines[1])
+  
+  graphics::lines(new_adt$x, new_adt$y, col = col[2], 
+                  lwd = lwd_lines[2], lty = lty_lines[2])
+  
+  if(isTRUE(legendPlot)){
+    graphics::legend("topleft", legend = c(eq_juv, eq_adt), 
+                     bty = "n", pch = pch, col = col, 
+                     cex = cex_label)
   }
   
-  return(invisible(NULL))
+  invisible(NULL)
 }
 
 
@@ -402,13 +528,17 @@ print.morphMat <- function(x, ...){
 #' @param xlab a title for the x axis.
 #' @param ylab a title for the y axis.
 #' @param col color for the logistic curve and for the L50\% size at morphometric maturity.
-#' @param lwd line with for drawing fitted values and confidence intervals.
-#' @param lty line type line type for drawing fitted values and confidence intervals
+#' @param lwd line width for drawing fitted values and confidence intervals.
+#' @param lty line type for drawing fitted values and confidence intervals.
 #' @param vline_hist color of the vertical lines in the histogram. The lines represent the
-#' the median and the confidence intervals.
-#' @param lwd_hist line with for the vertical line in the histogram.
+#' median and the confidence intervals.
+#' @param lwd_hist line width for the vertical line in the histogram.
 #' @param lty_hist line type for the vertical line in the histogram.
 #' @param onlyOgive plot only the ogive.
+#' @param gg_style ggplot style (FALSE or TRUE).
+#' @param point_alpha transparency level of points, used only when gg_style = TRUE.
+#' @param base_size base font size, used only when gg_style = TRUE.
+#' @param label_size size of L50 and R2 labels, used only when gg_style = TRUE.
 #' @param \dots Additional arguments to the plot method.
 #' @examples
 #' data(crabdata)
@@ -421,79 +551,226 @@ print.morphMat <- function(x, ...){
 #' plot(my_mature, xlab = "Carapace width (mm.)", ylab = "Proportion mature", col = c("blue", "red"))
 #' @export
 #' @method plot morphMat
-plot.morphMat <- function(x, xlab = "X", ylab = "Proportion mature", col = c("blue", "red"),
-                          lwd = 2, lty = 2, vline_hist = "black", lwd_hist = 2, lty_hist = 2, 
-                          onlyOgive = FALSE, ...){
-
-  if (!inherits(x, "morphMat"))
+plot.morphMat <- function(x, xlab = "X", ylab = "Proportion mature",
+                          col = c("blue", "red"),
+                          lwd = 2, lty = 2,
+                          vline_hist = "black",
+                          lwd_hist = 2, lty_hist = 2,
+                          onlyOgive = FALSE, gg_style = FALSE,
+                          point_alpha = 0.8,
+                          base_size = 13,
+                          label_size = 5, ...) {
+  
+  if (!inherits(x, "morphMat")) {
     stop("Use with 'morphMat' objects only")
-
-  fit     <- x$out
+  }
+  
+  if (length(col) < 2) {
+    stop("'col' argument must have 2 values. The colors could be the same.")
+  }
+  
+  if (length(col) > 2) {
+    warning("'col': only the first two colors will be used in the plot.")
+  }
+  
+  col <- col[1:2]
+  
+  fit <- x$out
+  
+  if (!all(c("x", "mature", "fitted", "CIlower", "CIupper") %in% names(fit))) {
+    stop("The 'out' object must contain 'x', 'mature', 'fitted', 'CIlower', and 'CIupper'.")
+  }
+  
   x_input <- fit$x
   y_input <- fit$mature
-  m_p     <- tapply(y_input, x_input, mean)
-  wide    <- quantile(x$L50_boot, probs = c(0.025, 0.5, 0.975), na.rm = TRUE)
-
-  # R-square Nagelkerke method
-  model1 <- glm(y_input ~ x_input, family = binomial(link = "logit"))
-  R2     <- nagelkerkeR2(model1)
   
-  if(onlyOgive == TRUE){
-    if(length(col) < 2) stop('col argument must have 2 values. The colors could be the same')
-    if(length(col) > 2) warning('col: only the first two colors will be used in the plot')
-    plot(sort(unique(x_input)), m_p, xlab = xlab, ylab = ylab, pch = 19, col = "darkgrey", ...)
-    lines(sort(x_input), sort(fit$fitted), col = col[1], lwd = lwd)
-    lines(sort(x_input), sort(fit$CIlower), col = col[1], lwd = lwd, lty = lty)
-    lines(sort(x_input), sort(fit$CIupper), col = col[1], lwd = lwd, lty = lty)
-    lines(c(wide[2], wide[2]), c(-1, 0.5), col = col[2], lwd = lwd, lty = lty)
-    lines(c(-1, wide[2]), c(0.5, 0.5), col = col[2], lwd = lwd, lty = lty)
-    points(wide[2], 0.5, pch = 19, col = col[2], cex = 1.25)
-    legend("topleft", c(as.expression(bquote(bold(L[50] == .(round(wide[2], 1))))),
-                        as.expression(bquote(bold(R^2 == .(round(R2, 2)))))),
-           bty = "n")
-  }else{
-    # figure 1
-    hist(x$A_boot, main = "", xlab = "A", col = "grey90")
-    abline(v = as.numeric(quantile(x$A_boot, probs = c(0.5), na.rm = TRUE)),
-           lwd = lwd_hist, col = vline_hist)
-    abline(v = c(as.numeric(quantile(x$A_boot, probs = c(0.025, 0.975), na.rm = TRUE))),
-           lty = lty_hist, col = vline_hist)
-    box()
-    
-    # figure 2
-    hist(x$B_boot, main = "", xlab = "B", col = "grey90")
-    abline(v = as.numeric(quantile(x$B_boot, probs = c(0.5), na.rm = TRUE)),
-           lwd = lwd_hist, col = vline_hist)
-    abline(v = c(as.numeric(quantile(x$B_boot, probs = c(0.025, 0.975), na.rm = TRUE))),
-           lty = lty_hist, col = vline_hist)
-    box()
-    
-    # figure 3
-    hist(x$L50_boot, main = "", xlab = "Size at sexual maturity values", col = "grey90")
-    abline(v = as.numeric(quantile(x$L50_boot, probs = c(0.5), na.rm = TRUE)),
-           lwd = lwd_hist, col = vline_hist)
-    abline(v = c(as.numeric(quantile(x$L50_boot, probs = c(0.025, 0.975), na.rm = TRUE))),
-           lty = lty_hist, col = vline_hist)
-    box()
-    
-    # figure 4
-    if(length(col) < 2) stop('col argument must have 2 values. The colors could be the same')
-    if(length(col) > 2) warning('col: only the first two colors will be used in the plot')
-    plot(sort(unique(x_input)), m_p, xlab = xlab, ylab = ylab, pch = 19, col = "darkgrey", ...)
-    lines(sort(x_input), sort(fit$fitted), col = col[1], lwd = lwd)
-    lines(sort(x_input), sort(fit$CIlower), col = col[1], lwd = lwd, lty = lty)
-    lines(sort(x_input), sort(fit$CIupper), col = col[1], lwd = lwd, lty = lty)
-    lines(c(wide[2], wide[2]), c(-1, 0.5), col = col[2], lwd = lwd, lty = lty)
-    lines(c(-1, wide[2]), c(0.5, 0.5), col = col[2], lwd = lwd, lty = lty)
-    points(wide[2], 0.5, pch = 19, col = col[2], cex = 1.25)
-    legend("topleft", c(as.expression(bquote(bold(L[50] == .(round(wide[2], 1))))),
-                        as.expression(bquote(bold(R^2 == .(round(R2, 2)))))),
-           bty = "n")
+  m_p <- tapply(y_input, x_input, mean)
+  
+  wide <- stats::quantile(x$L50_boot, probs = c(0.025, 0.5, 0.975), na.rm = TRUE)
+  
+  model1 <- stats::glm(y_input ~ x_input, family = stats::binomial(link = "logit"))
+  
+  R2 <- nagelkerkeR2(model1)
+  
+  ogive_points <- data.frame(x = as.numeric(names(m_p)),
+                             proportion = as.numeric(m_p))
+  
+  ogive_points <- ogive_points[order(ogive_points$x), ]
+  
+  ogive_fit <- data.frame(x = fit$x, fitted = fit$fitted, 
+                          CIlower = fit$CIlower, CIupper = fit$CIupper)
+  
+  ogive_fit <- ogive_fit[order(ogive_fit$x), ]
+  
+  L50_text <- paste0("L[50] == ", round(wide[2], 1))
+  R2_text  <- paste0("R^2 == ", round(R2, 2))
+  
+  print_summary <- function(){
+    cat("Size at morphometric maturity =", round(wide[2], 1), "\n")
+    cat("Confidence intervals =", round(wide[1], 1), "-", round(wide[3], 1), "\n")
+    cat("Rsquare =", round(R2, 2), "\n")
   }
-
-  cat("Size at morphometric maturity =", round(wide[2], 1), "\n")
-  cat("Confidence intervals =", round(wide[1], 1), "-",round(wide[3], 1) ,  "\n")
-  cat("Rsquare =", round(R2, 2))
-
-  return(invisible(NULL))
+  
+  if(isTRUE(gg_style)){
+    if (!requireNamespace("ggplot2", quietly = TRUE)) {
+      stop("Package 'ggplot2' is required when gg_style = TRUE.")
+    }
+    
+    p_ogive <- ggplot2::ggplot() +
+      ggplot2::geom_point(data = ogive_points, 
+                          ggplot2::aes(x = x, y = proportion),
+                          colour = "darkgrey", size = 2.3, 
+                          alpha = point_alpha) +
+      ggplot2::geom_line(data = ogive_fit, 
+                         ggplot2::aes(x = x, y = fitted), 
+                         colour = col[1], linewidth = lwd) +
+      ggplot2::geom_line(data = ogive_fit, 
+                         ggplot2::aes(x = x, y = CIlower), 
+                         colour = col[1], linewidth = lwd, 
+                         linetype = lty) +
+      ggplot2::geom_line(data = ogive_fit, 
+                         ggplot2::aes(x = x, y = CIupper), 
+                         colour = col[1], linewidth = lwd, 
+                         linetype = lty) +
+      ggplot2::geom_segment(ggplot2::aes(x = wide[2], xend = wide[2], y = 0, yend = 0.5), 
+                            colour = col[2], linewidth = lwd, linetype = lty) +
+      ggplot2::geom_segment(ggplot2::aes(x = min(ogive_fit$x, na.rm = TRUE), 
+                                         xend = wide[2], y = 0.5, yend = 0.5), 
+                            colour = col[2], linewidth = lwd, linetype = lty) +
+      ggplot2::geom_point(ggplot2::aes(x = wide[2], y = 0.5), colour = col[2], size = 3) +
+      ggplot2::annotate("text", x = min(ogive_fit$x, na.rm = TRUE), y = 0.96, 
+                        label = L50_text, parse = TRUE, hjust = 0, fontface = "bold", 
+                        size = label_size) +
+      ggplot2::annotate("text", x = min(ogive_fit$x, na.rm = TRUE), y = 0.86, 
+                        label = R2_text, parse = TRUE, hjust = 0, fontface = "bold", 
+                        size = label_size) +
+      ggplot2::labs(x = xlab, y = ylab) +
+      ggplot2::coord_cartesian(ylim = c(0, 1)) +
+      ggplot2::theme_classic(base_size = base_size) +
+      ggplot2::theme(axis.title = ggplot2::element_text(face = "bold"), 
+                     axis.text = ggplot2::element_text(colour = "black"), 
+                     plot.margin = ggplot2::margin(8, 8, 8, 8))
+    
+    if(isTRUE(onlyOgive)){
+      print_summary()
+      return(p_ogive)
+    }
+    
+    make_hist_plot <- function(values, label_x){
+      
+      values <- values[is.finite(values)]
+      
+      q <- stats::quantile(values, probs = c(0.025, 0.5, 0.975), na.rm = TRUE)
+      
+      ggplot2::ggplot(data.frame(value = values), ggplot2::aes(x = value)) +
+        ggplot2::geom_histogram(bins = 30, fill = "grey90", colour = "grey40") +
+        ggplot2::geom_vline(xintercept = q[2], colour = vline_hist, linewidth = lwd_hist) +
+        ggplot2::geom_vline(xintercept = c(q[1], q[3]), colour = vline_hist, 
+                            linewidth = lwd_hist, linetype = lty_hist) +
+        ggplot2::labs(x = label_x,y = "Frequency") +
+        ggplot2::theme_classic(base_size = base_size) +
+        ggplot2::theme(axis.title = ggplot2::element_text(face = "bold"), 
+                       axis.text = ggplot2::element_text(colour = "black"), 
+                       plot.margin = ggplot2::margin(8, 8, 8, 8))
+    }
+    
+    p_A <- make_hist_plot(x$A_boot, "A")
+    p_B <- make_hist_plot(x$B_boot, "B")
+    p_L50 <- make_hist_plot(x$L50_boot, "Size at sexual maturity values")
+    
+    out <- list(A = p_A, B = p_B, L50 = p_L50, ogive = p_ogive)
+    
+    print_summary()
+    
+    return(out)
+  }
+  
+  if (isTRUE(onlyOgive)) {
+    
+    graphics::plot(ogive_points$x, ogive_points$proportion, 
+                   xlab = xlab, ylab = ylab, pch = 19, col = "darkgrey", ...)
+    
+    graphics::lines(ogive_fit$x, ogive_fit$fitted, 
+                    col = col[1], lwd = lwd)
+    
+    graphics::lines(ogive_fit$x, ogive_fit$CIlower, 
+                    col = col[1], lwd = lwd, lty = lty)
+    
+    graphics::lines(ogive_fit$x, ogive_fit$CIupper, 
+                    col = col[1], lwd = lwd, lty = lty)
+    
+    graphics::lines(c(wide[2], wide[2]), c(0, 0.5), 
+                    col = col[2], lwd = lwd, lty = lty)
+    
+    graphics::lines(c(min(ogive_fit$x, na.rm = TRUE), wide[2]), c(0.5, 0.5),
+                    col = col[2], lwd = lwd,lty = lty)
+    
+    graphics::points(wide[2], 0.5, pch = 19, col = col[2], cex = 1.25)
+    
+    graphics::legend("topleft",
+      c(as.expression(bquote(bold(L[50] == .(round(wide[2], 1))))),
+        as.expression(bquote(bold(R^2 == .(round(R2, 2)))))),bty = "n")
+    
+    print_summary()
+    
+    return(invisible(NULL))
+  }
+  
+  graphics::hist(x$A_boot, main = "", xlab = "A", col = "grey90")
+  
+  graphics::abline(v = as.numeric(stats::quantile(x$A_boot, probs = 0.5, na.rm = TRUE)), 
+                   lwd = lwd_hist, col = vline_hist)
+  
+  graphics::abline(v = as.numeric(stats::quantile(x$A_boot, probs = c(0.025, 0.975), na.rm = TRUE)), 
+                   lty = lty_hist, col = vline_hist)
+  
+  graphics::box()
+  
+  graphics::hist(x$B_boot, main = "", xlab = "B", col = "grey90")
+  
+  graphics::abline(v = as.numeric(stats::quantile(x$B_boot, probs = 0.5, na.rm = TRUE)), 
+                   lwd = lwd_hist, col = vline_hist)
+  
+  graphics::abline(v = as.numeric(stats::quantile(x$B_boot, probs = c(0.025, 0.975), na.rm = TRUE)), 
+                   lty = lty_hist, col = vline_hist)
+  
+  graphics::box()
+  
+  graphics::hist(x$L50_boot, main = "", xlab = "Size at sexual maturity values", col = "grey90")
+  
+  graphics::abline(v = as.numeric(stats::quantile(x$L50_boot, probs = 0.5, na.rm = TRUE)), 
+                   lwd = lwd_hist, col = vline_hist)
+  
+  graphics::abline(v = as.numeric(stats::quantile(x$L50_boot, probs = c(0.025, 0.975), na.rm = TRUE)), 
+                   lty = lty_hist, col = vline_hist)
+  
+  graphics::box()
+  
+  graphics::plot(ogive_points$x, ogive_points$proportion, 
+                 xlab = xlab, ylab = ylab, pch = 19, col = "darkgrey", ...)
+  
+  graphics::lines(ogive_fit$x, ogive_fit$fitted, 
+                  col = col[1], lwd = lwd)
+  
+  graphics::lines(ogive_fit$x, ogive_fit$CIlower, 
+                  col = col[1], lwd = lwd, lty = lty)
+  
+  graphics::lines(ogive_fit$x, ogive_fit$CIupper, 
+                  col = col[1], lwd = lwd,lty = lty)
+  
+  graphics::lines(c(wide[2], wide[2]), 
+                  c(0, 0.5), col = col[2], lwd = lwd, lty = lty)
+  
+  graphics::lines(c(min(ogive_fit$x, na.rm = TRUE), wide[2]), 
+                  c(0.5, 0.5), col = col[2], lwd = lwd, lty = lty)
+  
+  graphics::points(wide[2], 0.5, pch = 19, col = col[2], cex = 1.25)
+  
+  graphics::legend("topleft",
+    c(as.expression(bquote(bold(L[50] == .(round(wide[2], 1))))),
+      as.expression(bquote(bold(R^2 == .(round(R2, 2)))))), bty = "n")
+  
+  print_summary()
+  
+  invisible(NULL)
 }
