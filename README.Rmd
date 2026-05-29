@@ -5,10 +5,12 @@ output:
 ---
 
 ```{r setup, echo = FALSE}
+dir.create("man/figures", recursive = TRUE, showWarnings = FALSE)
+
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "README-",
+  fig.path = "man/figures/README-",
   fig.align = "center",
   fig.width = 7,
   fig.height = 5,
@@ -179,9 +181,23 @@ names(p_morph)
 
 Each plot can be displayed separately.
 
-```{r morph-gg-l50}
+```{r morph-gg-A}
+p_morph$A
+```
+
+```{r morph-gg-B}
+p_morph$B
+```
+
+```{r morph-gg-L50}
 p_morph$L50
 ```
+
+```{r morph-gg-ogive}
+p_morph$ogive
+```
+
+The returned plots can also be modified using standard `ggplot2` syntax.
 
 ```{r morph-gg-ogive-custom}
 p_morph$ogive +
@@ -235,6 +251,19 @@ plot(
 )
 ```
 
+The legend can be removed.
+
+```{r gonad-ogive-base-no-legend}
+plot(
+  my_gonad,
+  xlab = "Total length (cm)",
+  ylab = "Proportion mature",
+  col = c("blue", "red"),
+  onlyOgive = TRUE,
+  showLegend = FALSE
+)
+```
+
 ### ggplot2-style maturity ogive
 
 ```{r gonad-ogive-gg}
@@ -262,9 +291,25 @@ p_gonad <- plot(
 names(p_gonad)
 ```
 
-```{r gonad-gg-l50}
+Each plot can be displayed separately.
+
+```{r gonad-gg-A}
+p_gonad$A
+```
+
+```{r gonad-gg-B}
+p_gonad$B
+```
+
+```{r gonad-gg-L50}
 p_gonad$L50
 ```
+
+```{r gonad-gg-ogive}
+p_gonad$ogive
+```
+
+The returned plots can be customized using `ggplot2`.
 
 ```{r gonad-gg-ogive-custom}
 p_gonad$ogive +

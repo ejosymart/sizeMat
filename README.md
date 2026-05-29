@@ -138,7 +138,7 @@ plot(
 )
 ```
 
-<img src="README-morph-classify-base-1.png" style="display: block; margin: auto;" />
+<img src="man/figures/README-morph-classify-base-1.png" style="display: block; margin: auto;" />
 
 ### ggplot2-style plot
 
@@ -155,7 +155,7 @@ plot(
 )
 ```
 
-<img src="README-morph-classify-gg-1.png" style="display: block; margin: auto;" />
+<img src="man/figures/README-morph-classify-gg-1.png" style="display: block; margin: auto;" />
 
 Because the output is a `ggplot` object, it can be modified using
 `ggplot2`.
@@ -174,7 +174,7 @@ p_classify +
   ggplot2::theme_bw()
 ```
 
-<img src="README-morph-classify-gg-custom-1.png" style="display: block; margin: auto;" />
+<img src="man/figures/README-morph-classify-gg-custom-1.png" style="display: block; margin: auto;" />
 
 ### Estimate morphometric maturity
 
@@ -208,7 +208,7 @@ plot(
 )
 ```
 
-<img src="README-morph-ogive-base-1.png" style="display: block; margin: auto;" />
+<img src="man/figures/README-morph-ogive-base-1.png" style="display: block; margin: auto;" />
 
     #> Size at morphometric maturity = 118.6 
     #> Confidence intervals = 116 - 121 
@@ -230,7 +230,7 @@ plot(
 #> Rsquare = 0.71
 ```
 
-<img src="README-morph-ogive-gg-1.png" style="display: block; margin: auto;" />
+<img src="man/figures/README-morph-ogive-gg-1.png" style="display: block; margin: auto;" />
 
 When `gg_style = TRUE` and `onlyOgive = FALSE`, the plot method returns
 a list of independent `ggplot` objects.
@@ -254,10 +254,30 @@ names(p_morph)
 Each plot can be displayed separately.
 
 ``` r
+p_morph$A
+```
+
+<img src="man/figures/README-morph-gg-A-1.png" style="display: block; margin: auto;" />
+
+``` r
+p_morph$B
+```
+
+<img src="man/figures/README-morph-gg-B-1.png" style="display: block; margin: auto;" />
+
+``` r
 p_morph$L50
 ```
 
-<img src="README-morph-gg-l50-1.png" style="display: block; margin: auto;" />
+<img src="man/figures/README-morph-gg-L50-1.png" style="display: block; margin: auto;" />
+
+``` r
+p_morph$ogive
+```
+
+<img src="man/figures/README-morph-gg-ogive-1.png" style="display: block; margin: auto;" />
+
+The returned plots can also be modified using standard `ggplot2` syntax.
 
 ``` r
 p_morph$ogive +
@@ -265,7 +285,7 @@ p_morph$ogive +
   ggplot2::ggtitle("Morphometric maturity ogive")
 ```
 
-<img src="README-morph-gg-ogive-custom-1.png" style="display: block; margin: auto;" />
+<img src="man/figures/README-morph-gg-ogive-custom-1.png" style="display: block; margin: auto;" />
 
 ## Example 2: Size at gonadal maturity
 
@@ -307,7 +327,7 @@ plot(
 )
 ```
 
-<img src="README-gonad-ogive-base-1.png" style="display: block; margin: auto;" />
+<img src="man/figures/README-gonad-ogive-base-1.png" style="display: block; margin: auto;" />
 
     #> Size at gonadal maturity = 24.2 
     #> Confidence intervals = 23.8 - 24.6 
@@ -326,7 +346,26 @@ plot(
 )
 ```
 
-<img src="README-gonad-ogive-base-legend-1.png" style="display: block; margin: auto;" />
+<img src="man/figures/README-gonad-ogive-base-legend-1.png" style="display: block; margin: auto;" />
+
+    #> Size at gonadal maturity = 24.2 
+    #> Confidence intervals = 23.8 - 24.6 
+    #> Rsquare = 0.56
+
+The legend can be removed.
+
+``` r
+plot(
+  my_gonad,
+  xlab = "Total length (cm)",
+  ylab = "Proportion mature",
+  col = c("blue", "red"),
+  onlyOgive = TRUE,
+  showLegend = FALSE
+)
+```
+
+<img src="man/figures/README-gonad-ogive-base-no-legend-1.png" style="display: block; margin: auto;" />
 
     #> Size at gonadal maturity = 24.2 
     #> Confidence intervals = 23.8 - 24.6 
@@ -348,7 +387,7 @@ plot(
 #> Rsquare = 0.56
 ```
 
-<img src="README-gonad-ogive-gg-1.png" style="display: block; margin: auto;" />
+<img src="man/figures/README-gonad-ogive-gg-1.png" style="display: block; margin: auto;" />
 
 When `gg_style = TRUE` and `onlyOgive = FALSE`, the function returns a
 list of independent `ggplot` objects.
@@ -369,11 +408,33 @@ names(p_gonad)
 #> [1] "A"     "B"     "L50"   "ogive"
 ```
 
+Each plot can be displayed separately.
+
+``` r
+p_gonad$A
+```
+
+<img src="man/figures/README-gonad-gg-A-1.png" style="display: block; margin: auto;" />
+
+``` r
+p_gonad$B
+```
+
+<img src="man/figures/README-gonad-gg-B-1.png" style="display: block; margin: auto;" />
+
 ``` r
 p_gonad$L50
 ```
 
-<img src="README-gonad-gg-l50-1.png" style="display: block; margin: auto;" />
+<img src="man/figures/README-gonad-gg-L50-1.png" style="display: block; margin: auto;" />
+
+``` r
+p_gonad$ogive
+```
+
+<img src="man/figures/README-gonad-gg-ogive-1.png" style="display: block; margin: auto;" />
+
+The returned plots can be customized using `ggplot2`.
 
 ``` r
 p_gonad$ogive +
@@ -381,7 +442,7 @@ p_gonad$ogive +
   ggplot2::ggtitle("Gonadal maturity ogive")
 ```
 
-<img src="README-gonad-gg-ogive-custom-1.png" style="display: block; margin: auto;" />
+<img src="man/figures/README-gonad-gg-ogive-custom-1.png" style="display: block; margin: auto;" />
 
 ## Combining ggplot2-style outputs
 
@@ -400,7 +461,7 @@ ggpubr::ggarrange(
 )
 ```
 
-<img src="README-combine-ggpubr-1.png" style="display: block; margin: auto;" />
+<img src="man/figures/README-combine-ggpubr-1.png" style="display: block; margin: auto;" />
 
 ``` r
 cowplot::plot_grid(
@@ -412,7 +473,7 @@ cowplot::plot_grid(
 )
 ```
 
-<img src="README-combine-cowplot-1.png" style="display: block; margin: auto;" />
+<img src="man/figures/README-combine-cowplot-1.png" style="display: block; margin: auto;" />
 
 ## Citation
 
