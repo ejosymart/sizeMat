@@ -4,8 +4,8 @@
 
 <!-- badges: start -->
 
-[![packageversion](https://img.shields.io/badge/Package%20version-1.1.2-orange.svg?style=flat-square)](commits/master)
-[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/sizeMat)](https://cran.r-project.org/package=sizeMat)
+[![packageversion](https://img.shields.io/badge/Package%20version-1.2.0-orange.svg?style=flat-square)](commits/master)
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/sizeMat)](https://cran.r-project.org/package=sizeMat)
 [![metacran
 downloads](https://cranlogs.r-pkg.org/badges/sizeMat)](https://cran.rstudio.com/web/packages/sizeMat/index.html)
 [![total](http://cranlogs.r-pkg.org/badges/grand-total/sizeMat)](https://www.rpackages.io/package/sizeMat)
@@ -69,10 +69,6 @@ print(classify_data)
 #> Call:
 #> glm(formula = y ~ x, data = juv)
 #> 
-#> Deviance Residuals: 
-#>      Min        1Q    Median        3Q       Max  
-#> -2.77010  -0.57399   0.09397   0.56605   1.99008  
-#> 
 #> Coefficients:
 #>              Estimate Std. Error t value Pr(>|t|)    
 #> (Intercept) -3.794687   0.497056  -7.634 3.93e-11 ***
@@ -93,10 +89,6 @@ print(classify_data)
 #> 
 #> Call:
 #> glm(formula = y ~ x, data = adt)
-#> 
-#> Deviance Residuals: 
-#>     Min       1Q   Median       3Q      Max  
-#> -3.3055  -1.0932  -0.0628   1.1178   3.2759  
 #> 
 #> Coefficients:
 #>               Estimate Std. Error t value Pr(>|t|)    
@@ -131,7 +123,7 @@ print(my_ogive)
 #> A   -20.753  -20.8576          
 #> B   0.1748   0.1757            
 #> L50 118.7237 118.6591          
-#> R2  -        0.7111
+#> R2  0.7111   -
 ```
 
 ## Size at Gonad Maturity
@@ -140,10 +132,10 @@ print(my_ogive)
 data(matFish)
 
 my_ogive = gonad_mature(matFish, varNames = c("total_length", "stage_mat"), 
-                        inmName = "I", matName = c("II", "III", "IV"), method = "fq", niter = 999)
+                        immName = "I", matName = c("II", "III", "IV"), method = "fq", niter = 999)
 
 print(my_ogive)
-#> formula: Y = 1/1+exp-(A + B*X)
+#> formula: Y = 1/[1+exp-(A + B*X)]
 #>     Original Bootstrap (Median)
 #> A   -8.6047  -8.6407           
 #> B   0.356    0.3576            
