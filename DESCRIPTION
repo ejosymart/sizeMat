@@ -5,7 +5,7 @@ Version: 1.2.0
 Date: 2026-05-29
 Authors@R: c(person("Josymar", "Torrejon-Magallanes", email = "ejosymart@gmail.com", role = c("cre", "aut")), person("Luis", "Angeles-Gonzalez", email = "luis.angeles0612@gmail.com", role = "aut"))
 Maintainer: Josymar Torrejon-Magallanes <ejosymart@gmail.com>
-Description: Estimate morphometric and gonadal size at sexual maturity for organisms, usually fish and invertebrates. It includes methods for classification based on relative growth (using principal components analysis, hierarchical clustering, discriminant analysis), logistic regression (Frequentist or Bayes), parameters estimation and some basic plots. Optional ggplot2-style graphics are available for selected plot methods.
+Description: Estimate morphometric and gonadal size at sexual maturity for organisms, usually fish and invertebrates. It includes methods for classification based on relative growth (using principal components analysis, hierarchical clustering, discriminant analysis), logistic regression (Frequentist or Bayes), parameters estimation and some basic plots. Optional ggplot-style graphics are available for selected plot methods.
 Depends: R (>= 4.0.0)
 Imports: MCMCpack, matrixStats, MASS, grDevices, graphics, stats, utils
 Suggests: rmarkdown, knitr, ggplot2
