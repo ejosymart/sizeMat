@@ -484,7 +484,7 @@ citation("sizeMat")
 #> To cite package 'sizeMat' in publications use:
 #> 
 #>   Torrejon-Magallanes J, Angeles-Gonzalez L (2026). _sizeMat: Estimate
-#>   Size at Sexual Maturity_. R package version 1.1.3,
+#>   Size at Sexual Maturity_. R package version 1.2.0,
 #>   <https://cran.r-project.org/package=sizeMat>.
 #> 
 #> A BibTeX entry for LaTeX users is
@@ -493,7 +493,7 @@ citation("sizeMat")
 #>     title = {sizeMat: Estimate Size at Sexual Maturity},
 #>     author = {Josymar Torrejon-Magallanes and Luis Angeles-Gonzalez},
 #>     year = {2026},
-#>     note = {R package version 1.1.3},
+#>     note = {R package version 1.2.0},
 #>     url = {https://cran.r-project.org/package=sizeMat},
 #>   }
 ```
