@@ -1,6 +1,6 @@
 ---
 title: "sizeMat: An R Package to Estimate Size at Sexual Maturity"
-author: "Josymar Torrejon-Magallanes"
+author: "Josymar Torrejon-Magallanes; Luis Angeles Gonzalez"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
